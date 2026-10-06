@@ -119,24 +119,44 @@ export function mountScene(onFailure=()=>{}){
  for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z])projected.expandByPoint(new THREE.Vector3(x,y,z).applyMatrix4(camera.matrixWorldInverse));
  const size=projected.getSize(new THREE.Vector3());
  let alive=true,frame=0,target=0,current=0,visible=true;
+ let phase=0,lastTick=0,idleUntil=0,paused=false,dragging=false;
+ const motionButton=document.querySelector('[data-scene-motion]');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),events=new AbortController();
- const draw=()=>{frame=0;if(!alive||!visible||document.hidden)return;current=reduced.matches?target:current+(target-current)*.12;group.rotation.y=current;renderer.render(scene,camera);if(Math.abs(current-target)>.0005)frame=requestAnimationFrame(draw);};
- const schedule=()=>{if(!frame&&alive)frame=requestAnimationFrame(draw);};
+ const draw=now=>{
+  frame=0;if(!alive||!visible||document.hidden){lastTick=0;return;}
+  // Thirty frames/second are enough for a gentle 28-second rocking cycle.
+  if(lastTick&&now-lastTick<1000/30){schedule();return;}
+  const dt=lastTick?Math.min((now-lastTick)/1000,.1):1/30;lastTick=now;
+  const automatic=!reduced.matches&&!paused&&!dragging&&now>=idleUntil;
+  if(automatic){phase=(phase+dt*Math.PI*2/28)%(Math.PI*2);target=.12*Math.sin(phase);}
+  const previous=current;current=reduced.matches?target:current+(target-current)*(1-Math.exp(-5*dt));
+  if(Math.abs(current-target)<.00001)current=target;
+  group.rotation.y=current;
+  if(Math.abs(current-previous)>.000001)renderer.render(scene,camera);
+  if((!reduced.matches&&!paused&&!dragging)||Math.abs(current-target)>.00001)schedule();
+ };
+ const schedule=()=>{if(!frame&&alive&&visible&&!document.hidden)frame=requestAnimationFrame(draw);};
+ const stop=()=>{cancelAnimationFrame(frame);frame=0;lastTick=0;};
+ const updateMotionButton=()=>{if(!motionButton)return;motionButton.hidden=reduced.matches;motionButton.textContent=paused?'Animer':'Pause';motionButton.setAttribute('aria-label',paused?'Reprendre la rotation automatique':'Mettre la rotation en pause');};
  const resize=()=>{const{width,height}=host.getBoundingClientRect();if(!width||!height)return false;const aspect=width/height;camera.aspect=aspect;const distance=Math.max(size.y/.83,size.x/(aspect*.98))/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)));camera.position.copy(focus).addScaledVector(direction,distance+1);camera.lookAt(focus);camera.updateProjectionMatrix();renderer.setPixelRatio(Math.min(Math.max(devicePixelRatio,2),2.5,1800/width));renderer.setSize(width,height);renderer.render(scene,camera);return true;};
  const dispose=()=>{if(!alive)return;alive=false;cancelAnimationFrame(frame);observer.disconnect();visibility.disconnect();events.abort();scene.traverse(o=>{if(o.isMesh)o.geometry.dispose();});const all=new Set([...Object.values(mat),...glazing,shadow.material]);all.forEach(m=>{m.map?.dispose();m.dispose();});renderer.dispose();renderer.domElement.remove();delete host.dataset.ready;};
- let observer=new ResizeObserver(()=>{try{resize();}catch{dispose();onFailure();}}),visibility=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();else{cancelAnimationFrame(frame);frame=0;}});
+ let observer=new ResizeObserver(()=>{try{resize();}catch{dispose();onFailure();}}),visibility=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)schedule();else stop();});
  try{if(!resize()){dispose();return false;}}catch{dispose();return false;}
  observer.observe(host);visibility.observe(host);host.dataset.ready='true';
  const listen=(el,type,fn)=>el.addEventListener(type,fn,{signal:events.signal});
  listen(renderer.domElement,'webglcontextlost',()=>{dispose();onFailure();});
- listen(document,'visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;}else schedule();});
- let dragging=false,startX=0,startAngle=0;
- const setAngle=a=>{target=THREE.MathUtils.clamp(a,-.2,.32);schedule();};
- listen(host,'pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragging=true;startX=e.clientX;startAngle=target;host.setPointerCapture(e.pointerId);host.classList.add('is-dragging');});
+ listen(document,'visibilitychange',()=>{if(document.hidden)stop();else schedule();});
+ listen(reduced,'change',()=>{stop();target=current;updateMotionButton();schedule();});
+ if(motionButton)listen(motionButton,'click',()=>{paused=!paused;target=current;idleUntil=0;stop();updateMotionButton();if(!paused)schedule();});
+ updateMotionButton();
+ let startX=0,startAngle=0;
+ const setAngle=a=>{idleUntil=performance.now()+6000;target=THREE.MathUtils.clamp(a,-.2,.32);schedule();};
+ listen(host,'pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragging=true;target=current;startX=e.clientX;startAngle=current;host.setPointerCapture(e.pointerId);host.classList.add('is-dragging');});
  listen(host,'pointermove',e=>{if(dragging)setAngle(startAngle+(e.clientX-startX)/host.clientWidth*.9);});
- const release=()=>{dragging=false;host.classList.remove('is-dragging');};listen(host,'pointerup',release);listen(host,'pointercancel',release);
+ const release=()=>{dragging=false;idleUntil=performance.now()+6000;host.classList.remove('is-dragging');schedule();};listen(host,'pointerup',release);listen(host,'pointercancel',release);
  listen(host,'keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();setAngle(target+(e.key==='ArrowLeft'?-.1:.1));}else if(e.key==='Home'){e.preventDefault();setAngle(0);}});
  document.querySelectorAll('[data-scene-turn]').forEach(b=>listen(b,'click',()=>setAngle(b.dataset.sceneTurn==='reset'?0:target+Number(b.dataset.sceneTurn))));
  listen(window,'pagehide',e=>{if(!e.persisted)dispose();});
+ schedule();
  return true;
 }
