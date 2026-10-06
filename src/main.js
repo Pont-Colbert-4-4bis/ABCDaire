@@ -11,12 +11,13 @@ if(scene){
  const illustration=document.querySelector('.hero-art .illustration');
  const status=document.querySelector('[data-scene-status]');
  let desired='illustration', loading;
+ const fallback=()=>{loading=undefined;scene.style.opacity='';show('illustration');status.textContent='La vue 3D est indisponible sur cet appareil. L’illustration reste accessible.';};
  const show=view=>{desired=view;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));scene.hidden=view!=='3d';illustration.hidden=view==='3d';};
  buttons.forEach(button=>button.addEventListener('click',async()=>{
   const view=button.dataset.view;desired=view;
   if(view==='illustration'){show(view);status.textContent='Interprétation des façades · sans valeur de plan';return;}
   status.textContent='Chargement de la vue 3D…';
-  try{loading??=import('./scene.js').then(m=>m.mountScene());const ok=await loading;if(!ok)throw Error('WebGL');if(desired==='3d'){show('3d');status.textContent='Maquette simplifiée · déplacez le pointeur pour changer légèrement l’angle';}}
-  catch{loading=undefined;show('illustration');status.textContent='La vue 3D est indisponible sur cet appareil. L’illustration reste accessible.';}
+  try{scene.style.opacity='0';scene.hidden=false;loading??=import('./scene.js').then(m=>m.mountScene(fallback));const ok=await loading;if(!ok)throw Error('WebGL');if(desired==='3d'){scene.style.opacity='';show('3d');status.textContent='Maquette simplifiée · déplacez le pointeur pour changer légèrement l’angle';}}
+  catch{fallback();}
  }));
 }
