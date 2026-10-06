@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Première édition pilote du 6 octobre 2026 : 23 fiches, annuaire professionnel, 10 historiques de décisions, index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Illustration des façades et maquette Three.js activable à la demande.
+Guide public de la résidence à Versailles. Première édition pilote du 6 octobre 2026 : 23 fiches, annuaire professionnel, 10 historiques de décisions, index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
 
 ## Contenu éditorial
 
@@ -38,10 +38,16 @@ Site : https://pont-colbert-4-4bis.github.io/ABCDaire/
 
 Les composants tiers conservent leurs licences respectives. Les documents d’archives ne sont pas redistribués.
 
-## Illustration
+## Maquette et illustration de secours
 
 Illustration générée à partir de deux photographies de référence fournies par le porteur du projet. Les photographies originales ne sont pas redistribuées. Il s’agit d’une interprétation graphique sans valeur de plan. `assets/colbert-illustration.jpg.base64` contient le JPEG optimisé ; le générateur le décode pour le site.
 
 ## Confidentialité de l’annuaire
 
 Seuls les standards professionnels et les coordonnées de dépannage sont publics. L’espace résidents avec authentification individuelle reste une proposition ; aucun contact privé ne doit être placé dans le dépôt ou un fichier simplement masqué.
+
+La vue 3D affiche les volumes étagés, balcons anguleux et garde-corps, fenêtres avec détails de vitrage, garage, pavage et végétation. Les matières et feuillages sont générés localement ; les géométries sont regroupées et les feuilles instanciées pour limiter les appels de dessin. Le rendu utilise un canevas transparent et une résolution adaptée à l’écran (jusqu’à 2,5×, largeur plafonnée à 1 800 pixels).
+
+La scène se tourne par glissement, par les boutons ou avec les flèches du clavier ; « Recentrer la vue » rétablit l’angle initial. Aucun mouvement automatique continu ; le rendu s’arrête au repos et hors écran. La préférence de mouvement réduit supprime l’interpolation. L’image reste présente jusqu’au premier rendu et revient si WebGL échoue ; il n’y a plus de sélecteur 2D/3D.
+
+Vérifications de cette évolution : affichage automatique et commandes, largeur mobile 390 px, absence de débordement, mouvement réduit simulé, WebGL indisponible et événement de perte de contexte simulés, compilation et contrôle des 30 pages / 1 202 liens.
