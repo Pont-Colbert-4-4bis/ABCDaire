@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Première édition pilote du 6 octobre 2026 : 24 fiches, annuaire professionnel, 17 synthèses de contrats et services, 10 historiques de décisions, index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
+Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (97 étapes sourcées, AG 2012–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
 
 ## Contenu éditorial
 
@@ -61,3 +61,13 @@ La fiche WhatsApp distingue le groupe des résidents et celui réservé aux memb
 La maquette a été rapprochée des photographies de rue : proportions de la longue façade, teintes ivoire et saumon, balcons triangulaires, deux entrées de parking à des niveaux différents, abri de bus, lampadaire et bornes. Les éléments non mesurables sur les deux vues restent une interprétation.
 
 Validation de l’ajout contrats et WhatsApp : compilation, contrôle de 32 pages et 1 413 liens locaux, correspondances des 17 synthèses avec les fiches et contacts, recherche « ampoule », ouverture des détails du contrat et lecture mobile à 390 px sans débordement. Les QR codes restent en attente des liens vérifiés.
+
+## Historique des AG et contacts contextuels
+
+Les PV de 2012 à 2026 ont été rapprochés par sujet. Chaque étape distingue le vote, le rejet, le report, l’information et l’approbation des comptes, avec la référence de résolution ; les nouvelles lectures indiquent aussi la page du PDF. L’archive 2017 consultée est incomplète et seules les décisions entièrement lisibles sont reprises. Un document classé dans les archives mais concernant une autre copropriété a été écarté. Cette sélection éditoriale ne prétend pas restituer toutes les résolutions.
+
+Une fiche Recharge des véhicules électriques retrace les projets successifs. Elle ne présente aucun opérateur comme actuellement en service sans convention et réception vérifiées. L’ambiguïté du DTG 2025 et la divergence avec la formulation de 2023 restent visibles.
+
+Les interlocuteurs de chaque fiche sont affichés à droite sur grand écran et avant le contenu sur mobile. Leurs coordonnées proviennent du même annuaire, pour éviter les copies divergentes. Le logo vectoriel et le favicon partagent une silhouette architecturale simplifiée.
+
+Validation du 7 octobre : compilation et contrôle de 33 pages / 1 599 liens locaux, 28 historiques rattachés à une fiche et 97 références présentes, contacts visibles sur ordinateur et au début des fiches à 390 px sans débordement, recherche « indemnisation » retrouvant la fiche chauffage et l’historique général.
