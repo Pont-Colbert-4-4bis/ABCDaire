@@ -7,17 +7,15 @@ document.querySelector('[data-print]')?.addEventListener('click',()=>window.prin
 document.querySelector('[data-copy]')?.addEventListener('click',async()=>{const status=document.querySelector('.status-message');try{await navigator.clipboard.writeText(location.href);status.textContent='Lien copié.';}catch{status.textContent='Vous pouvez copier l’adresse de cette page dans votre navigateur.';}});
 const scene=document.querySelector('#scene');
 if(scene){
- const buttons=[...document.querySelectorAll('[data-view]')];
  const illustration=document.querySelector('.hero-art .illustration');
  const status=document.querySelector('[data-scene-status]');
- let desired='illustration', loading;
- const fallback=()=>{loading=undefined;scene.style.opacity='';show('illustration');status.textContent='La vue 3D est indisponible sur cet appareil. L’illustration reste accessible.';};
- const show=view=>{desired=view;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));scene.hidden=view!=='3d';illustration.hidden=view==='3d';};
- buttons.forEach(button=>button.addEventListener('click',async()=>{
-  const view=button.dataset.view;desired=view;
-  if(view==='illustration'){show(view);status.textContent='Interprétation des façades · sans valeur de plan';return;}
-  status.textContent='Chargement de la vue 3D…';
-  try{scene.style.opacity='0';scene.hidden=false;loading??=import('./scene.js').then(m=>m.mountScene(fallback));const ok=await loading;if(!ok)throw Error('WebGL');if(desired==='3d'){scene.style.opacity='';show('3d');status.textContent='Maquette simplifiée · déplacez le pointeur pour changer légèrement l’angle';}}
-  catch{fallback();}
- }));
+ const controls=document.querySelector('.scene-controls');
+ const fallback=()=>{scene.hidden=true;illustration.hidden=false;controls.hidden=true;scene.style.opacity='';status.textContent='Illustration de la résidence · sans valeur de plan';};
+ // Keep a real image until the first successful frame, including on slow devices.
+ scene.style.opacity='0';scene.hidden=false;
+ import('./scene.js').then(m=>m.mountScene(fallback)).then(ok=>{
+  if(!ok){fallback();return;}
+  scene.style.opacity='';illustration.hidden=true;controls.hidden=false;
+  status.textContent='Faites glisser pour explorer · interprétation sans valeur de plan';
+ }).catch(fallback);
 }
