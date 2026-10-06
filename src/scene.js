@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-export function mountScene(){
+export function mountScene(onFailure=()=>{}){
  const host=document.querySelector('#scene');if(!host)return false;
+ host.replaceChildren();delete host.dataset.ready;
  let renderer;try{renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});}catch{return false;}
  renderer.setPixelRatio(Math.min(devicePixelRatio,1.7));renderer.setClearColor(0x000000,0);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;host.append(renderer.domElement);renderer.domElement.setAttribute('aria-hidden','true');
  const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-12,12,9,-9,.1,100);camera.position.set(-16,11,24);camera.lookAt(0,3.1,0);
@@ -35,7 +36,10 @@ export function mountScene(){
  function tree(x,z,s=1){const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.065*s,.11*s,1.6*s,8),mat.stem);trunk.position.set(x,.8*s,z);trunk.castShadow=true;group.add(trunk);for(let i=0;i<4;i++){const crown=new THREE.Mesh(new THREE.IcosahedronGeometry((.67-i*.04)*s,2),i%2?mat.leaf2:mat.leaf);crown.position.set(x+Math.sin(i*2)*.29*s,(1.65+i*.2)*s,z+Math.cos(i*2)*.25*s);crown.scale.y=1.12;crown.castShadow=true;group.add(crown);}}
  tree(-8.7,-2.1,1.4);tree(8.55,-1.9,1.4);tree(-3.95,2.9,.78);tree(5.9,2.85,.84);
  const shadow=new THREE.Mesh(new THREE.PlaneGeometry(45,45),new THREE.ShadowMaterial({opacity:.12}));shadow.rotation.x=-Math.PI/2;shadow.position.y=-.31;shadow.receiveShadow=true;scene.add(shadow);
- const resize=()=>{const {width,height}=host.getBoundingClientRect();if(!width||!height)return;const a=width/height,vertical=Math.max(6.5,11.5/a);camera.left=-vertical*a;camera.right=vertical*a;camera.top=vertical;camera.bottom=-vertical;camera.updateProjectionMatrix();renderer.setSize(width,height);renderer.render(scene,camera);};new ResizeObserver(resize).observe(host);resize();host.dataset.ready='true';
+ const resize=()=>{const {width,height}=host.getBoundingClientRect();if(!width||!height)return false;const a=width/height,vertical=Math.max(6.5,11.5/a);camera.left=-vertical*a;camera.right=vertical*a;camera.top=vertical;camera.bottom=-vertical;camera.updateProjectionMatrix();renderer.setSize(width,height);renderer.render(scene,camera);return true;};
+ if(!resize()){renderer.dispose();renderer.domElement.remove();return false;}
+ const observer=new ResizeObserver(resize);observer.observe(host);host.dataset.ready='true';
+ renderer.domElement.addEventListener('webglcontextlost',()=>{observer.disconnect();delete host.dataset.ready;onFailure();},{once:true});
  let target=0,current=0,frame=0;const draw=()=>{current+=(target-current)*.1;group.rotation.y=current;renderer.render(scene,camera);if(Math.abs(target-current)>.0005)frame=requestAnimationFrame(draw);else frame=0;};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');host.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||reduced.matches)return;const r=host.getBoundingClientRect();target=((e.clientX-r.left)/r.width-.5)*.16;if(!frame)draw();});host.addEventListener('pointerleave',()=>{target=0;if(!frame)draw();});document.addEventListener('visibilitychange',()=>{if(document.hidden&&frame){cancelAnimationFrame(frame);frame=0;}});return true;
 }
