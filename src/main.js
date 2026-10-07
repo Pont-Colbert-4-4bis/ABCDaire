@@ -7,15 +7,15 @@ document.querySelector('[data-print]')?.addEventListener('click',()=>window.prin
 document.querySelector('[data-copy]')?.addEventListener('click',async()=>{const status=document.querySelector('.status-message');try{await navigator.clipboard.writeText(location.href);status.textContent='Lien copié.';}catch{status.textContent='Vous pouvez copier l’adresse de cette page dans votre navigateur.';}});
 const scene=document.querySelector('#scene');
 if(scene){
- const illustration=document.querySelector('.hero-art .illustration');
+ const illustration=document.querySelector('.model-poster');
  const status=document.querySelector('[data-scene-status]');
  const controls=document.querySelector('.scene-controls');
- const fallback=()=>{scene.hidden=true;illustration.hidden=false;controls.hidden=true;scene.style.opacity='';status.textContent='Illustration de la résidence · sans valeur de plan';};
- // Keep a real image until the first successful frame, including on slow devices.
+ const fallback=()=>{scene.hidden=true;illustration.hidden=false;controls.hidden=true;scene.style.opacity='';status.textContent='Vue fixe de la maquette · la 3D est indisponible sur cet appareil.';};
+ // The poster is a render of this same model, kept until the first successful frame.
  scene.style.opacity='0';scene.hidden=false;
  import('./scene.js').then(m=>m.mountScene(fallback)).then(ok=>{
-  if(!ok){fallback();return;}
+  if(!ok||scene.dataset.ready!=='true'){fallback();return;}
   scene.style.opacity='';illustration.hidden=true;controls.hidden=false;
-  status.textContent='Faites glisser pour explorer · interprétation sans valeur de plan';
+  status.textContent=scene.dataset.mode==='explore'?'Faites glisser pour tourner · pincez ou utilisez + / − pour zoomer.':'Faites glisser pour explorer · maquette d’après photographies.';
  }).catch(fallback);
 }

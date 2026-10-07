@@ -1,0 +1,30 @@
+{
+  "name": "Villa Colbert — reconstruction photographique",
+  "revision": "2026-10-07",
+  "coordinateSystem": "glTF: X vers la droite depuis la rue, Y hauteur, Z vers la rue",
+  "unit": "metre, echelle provisoire non mesuree",
+  "observations": [
+    "Entree 4 bis a gauche, pres des parkings; entree 4 a droite (confirmation de Philippe).",
+    "Deux portes de parking separees a gauche: une rampe descendante et un acces plus haut.",
+    "Rez-de-chaussee, cinq niveaux courants et dernier niveau en retrait.",
+    "Quatre piles de balcons sur la longue facade, deux sur les retours gauches visibles; plans triangulaires, garde-corps pleins et metalliques.",
+    "Enduit clair, panneaux saumon, fenetres a cadres clairs, volets de positions variees.",
+    "Aile en retour cote parkings et empreinte en decroche visible dans la vue aerienne.",
+    "Deux noyaux techniques en toiture, acroteres, terrasses en retrait, antenne.",
+    "Haies dans des jardinieres basses, passages d'entree, marches, abri de bus, deux arbres de rue, potelets, lampadaire et parcometre."
+  ],
+  "estimates": {
+    "mainFacadeWidth": 44.4,
+    "mainDepth": 10.9,
+    "leftReturnDepth": 18.0,
+    "floorHeight": 2.62,
+    "mainCorniceHeight": 15.8,
+    "atticRoofHeight": 18.05
+  },
+  "limits": [
+    "Pas de releve metrique ni plan d'architecte fourni: cotes, pentes et profondeur des balcons estimees.",
+    "Facade arriere et details de toiture partiellement caches: volumes reconstitues a partir de la vue aerienne, ouvertures arriere non inventoriees.",
+    "Mobilier et vegetation representes a la date des photos; personnes, vehicules, plaques et contenu des affiches exclus.",
+    "Les captures de reference restent hors du depot public; aucune photographie n'est utilisee comme texture."
+  ]
+}

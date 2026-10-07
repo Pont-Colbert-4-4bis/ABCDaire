@@ -1,1 +1,22 @@
-{"name":"abcdaire-colbert","version":"0.1.0","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs && pagefind --site dist --exclude-selectors '[data-search-ignore]'","check":"node scripts/check.mjs","preview":"node scripts/serve.mjs"},"dependencies":{"three":"^0.180.0","@fontsource-variable/manrope":"^5.2.8","@fontsource/libre-caslon-display":"^5.2.6"},"devDependencies":{"esbuild":"^0.25.0","pagefind":"^1.4.0"}}
+{
+  "name": "abcdaire-colbert",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs && pagefind --site dist --exclude-selectors '[data-search-ignore]'",
+    "check": "node scripts/check.mjs && node scripts/check-model.mjs",
+    "preview": "node scripts/serve.mjs",
+    "check:model": "node scripts/check-model.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource/libre-caslon-display": "^5.2.6",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "gltf-validator": "^2.0.0-dev.3.10",
+    "pagefind": "^1.4.0"
+  }
+}

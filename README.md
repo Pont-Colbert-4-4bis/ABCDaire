@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
+Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette GLB autonome affichée avec Three.js sur l’accueil et dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 
@@ -38,27 +38,27 @@ Site : https://pont-colbert-4-4bis.github.io/ABCDaire/
 
 Les composants tiers conservent leurs licences respectives. Seules les copies publiques contrôlées du Petit Colbert sont distribuées ; les originaux restent privés.
 
-## Maquette et illustration de secours
+## Maquette 3D autonome
 
-Illustration générée à partir de deux photographies de référence fournies par le porteur du projet. Les photographies originales ne sont pas redistribuées. Il s’agit d’une interprétation graphique sans valeur de plan. `assets/colbert-illustration.jpg.base64` contient le JPEG optimisé ; le générateur le décode pour le site.
+La géométrie est créée et revue indépendamment du site dans Blender, puis exportée en glTF 2.0 binaire (GLB). `model/build_colbert.py` conserve une source reproductible et `model/reference.json` distingue observations et estimations. Voir [la documentation de la maquette](model/README.md).
+
+Le modèle web `assets/models/villa-colbert.glb` est compressé avec Draco, regroupé par matériau (29 maillages, 137 656 triangles, 482 632 octets). L’accueil et `/residence/` chargent le même fichier, avec décodeurs locaux et cache versionné. Aucun appel à un CDN ni texture photographique. Le fichier WebP de secours est un rendu du même modèle, visible pendant le chargement et en cas d’échec de WebGL ; l’ancienne illustration indépendante n’est plus utilisée.
+
+Entrée **4 bis à gauche près des parkings**, entrée **4 à droite depuis la rue**. Deux garages à des niveaux différents, rampes, retour de façade, balcons de plan triangulaire, fenêtres/volets, attique, toiture et mobilier de rue sont représentés. Les cotes sont estimées d’après six vues de rue et une vue aérienne fournies le 7 octobre 2026. Les façades cachées ne sont pas complètement documentées : ce modèle n’est pas un relevé géométrique ni un plan d’architecte.
+
+La page agrandie propose les vues Ensemble, Façade, Parkings et Toiture, des repères d’entrée cliquables, le zoom et un téléchargement GLB. L’accueil démarre un lent va-et-vient de ±4,9° sur 32 secondes ; la page de détail démarre en pause. Les interactions restent possibles au clavier. Le rendu est plafonné à 30 images/s, à une densité de 2× et 2 300 pixels de largeur. Les ombres sont calculées une fois pour cette scène statique. Le rendu s’arrête hors écran ou dans un onglet masqué. La préférence de mouvement réduit désactive le mouvement automatique et les transitions de caméra.
+
+`npm run check` contrôle aussi le modèle : validation Khronos glTF, présence et ordre des quatre repères, intégrité binaire, absence de fichiers externes, compte de triangles et budget de poids/maillages. Le validateur ne décompresse pas Draco : le GLB maître non compressé est validé séparément, et le modèle compressé est chargé dans le navigateur.
 
 ## Confidentialité de l’annuaire
 
 Seuls les standards professionnels et les coordonnées de dépannage sont publics. L’espace résidents avec authentification individuelle reste une proposition ; aucun contact privé ne doit être placé dans le dépôt ou un fichier simplement masqué.
-
-La vue 3D affiche les volumes étagés, balcons de plan triangulaire et garde-corps, fenêtres avec détails de vitrage, deux entrées de parking sur la gauche, pavage et végétation. Les matières et feuillages sont générés localement ; les géométries sont regroupées et les feuilles instanciées pour limiter les appels de dessin. Le rendu utilise un canevas transparent et une résolution adaptée à l’écran (jusqu’à 2,5×, largeur plafonnée à 1 800 pixels).
-
-La scène se tourne par glissement, par les boutons ou avec les flèches du clavier ; « Recentrer la vue » rétablit l’angle initial. Un lent va-et-vient automatique de ±7° effectue un cycle en 28 secondes, avec une cadence plafonnée à 30 images/seconde. Le bouton Pause/Animer permet de le suspendre ; une interaction manuelle suspend le mouvement pendant 6 secondes. La scène s’arrête hors écran ou dans un onglet masqué. La préférence de mouvement réduit désactive la rotation automatique et l’interpolation. L’image reste présente jusqu’au premier rendu et revient si WebGL échoue ; il n’y a plus de sélecteur 2D/3D.
-
-Vérifications de cette évolution : affichage automatique et commandes, largeur mobile 390 px, absence de débordement, mouvement réduit simulé, WebGL indisponible et événement de perte de contexte simulés, compilation et contrôle des 30 pages / 1 202 liens.
 
 ## Contrats et groupes WhatsApp
 
 La page `/entretien/` détaille 17 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources et points à confirmer. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
 
 La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Un QR d’invitation historique a été retrouvé dans deux variantes d’octobre 2025. Sa validité et le contrôle des admissions restent à vérifier ; il n’est pas publié. Aucun faux QR code ou lien d’invitation ouvert n’est publié.
-
-La maquette a été rapprochée des photographies de rue : proportions de la longue façade, teintes ivoire et saumon, balcons triangulaires, deux entrées de parking à des niveaux différents, abri de bus, lampadaire et bornes. Les éléments non mesurables sur les deux vues restent une interprétation.
 
 Validation de l’ajout contrats et WhatsApp : compilation, contrôle de 32 pages et 1 413 liens locaux, correspondances des 17 synthèses avec les fiches et contacts, recherche « ampoule », ouverture des détails du contrat et lecture mobile à 390 px sans débordement. Les QR codes restent en attente des liens vérifiés.
 
@@ -87,3 +87,5 @@ Juin 2025, février 2025 V5 et octobre 2026 V8 restent signalés comme versions 
 Vérification de cette évolution : compilation et contrôle des 58 pages et 2 539 liens locaux ; recherche « Electromob » retrouvant les numéros et les fiches associées ; lecture à 390 px sans débordement ; ordre des étapes du prix de l’eau contrôlé de 2026 à 2012. Les 24 numéros ont des pages distinctes et des références de source.
 
 Contrôle de cette archive : 30 PDF, 36 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
+
+Validation de la maquette autonome du 7 octobre : 59 pages HTML et 2 833 liens locaux contrôlés ; modèle maître et modèle web validés ; rendu Chrome avec 30 appels de dessin, presets et repères d’entrée ; rotation et pause ; vue mobile 390 px sans débordement ; simulations de mouvement réduit, WebGL indisponible et perte de contexte avec secours visible. Les valeurs de fidélité restent estimées d’après les photographies.

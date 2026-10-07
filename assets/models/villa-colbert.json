@@ -1,0 +1,40 @@
+{
+  "revision": "2026-10-07",
+  "counts": {
+    "windows": 93,
+    "triangular_balconies": 50,
+    "entrances": 2,
+    "garage_doors": 2
+  },
+  "balconyEvidence": {
+    "streetAndLeft": 30,
+    "rearEstimated": 20
+  },
+  "objects": 33,
+  "triangles": 137656,
+  "webBytes": 482632,
+  "masterBytes": 4105204,
+  "units": "photo-estimated metres, not surveyed",
+  "landmarks": {
+    "4bis": [
+      -20,
+      1.35,
+      0.3
+    ],
+    "4": [
+      9,
+      1.35,
+      0.3
+    ],
+    "parkingBas": [
+      -31.15,
+      -0.35,
+      2.3
+    ],
+    "parkingHaut": [
+      -25.7,
+      1.5,
+      2.3
+    ]
+  }
+}
