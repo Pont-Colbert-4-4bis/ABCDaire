@@ -344,8 +344,8 @@ export const decisions = [
     "id": "recharge",
     "title": "Recharge des véhicules électriques",
     "page": "recharge-vehicules-electriques",
-    "current": "Une infrastructure a été votée en 2024 ; sa mise en service reste à confirmer",
-    "status": "Projet voté",
+    "current": "Infrastructure votée en 2024 ; huit bornes installées en janvier 2025 selon Le Petit Colbert",
+    "status": "Réalisation rapportée",
     "steps": [
       [
         "28 septembre 2020 · résolution 27",
@@ -382,9 +382,15 @@ export const decisions = [
         "Adoptée",
         "La proposition Electro-Mob d’infrastructure est votée pour un budget de 7 950,17 € TTC. Le PV prévoit un financement par le fonds travaux et un échéancier en juillet et octobre.",
         "PV du 28 juin 2024, résolution 16, p. 25 du PDF."
+      ],
+      [
+        "20 janvier 2025 · information du journal",
+        "Installation rapportée",
+        "Le Petit Colbert de février 2025 (V5) annonce que l’installation de huit bornes par Electromob s’est terminée le 20 janvier 2025. Ce compte rendu complète le vote de 2024, sans se substituer à une réception technique.",
+        "Le Petit Colbert de février 2025, V5, transmis le 18 février 2025."
       ]
     ],
-    "limit": "Confirmer auprès du syndic l’opérateur effectivement engagé, la convention signée, la réception et les modalités de raccordement. Un vote ne prouve pas qu’une borne ou un abonnement est disponible."
+    "limit": "L’installation est rapportée dans le journal. La convention signée, la réception, le rôle actuel de l’opérateur, la maintenance et les modalités de raccordement individuel restent à confirmer auprès du syndic."
   },
   {
     "id": "vide-ordures",
