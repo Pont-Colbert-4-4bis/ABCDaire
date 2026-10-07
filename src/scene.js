@@ -50,10 +50,10 @@ export async function mountScene(onFailure=()=>{}) {
   // Hero keeps normal vertical page scrolling. The enlarged viewer owns both axes.
   renderer.domElement.style.touchAction=detailed?'none':'pan-y';
   const presets={
-   overview:{target:[-5,7.4,-.2],theta:-.49,phi:1.3,width:65,height:28},
+   overview:{target:[-5,5.2,-.2],theta:-.49,phi:1.3,fitModel:true},
    facade:{target:[-2,8.2,.3],theta:0,phi:1.52,width:63,height:24},
    parkings:{target:[-27.1,3.9,1.5],theta:-.52,phi:1.2,width:26,height:21},
-   roof:{target:[-3,7.3,-5],theta:-.45,phi:.37,width:62,height:39},
+   roof:{target:[-3,7.3,-5],theta:-.45,phi:.37,fitModel:true},
    '4bis':{target:[-21.5,3.6,1.7],theta:-.35,phi:1.36,width:17,height:15},
    '4':{target:[9,3.9,1.7],theta:-.24,phi:1.40,width:15,height:15}
   };
@@ -61,7 +61,27 @@ export async function mountScene(onFailure=()=>{}) {
   const captureOrbit=()=>{spherical.setFromVector3(camera.position.clone().sub(controls.target));baseTheta=spherical.theta;basePhi=spherical.phi;baseRadius=spherical.radius;phase=0;};
   const updateMotion=()=>{host.dataset.motion=reduced.matches?'reduced':paused?'paused':'playing';if(motion){motion.hidden=reduced.matches;motion.textContent=paused?'Animer':'Pause';motion.setAttribute('aria-label',paused?'Animer lentement la maquette':'Mettre la rotation en pause');motion.setAttribute('aria-pressed',String(!paused));}};
   const updatePresets=()=>presetButtons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sceneView===activePreset)));
-  const fittedDistance=p=>Math.max(p.height,p.width/camera.aspect)/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)))*1.04;
+  model.updateMatrixWorld(true);
+  const fittedDistance=p=>{
+   const tangent=Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+   if(!p.fitModel)return Math.max(p.height,p.width/camera.aspect)/(2*tangent)*1.04;
+   // Fit the actual architecture in camera space, including the low garage.
+   // A global bounding box invents tall corners over the road and zooms out too far.
+   const right=new THREE.Vector3(Math.cos(p.theta),0,-Math.sin(p.theta));
+   const up=new THREE.Vector3(-Math.sin(p.theta)*Math.cos(p.phi),Math.sin(p.phi),-Math.cos(p.theta)*Math.cos(p.phi));
+   const backward=new THREE.Vector3().setFromSphericalCoords(1,p.phi,p.theta);
+   const target=new THREE.Vector3(...p.target),delta=new THREE.Vector3();let distance=0;
+   model.traverse(object=>{
+    if(!object.isMesh)return;const positions=object.geometry.getAttribute('position');
+    for(let i=0;i<positions.count;i++){
+     delta.fromBufferAttribute(positions,i).applyMatrix4(object.matrixWorld);
+     if(delta.z>8.5)continue; // The decorative road may extend beyond the view.
+     delta.sub(target);
+     distance=Math.max(distance,delta.dot(backward)+Math.max(Math.abs(delta.dot(right))/(tangent*camera.aspect),Math.abs(delta.dot(up))/tangent));
+    }
+   });
+   return distance*1.07;
+  };
   const view=(name,animate=true)=>{
    const p=presets[name]||presets.overview;activePreset=name;updatePresets();phase=0;
    const target=new THREE.Vector3(...p.target),position=target.clone().add(new THREE.Vector3().setFromSphericalCoords(fittedDistance(p),p.phi,p.theta));
