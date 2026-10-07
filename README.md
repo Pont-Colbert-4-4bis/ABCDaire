@@ -1,10 +1,10 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (97 étapes sourcées, AG 2012–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
+Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette Three.js détaillée affichée automatiquement, avec illustration de secours.
 
 ## Contenu éditorial
 
-Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs` et les contrats dans `content/maintenance.mjs`. Chaque fiche identifie ses sources et les points restant à confirmer. La publication d’une fiche ne vaut pas approbation du conseil syndical ni autorisation de travaux. Les informations non revalidées sont explicitement signalées.
+Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs`, les contrats dans `content/maintenance.mjs` et les synthèses du Petit Colbert dans `content/newsletters.mjs`. Chaque fiche identifie ses sources et les points restant à confirmer. La publication d’une fiche ne vaut pas approbation du conseil syndical ni autorisation de travaux. Les informations non revalidées sont explicitement signalées.
 
 Aucun email, compte rendu brut, contrat privé, donnée personnelle, code d’accès ou plan technique ne doit être ajouté au dépôt, aux tickets publics ou à l’index de recherche. Les sources privées restent dans leur stockage d’origine. Une correction concernant un dossier individuel se transmet par un canal privé.
 
@@ -21,7 +21,7 @@ npm run preview
 
 Aperçu : http://127.0.0.1:4173/ABCDaire/
 
-Le générateur produit des pages HTML autonomes dans `dist/`. Esbuild regroupe les styles, polices locales et scripts. Three.js est chargé séparément sur l’accueil ; le contenu reste accessible sans la 3D. Pagefind indexe les fiches, l’annuaire, les contrats et les synthèses des décisions. Aucun service d’analyse d’audience n’est ajouté.
+Le générateur produit des pages HTML autonomes dans `dist/`. Esbuild regroupe les styles, polices locales et scripts. Three.js est chargé séparément sur l’accueil ; le contenu reste accessible sans la 3D. Pagefind indexe les fiches, l’annuaire, les contrats, les synthèses des décisions et les archives du Petit Colbert. Aucun service d’analyse d’audience n’est ajouté.
 
 ## Publication
 
@@ -66,8 +66,20 @@ Validation de l’ajout contrats et WhatsApp : compilation, contrôle de 32 page
 
 Les PV de 2012 à 2026 ont été rapprochés par sujet. Chaque étape distingue le vote, le rejet, le report, l’information et l’approbation des comptes, avec la référence de résolution ; les nouvelles lectures indiquent aussi la page du PDF. L’archive 2017 consultée est incomplète et seules les décisions entièrement lisibles sont reprises. Un document classé dans les archives mais concernant une autre copropriété a été écarté. Cette sélection éditoriale ne prétend pas restituer toutes les résolutions.
 
-Une fiche Recharge des véhicules électriques retrace les projets successifs. Elle ne présente aucun opérateur comme actuellement en service sans convention et réception vérifiées. L’ambiguïté du DTG 2025 et la divergence avec la formulation de 2023 restent visibles.
+Une fiche Recharge des véhicules électriques retrace les projets successifs. Le Petit Colbert de février 2025 (V5) rapporte l’installation de huit bornes par Electromob le 20 janvier 2025. Cette réalisation rapportée est distinguée de la réception technique et de la vérification de l’exploitation actuelle. L’ambiguïté du DTG 2025 et la divergence avec la formulation de 2023 restent visibles.
 
 Les interlocuteurs de chaque fiche sont affichés à droite sur grand écran et avant le contenu sur mobile. Leurs coordonnées proviennent du même annuaire, pour éviter les copies divergentes. Le logo vectoriel et le favicon partagent une silhouette architecturale simplifiée.
 
 Validation du 7 octobre : compilation et contrôle de 33 pages / 1 599 liens locaux, 28 historiques rattachés à une fiche et 97 références présentes, contacts visibles sur ordinateur et au début des fiches à 390 px sans débordement, recherche « indemnisation » retrouvant la fiche chauffage et l’historique général.
+
+## Archives du Petit Colbert
+
+La rubrique `/petit-colbert/` rassemble 24 éditions ou projets retrouvés, de février 2020 à octobre 2026, du plus récent au plus ancien. Chaque numéro dispose d’une synthèse HTML recherchable, d’une indication de source/version, de liens vers les fiches actuelles et d’une navigation vers les numéros voisins. Les fiches renvoient aux numéros qui les concernent. Le menu global, l’accueil et le pied de page donnent accès aux archives.
+
+Les originaux ne sont pas redistribués. Les coordonnées personnelles, situations individuelles, plaques d’immatriculation et procédures d’accès restent privées. Les annonces ne sont pas transformées en réalisations, et la présence d’un document n’atteste pas son affichage. Juin 2025, février 2025 V5 et octobre 2026 V8 restent signalés comme versions de travail. Décembre 2024 est évoqué par les échanges, mais le document reste à retrouver.
+
+Corrections conservées : janvier 2025 comporte une coquille « 2024 » dans l’affiche source ; mai 2026 diverge entre 4 et 4 bis pour le remplacement d’un variateur d’ascenseur ; octobre 2025 comporte plusieurs variantes non départagées. Le journal de février 2025 complète l’historique de recharge avec une installation rapportée le 20 janvier 2025.
+
+À la demande de Philippe, les étapes de chaque historique d’AG sont désormais présentées par date décroissante, dans la page générale et les fiches. Les résolutions d’une même date conservent leur ordre de lecture.
+
+Vérification de cette évolution : compilation et contrôle des 58 pages et 2 539 liens locaux ; recherche « Electromob » retrouvant les numéros et les fiches associées ; lecture à 390 px sans débordement ; ordre des étapes du prix de l’eau contrôlé de 2026 à 2012. Les 24 numéros ont des pages distinctes et des références de source.
