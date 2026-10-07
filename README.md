@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette GLB autonome affichée avec Three.js sur l’accueil et dans la page « La résidence en 3D ».
+Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette 3D interactive (Three.js) sur l’accueil et dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 
@@ -21,7 +21,7 @@ npm run preview
 
 Aperçu : http://127.0.0.1:4173/ABCDaire/
 
-Le générateur produit des pages HTML autonomes dans `dist/`. Esbuild regroupe les styles, polices locales et scripts. Three.js est chargé séparément sur l’accueil ; le contenu reste accessible sans la 3D. Pagefind indexe les fiches, l’annuaire, les contrats, les synthèses des décisions et les archives du Petit Colbert. Aucun service d’analyse d’audience n’est ajouté.
+Le générateur produit des pages HTML autonomes dans `dist/`. Esbuild regroupe les styles, polices locales et scripts. La maquette 3D est une petite page à part (`dist/maquette/`, Three.js regroupé localement) affichée dans un cadre sur l’accueil et dans `/residence/` ; le contenu reste accessible sans la 3D. Pagefind indexe les fiches, l’annuaire, les contrats, les synthèses des décisions et les archives du Petit Colbert. Aucun service d’analyse d’audience n’est ajouté.
 
 ## Publication
 
@@ -38,17 +38,19 @@ Site : https://pont-colbert-4-4bis.github.io/ABCDaire/
 
 Les composants tiers conservent leurs licences respectives. Seules les copies publiques contrôlées du Petit Colbert sont distribuées ; les originaux restent privés.
 
-## Maquette 3D autonome
+## Maquette 3D
 
-La géométrie est créée et revue indépendamment du site dans Blender, puis exportée en glTF 2.0 binaire (GLB). `model/build_colbert.py` conserve une source reproductible et `model/reference.json` distingue observations et estimations. Voir [la documentation de la maquette](model/README.md).
+La maquette est construite par le code, dans le navigateur, à partir de `src/maquette/` : `maquette.js` produit le bâtiment, les parkings, les entrées 4 et 4 bis, les abords, les bâtiments voisins, le terrain et les bois ; `strings.mjs` contient les textes (français pour le guide, anglais pour la copie autonome) ; `markup.mjs` et `maquette.css` l’interface. `scripts/build.mjs` la compile avec esbuild dans `dist/maquette/`, sans CDN ni texture photographique. L’accueil l’affiche en cadre compact (`?mode=hero`, sans zoom à la molette pour laisser défiler la page) et `/residence/` en grand (`?mode=explore`). Voir [la documentation de la maquette](model/README.md) et `model/reference.json` pour la provenance, les estimations et les limites.
 
-Le modèle web `assets/models/villa-colbert.glb` est compressé avec Draco, regroupé par matériau (29 maillages, 137 656 triangles, 482 632 octets). L’accueil et `/residence/` chargent le même fichier, avec décodeurs locaux et cache versionné. Aucun appel à un CDN ni texture photographique. Le fichier WebP de secours est un rendu du même modèle, visible pendant le chargement et en cas d’échec de WebGL ; l’ancienne illustration indépendante n’est plus utilisée.
+Entrée **4 bis à gauche près des parkings** : une allée longe le pignon entre l’accès haut des parkings et le bâtiment, avec une jardinière le long du mur ; la porte s’ouvre sur la droite, au bout de l’allée, sous la terrasse. Entrée **4 à droite depuis la rue** : escalier de huit marches, porte vitrée et renfoncement planté. Les deux accès aux parkings (rampe descendante et accès plus haut), le terrain qui monte derrière l’immeuble et la pelouse de l’autre côté de la rue sont représentés. Les cotes sont estimées d’après les vues de rue, une vue aérienne et les précisions de résidents : ce modèle n’est pas un relevé ni un plan d’architecte.
 
-Entrée **4 bis à gauche près des parkings**, entrée **4 à droite depuis la rue**. Deux garages à des niveaux différents, rampes, retour de façade, balcons de plan triangulaire, fenêtres/volets, attique, toiture et mobilier de rue sont représentés. Les cotes sont estimées d’après six vues de rue et une vue aérienne fournies le 7 octobre 2026. Les façades cachées ne sont pas complètement documentées : ce modèle n’est pas un relevé géométrique ni un plan d’architecte.
+Commandes : six points de vue (façade sur rue, côté nord-ouest, angle sud-est, parkings & 4 bis, côté jardin, vue aérienne), repères cliquables des entrées 4 bis et 4, étages et dimensions, saisons (hiver, équinoxe, été) et curseur Soleil. La course du soleil est calculée pour Versailles, façade sur rue orientée au nord-est (42,5°).
 
-La page agrandie propose les vues Ensemble, Façade, Parkings et Toiture, des repères d’entrée cliquables, le zoom et un téléchargement GLB. L’accueil démarre un lent va-et-vient de ±4,9° sur 32 secondes ; la page de détail démarre en pause. Les interactions restent possibles au clavier. Le rendu est plafonné à 30 images/s, à une densité de 2× et 2 300 pixels de largeur. Les ombres sont calculées une fois pour cette scène statique. Le rendu s’arrête hors écran ou dans un onglet masqué. La préférence de mouvement réduit désactive le mouvement automatique et les transitions de caméra.
+Animation par défaut : une visite lente en va-et-vient devant la résidence, entière et centrée, de l’angle nord-ouest (vue 2) à la façade (vue 1), puis à l’angle sud-est (vue 3), retour à la façade, puis à l’angle nord-ouest, et ainsi de suite (18 s d’une vue à l’autre), pendant que la journée défile. Tout geste du visiteur — glisser, zoomer, choisir une vue ou une entrée, régler le soleil — suspend la visite pendant une minute ; elle reprend ensuite depuis la vue la plus proche. Le bouton Visite la relance aussitôt ou l’arrête, le bouton Journée arrête ou relance le soleil. La préférence « mouvement réduit » désactive le mouvement automatique et les transitions.
 
-`npm run check` contrôle aussi le modèle : validation Khronos glTF, présence et ordre des quatre repères, intégrité binaire, absence de fichiers externes, compte de triangles et budget de poids/maillages. Le validateur ne décompresse pas Draco : le GLB maître non compressé est validé séparément, et le modèle compressé est chargé dans le navigateur.
+Rendu : image recalculée seulement quand quelque chose bouge, 30 images/s au plus dans le guide, ombres recalculées seulement quand le soleil bouge, pause hors écran. Le cadre reste transparent jusqu’à la première image ; si WebGL est indisponible, un message remplace les commandes.
+
+`npm run check` contrôle les pages et liens du site ; la page `dist/maquette/` est exclue du contrôle de la recherche globale. Le rendu et les commandes se vérifient dans le navigateur (`npm run preview`, puis `/ABCDaire/maquette/?mode=explore`).
 
 ## Confidentialité de l’annuaire
 
@@ -88,4 +90,4 @@ Vérification de cette évolution : compilation et contrôle des 58 pages et 2 5
 
 Contrôle de cette archive : 30 PDF, 36 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
 
-Validation de la maquette autonome du 7 octobre : 59 pages HTML et 2 833 liens locaux contrôlés ; modèle maître et modèle web validés ; rendu Chrome avec 30 appels de dessin, presets et repères d’entrée ; rotation et pause ; vue mobile 390 px sans débordement ; simulations de mouvement réduit, WebGL indisponible et perte de contexte avec secours visible. Les valeurs de fidélité restent estimées d’après les photographies.
+Validation de la maquette du 7 octobre (version Three.js) : compilation et contrôle de 60 pages HTML et 2 834 liens locaux ; rendu Chromium (WebGL logiciel) de l’accueil, de `/residence/`, des vues rapprochées des entrées 4 et 4 bis et de l’accueil à 390 px ; visite entre les vues 2, 1 et 3 avec la journée, arrêt après un geste et reprise une minute plus tard, boutons Visite et Journée. Les cotes restent estimées d’après les photographies et les indications de résidents.

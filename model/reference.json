@@ -1,30 +1,44 @@
 {
-  "name": "Villa Colbert — reconstruction photographique",
+  "name": "Villa Colbert — maquette 3D procedurale (Three.js)",
   "revision": "2026-10-07",
-  "coordinateSystem": "glTF: X vers la droite depuis la rue, Y hauteur, Z vers la rue",
+  "source": "src/maquette/maquette.js",
+  "coordinateSystem": "Origine a l'angle est de la barre (facade sur rue x pignon sud-est), au niveau du trottoir; X le long de la facade sur rue vers le nord-ouest, Z vers la rue (nord-est), Y hauteur",
   "unit": "metre, echelle provisoire non mesuree",
+  "orientation": "facade sur rue orientee au nord-est (42,5 degres); soleil calcule pour Versailles, 48,797 N, 2,143 E",
   "observations": [
     "Entree 4 bis a gauche, pres des parkings; entree 4 a droite (confirmation de Philippe).",
-    "Deux portes de parking separees a gauche: une rampe descendante et un acces plus haut.",
-    "Rez-de-chaussee, cinq niveaux courants et dernier niveau en retrait.",
-    "Quatre piles de balcons sur la longue facade, deux sur les retours gauches visibles; plans triangulaires, garde-corps pleins et metalliques.",
-    "Enduit clair, panneaux saumon, fenetres a cadres clairs, volets de positions variees.",
-    "Aile en retour cote parkings et empreinte en decroche visible dans la vue aerienne.",
-    "Deux noyaux techniques en toiture, acroteres, terrasses en retrait, antenne.",
-    "Haies dans des jardinieres basses, passages d'entree, marches, abri de bus, deux arbres de rue, potelets, lampadaire et parcometre."
+    "Deux acces separes aux parkings sur la rue: une rampe descendante vers le niveau bas et une rampe montante vers le niveau haut, sous une terrasse.",
+    "Allee du 4 bis entre la rampe montante et le pignon, avec une jardiniere le long du mur; la porte du 4 bis est au bout de l'allee, sur la droite, et non face a l'allee (precision de residents).",
+    "Entree 4: escalier d'environ huit marches, porte vitree, renfoncement orange plante sous les balcons, jardinieres surelevees (photographie de residents).",
+    "Rez-de-chaussee sureleve, cinq niveaux courants et attique en retrait; aile en retour cote jardin au sud-est.",
+    "Balcons de plan triangulaire, garde-corps pleins et metalliques; enduit clair, panneaux orange, fenetres a cadres clairs.",
+    "Terrain montant regulierement derriere l'immeuble jusqu'aux bois, sans creux (precision de residents).",
+    "De l'autre cote de la rue: pelouse, sans parking ni batiment represente (demande de residents).",
+    "Voisins: immeuble en meuliere au sud-est, batiment blanc avec cage d'escalier vitree au nord-ouest.",
+    "Haies dans des jardinieres basses, abri de bus, arbres de rue, lampadaires et potelets."
   ],
   "estimates": {
-    "mainFacadeWidth": 44.4,
-    "mainDepth": 10.9,
-    "leftReturnDepth": 18.0,
-    "floorHeight": 2.62,
-    "mainCorniceHeight": 15.8,
-    "atticRoofHeight": 18.05
+    "mainFacadeWidth": 52.7,
+    "mainDepth": 12.4,
+    "wingWidth": 14.8,
+    "wingDepth": 12.0,
+    "depthWithWing": 24.4,
+    "groundFloorAbovePavement": 1.4,
+    "floorHeight": 2.75,
+    "slabRoofHeight": 17.9,
+    "atticRoofHeight": 20.65,
+    "atticSetbackFromStreet": 2.0,
+    "entrance4Steps": 8,
+    "walkway4bisWidth": 1.05,
+    "walkway4bisLandingHeight": 0.3,
+    "lowerParkingLevel": -2.45,
+    "upperParkingLevel": 0.35,
+    "terraceTop": 3.7
   },
   "limits": [
     "Pas de releve metrique ni plan d'architecte fourni: cotes, pentes et profondeur des balcons estimees.",
-    "Facade arriere et details de toiture partiellement caches: volumes reconstitues a partir de la vue aerienne, ouvertures arriere non inventoriees.",
-    "Mobilier et vegetation representes a la date des photos; personnes, vehicules, plaques et contenu des affiches exclus.",
+    "Cote jardin, aile et toiture partiellement caches: volumes reconstitues a partir de la vue aerienne, balcons et ouvertures extrapoles, non inventories.",
+    "Arbres, haies, voisins et vehicules simplifies; personnes, plaques et contenu des affiches exclus.",
     "Les captures de reference restent hors du depot public; aucune photographie n'est utilisee comme texture."
   ]
 }
