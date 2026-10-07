@@ -4,7 +4,7 @@ Guide public de la résidence à Versailles. Édition pilote actualisée le 7 oc
 
 ## Contenu éditorial
 
-Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs`, les contrats dans `content/maintenance.mjs` et les synthèses du Petit Colbert dans `content/newsletters.mjs`. Chaque fiche identifie ses sources et les points restant à confirmer. La publication d’une fiche ne vaut pas approbation du conseil syndical ni autorisation de travaux. Les informations non revalidées sont explicitement signalées.
+Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs`, les contrats dans `content/maintenance.mjs` et le catalogue du Petit Colbert dans `content/newsletters.mjs` et ses pages publiques dans `content/facsimiles.json`. Chaque fiche identifie ses sources et les points restant à confirmer. La publication d’une fiche ne vaut pas approbation du conseil syndical ni autorisation de travaux. Les informations non revalidées sont explicitement signalées.
 
 Aucun email, compte rendu brut, contrat privé, donnée personnelle, code d’accès ou plan technique ne doit être ajouté au dépôt, aux tickets publics ou à l’index de recherche. Les sources privées restent dans leur stockage d’origine. Une correction concernant un dossier individuel se transmet par un canal privé.
 
@@ -36,7 +36,7 @@ Site : https://pont-colbert-4-4bis.github.io/ABCDaire/
 - Vérifier les liens, la recherche, la navigation clavier et l’affichage mobile.
 - Garder les contenus privés hors du HTML, des métadonnées, des scripts et de l’index.
 
-Les composants tiers conservent leurs licences respectives. Les documents d’archives ne sont pas redistribués.
+Les composants tiers conservent leurs licences respectives. Seules les copies publiques contrôlées du Petit Colbert sont distribuées ; les originaux restent privés.
 
 ## Maquette et illustration de secours
 
@@ -56,7 +56,7 @@ Vérifications de cette évolution : affichage automatique et commandes, largeur
 
 La page `/entretien/` détaille 17 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources et points à confirmer. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
 
-La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Les liens d’adhésion n’ont pas été retrouvés dans les sources consultées : les QR codes restent à ajouter après réception des liens et confirmation du contrôle des admissions par les administrateurs. Aucun faux QR code ou lien d’invitation ouvert n’est publié.
+La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Un QR d’invitation historique a été retrouvé dans deux variantes d’octobre 2025. Sa validité et le contrôle des admissions restent à vérifier ; il n’est pas publié. Aucun faux QR code ou lien d’invitation ouvert n’est publié.
 
 La maquette a été rapprochée des photographies de rue : proportions de la longue façade, teintes ivoire et saumon, balcons triangulaires, deux entrées de parking à des niveaux différents, abri de bus, lampadaire et bornes. Les éléments non mesurables sur les deux vues restent une interprétation.
 
@@ -74,12 +74,16 @@ Validation du 7 octobre : compilation et contrôle de 33 pages / 1 599 liens loc
 
 ## Archives du Petit Colbert
 
-La rubrique `/petit-colbert/` rassemble 24 éditions ou projets retrouvés, de février 2020 à octobre 2026, du plus récent au plus ancien. Chaque numéro dispose d’une synthèse HTML recherchable, d’une indication de source/version, de liens vers les fiches actuelles et d’une navigation vers les numéros voisins. Les fiches renvoient aux numéros qui les concernent. Le menu global, l’accueil et le pied de page donnent accès aux archives.
+La rubrique `/petit-colbert/` rassemble 24 éditions ou projets retrouvés, de février 2020 à octobre 2026, du plus récent au plus ancien. Les synthèses ont été remplacées par les pages des documents, avec leur mise en page et leurs illustrations, avec remplacement des noms par une désignation générique, sans suppression des sections. Les 30 PDF (variantes comprises) et 36 images WebP se trouvent dans `assets/petit-colbert/`. Chaque édition propose la lecture des pages, leur agrandissement, le téléchargement du PDF, les autres variantes, le texte intégral de la copie publique pour la recherche et des liens vers les fiches actuelles.
 
-Les originaux ne sont pas redistribués. Les coordonnées personnelles, situations individuelles, plaques d’immatriculation et procédures d’accès restent privées. Les annonces ne sont pas transformées en réalisations, et la présence d’un document n’atteste pas son affichage. Juin 2025, février 2025 V5 et octobre 2026 V8 restent signalés comme versions de travail. Décembre 2024 est évoqué par les échanges, mais le document reste à retrouver.
+Les identités sont remplacées dans les PDF eux-mêmes : « membre du CS » pour les membres du conseil syndical, fonction ou mention anonyme pour les autres personnes. Les sections, les phrases et les consignes sont conservées. Les coordonnées privées et l’immatriculation sont masquées ; les QR d’invitation privés sont retirés. Les métadonnées nominatives, commentaires et pièces jointes ne sont pas conservés. Les images sont produites à partir des PDF anonymisés. Les transcriptions conservent l’ordre de lecture du texte d’origine et appliquent exactement les mêmes substitutions ; elles sont contrôlées avant publication. Les originaux et la liste privée des passages retirés restent hors Git. Les noms des entreprises sont conservés. Hors substitutions d’identités et de coordonnées, les formulations, coquilles et constats historiques ne sont pas réécrits.
 
-Corrections conservées : janvier 2025 comporte une coquille « 2024 » dans l’affiche source ; mai 2026 diverge entre 4 et 4 bis pour le remplacement d’un variateur d’ascenseur ; octobre 2025 comporte plusieurs variantes non départagées. Le journal de février 2025 complète l’historique de recharge avec une installation rapportée le 20 janvier 2025.
+Les documents Word sont convertis en PDF. Les variations de rendu liées aux polices et les défauts de présentation des sources sont possibles ; les pages et les transcriptions se complètent. Le fichier de juin 2023 comprend des notes préparatoires en pages 2–3, clairement signalées. Mai 2026 contient une illustration superposée à du texte dans le document Word révisé : ce défaut est signalé et le texte reste disponible. Les variantes d’octobre 2025 et décembre 2025 sont présentées séparément. Aucune version finale ou diffusion effective n’est inférée.
+
+Juin 2025, février 2025 V5 et octobre 2026 V8 restent signalés comme versions de travail. Décembre 2024 reste à retrouver. La coquille « janvier 2024 » de l’affiche classée janvier 2025 est conservée et expliquée. Mai 2026 diverge entre 4 et 4 bis pour le remplacement d’un variateur. Les annonces ne sont pas transformées en réalisations ou consignes actuelles.
 
 À la demande de Philippe, les étapes de chaque historique d’AG sont désormais présentées par date décroissante, dans la page générale et les fiches. Les résolutions d’une même date conservent leur ordre de lecture.
 
 Vérification de cette évolution : compilation et contrôle des 58 pages et 2 539 liens locaux ; recherche « Electromob » retrouvant les numéros et les fiches associées ; lecture à 390 px sans débordement ; ordre des étapes du prix de l’eau contrôlé de 2026 à 2012. Les 24 numéros ont des pages distinctes et des références de source.
+
+Contrôle de cette archive : 30 PDF, 36 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
