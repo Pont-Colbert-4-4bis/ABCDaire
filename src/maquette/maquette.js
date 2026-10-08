@@ -387,6 +387,8 @@ function makeMaterials() {
   M.garageDoorLow = std({ color: 0xc4c8cb, map: TEX.garageV, roughness: 0.5, metalness: 0.15 });
   M.railLight = std({ color: 0xf0eee8, roughness: 0.5, metalness: 0.1 });   // white-painted railings (photos)
   M.fence = std({ color: 0x8d9296, map: TEX.fence, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.6, metalness: 0.4 });
+  M.fenceGreen = std({ color: 0x3c6a46, map: TEX.fence, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.6, metalness: 0.2 });
+  M.railGreen = std({ color: 0x2e553a, roughness: 0.5, metalness: 0.3 });
   M.ramp = std({ color: 0xa39c92, map: TEX.asphalt, roughness: 0.95 });   // light grey asphalt (photo)
   M.paving = std({ color: 0x9c9890, map: TEX.concrete, roughness: 0.92 });
   M.stone = std({ color: 0xb09a86, map: TEX.concrete, roughness: 0.85 });
@@ -444,7 +446,7 @@ makeMaterials();
 // bags per material
 const BG = {};
 const bag = (k) => (BG[k] ||= new Bag());
-const SHADOWLESS = new Set(['glass', 'glassLit', 'curtain', 'curtainLit', 'frame', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
+const SHADOWLESS = new Set(['fenceGreen', 'glass', 'glassLit', 'curtain', 'curtainLit', 'frame', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
 function flushBags(group, receiveOnly = []) {
   for (const [k, b] of Object.entries(BG)) {
     if (!b.p.length) continue;
@@ -815,12 +817,37 @@ function insetPoly(pts, d) {
 // property fence along a polyline of [x, z]: posts at most 2.5 m apart, top rail, wire mesh; base(x, z) = ground
 const BACK_Z = -34.5;               // the back fence of the property, on the forest side: ~10 m behind the end of the wing
 const NW_WALL = [[52.95, -12.3], [56.1, BACK_Z]];   // boundary wall with the property to the west
+// Rue du Pont Colbert bends towards the forest past No. 6 (OpenStreetMap): straight along our façade
+// (centre z = 15) up to BEND_X, then a smooth curve (Catmull-Rom through the control points).
+const BEND_X = -16;
+const ROAD_CP = [[-6, 15], [-16, 15], [-26, 14.4], [-36, 10.6], [-48, 5.4], [-62, 0.8], [-80, -4.6], [-100, -10.2], [-130, -18.3], [-170, -29], [-215, -41]];
+function roadZ(x) {
+  if (x >= BEND_X) return 15;
+  const P = ROAD_CP; let i = 1;
+  while (i < P.length - 2 && x < P[i + 1][0]) i++;
+  const p0 = P[i - 1], p1 = P[i], p2 = P[i + 1], p3 = P[Math.min(P.length - 1, i + 2)];
+  const t = clamp((p1[0] - x) / (p1[0] - p2[0]), 0, 1.5), t2 = t * t, t3 = t2 * t;
+  return 0.5 * (2 * p1[1] + (p2[1] - p0[1]) * t + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * t2 + (3 * p1[1] - p0[1] - 3 * p2[1] + p3[1]) * t3);
+}
+// pavement on our side: 5 m along our building and No. 6, narrower past the forest entrance
+const paveW = (x) => lerp(5.01, 3.6, smooth(-52, -60, x));
+const paveD = (x) => -(5.15 + paveW(x));                 // offset of its back edge from the centreline
+function roadFrame(x) {   // centre, unit tangent (towards -x) and unit normal (towards the far side)
+  const tz = roadZ(x - 0.5) - roadZ(x + 0.5), l = Math.hypot(1, tz), T = [-1 / l, tz / l];
+  return { c: [x, roadZ(x)], T, N: [T[1], -T[0]] };
+}
+function roadPt(x, d) { const f = roadFrame(x); return [f.c[0] + f.N[0] * d, f.c[1] + f.N[1] * d]; }
+// signed distance from the centreline, measured square to the road (positive towards the far side)
+function roadOff(x, z) { const f = roadFrame(x); return (z - f.c[1]) * f.N[1]; }
+const backPt = (x, extra = 0) => roadPt(x, paveD(x) - extra);   // a point on (or behind) the back of our pavement
+const ENTRY_X = -49.5;                                   // the forest entrance, on the bend
+
 // Bois des Chantiers (forêt domaniale de Versailles). The forest entrance is beside No. 6: a path from the
 // street climbs to a junction where three forest roads start (OpenStreetMap); a fourth path runs right
 // behind our property along the back fence (residents).
 const FOREST_J = [-42.5, -37.5];
 const FOREST_PATHS = [
-  { w: 2.6, pts: [[-49.5, 4.9], [-46.0, -18.4], [-43.0, -33.4], FOREST_J] },                                          // entrance from the street
+  { w: 2.6, pts: [backPt(ENTRY_X, -0.1), [-46.0, -18.4], [-43.0, -33.4], FOREST_J] },                                 // entrance from the street
   { w: 3.2, pts: [FOREST_J, [-28.9, -73.2], [-11.1, -125.5], [15.6, -247.7], [23.6, -287.8]] },                       // Route de Sable
   { w: 3.2, pts: [FOREST_J, [-51.4, -67.2], [-55.2, -96.4], [-62.3, -137.0], [-67.9, -185.7], [-79.1, -284.4]] },      // Route du Petit Montreuil
   { w: 2.6, pts: [FOREST_J, [10.6, -42.3], [74.1, -70.1], [103.2, -75.7], [173.0, -103.6], [244.4, -116.3]] },        // track towards the north-west
@@ -858,17 +885,17 @@ function pathRibbon(pts, w, lift) {
     prev = cur;
   }
 }
-function fenceRun(pts, base, H = 1.35) {
+function fenceRun(pts, base, H = 1.35, mesh = 'fence', post = 'metal') {
   for (let i = 0; i < pts.length - 1; i++) {
     const [x0, z0] = pts[i], [x1, z1] = pts[i + 1], n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, z1 - z0) / 2.5));
     for (let j = 0; j <= n; j++) {
       const t = j / n, x = lerp(x0, x1, t), z = lerp(z0, z1, t), y = base(x, z);
-      if (j < n || i === pts.length - 2) bag('metal').cyl([x, y - 0.1, z], [x, y + H, z], 0.03, 0.03, 6, true);
+      if (j < n || i === pts.length - 2) bag(post).cyl([x, y - 0.1, z], [x, y + H, z], 0.03, 0.03, 6, true);
       if (j === n) continue;
       const t1 = (j + 1) / n, xb = lerp(x0, x1, t1), zb = lerp(z0, z1, t1), yb = base(xb, zb);
       const d = [xb - x, zb - z], l = Math.hypot(d[0], d[1]), nrm = [d[1] / l, 0, -d[0] / l];
-      bag('fence').quad([x, y + 0.04, z], [xb, yb + 0.04, zb], [xb, yb + H - 0.04, zb], [x, y + H - 0.04, z], nrm);
-      bag('metal').cyl([x, y + H - 0.03, z], [xb, yb + H - 0.03, zb], 0.014, 0.014, 4);
+      bag(mesh).quad([x, y + 0.04, z], [xb, yb + 0.04, zb], [xb, yb + H - 0.04, zb], [x, y + H - 0.04, z], nrm);
+      bag(post).cyl([x, y + H - 0.03, z], [xb, yb + H - 0.03, zb], 0.014, 0.014, 4);
     }
   }
 }
@@ -942,7 +969,7 @@ function buildSite(group) {
   // pavement on our side (grey) with the red-brown walkway band
   const pv = bag('pavement');
   pv.boxAB(-3.0, 0, 4.84, 220, SW_Y, 9.85, true);
-  pv.boxAB(-160, 0, 4.84, -15.8, SW_Y, 9.85, true);
+  pv.boxAB(BEND_X - 0.4, 0, 4.84, -15.8, SW_Y, 9.85, true);
   // red-brown paving around each street tree, from the kerb to the garden wall, narrowing towards the wall,
   // edged by a strip of cobbles; the rest of the pavement is grey (Street View, Feb 2026)
   const ry = SW_Y + 0.004;
@@ -952,20 +979,20 @@ function buildSite(group) {
     bag('cobble').segBox(k1, 9.85, w1, 4.84, ry, ry + 0.004, 0.32);
   }
   // cobbled gutter along the kerb
-  bag('cobble').boxAB(-160, 0, 10.05, 220, 0.012, 10.35, true);
+  bag('cobble').boxAB(BEND_X, 0, 10.05, 220, 0.012, 10.35, true);
   // cobbled vehicle crossing in front of the two ramps (between No. 6's gate and our corner planter)
   bag('cobble').boxAB(-15.8, 0, RAMP0, -3.0, SW_Y - 0.03, 9.85, true);
   // kerbs
-  bag('curb').boxAB(-160, 0, 9.85, 220, SW_Y + 0.01, 10.05, true);
-  bag('curb').boxAB(-160, 0, 19.95, 220, SW_Y + 0.01, 20.15, true);
+  bag('curb').boxAB(BEND_X, 0, 9.85, 220, SW_Y + 0.01, 10.05, true);
+  bag('curb').boxAB(BEND_X, 0, 19.95, 220, SW_Y + 0.01, 20.15, true);
   // road
-  bag('asphalt').quad([-200, 0, 10.05], [260, 0, 10.05], [260, 0, 19.95], [-200, 0, 19.95], [0, 1, 0]);
+  bag('asphalt').quad([BEND_X, 0, 10.05], [260, 0, 10.05], [260, 0, 19.95], [BEND_X, 0, 19.95], [0, 1, 0]);
   // far pavement
-  bag('pavement').boxAB(-160, 0, 20.15, 220, SW_Y, 24.2, true);
+  bag('pavement').boxAB(BEND_X, 0, 20.15, 220, SW_Y, 24.2, true);
   // markings: centre dashes, parking line, bus-stop zigzag
   const wm = bag('white');
-  for (let x = -196; x < 256; x += 6.5) wm.quad([x, 0.006, 14.94], [x + 3, 0.006, 14.94], [x + 3, 0.006, 15.08], [x, 0.006, 15.08], [0, 1, 0]);
-  wm.quad([-200, 0.006, 17.62], [260, 0.006, 17.62], [260, 0.006, 17.74], [-200, 0.006, 17.74], [0, 1, 0]);
+  for (let x = BEND_X + 0.5; x < 256; x += 6.5) wm.quad([x, 0.006, 14.94], [x + 3, 0.006, 14.94], [x + 3, 0.006, 15.08], [x, 0.006, 15.08], [0, 1, 0]);
+  wm.quad([BEND_X, 0.006, 17.62], [260, 0.006, 17.62], [260, 0.006, 17.74], [BEND_X, 0.006, 17.74], [0, 1, 0]);
   const yz = bag('yellow');
   const zig = [10.35, 11.9];
   for (let x = 11.5, i = 0; x < 26.5; x += 2.5, i++) {
@@ -1056,9 +1083,93 @@ function buildSite(group) {
     bag('concrete').segBox(ax, az, bx, bz, g - 0.4, g + 2.0, 0.25);
     bag('flashing').segBox(ax, az, bx, bz, g + 2.0, g + 2.06, 0.32);
   }
-  // the forest paths, and three wooden posts closing the entrance to cars at the street
+  // ---- the bend of the road past No. 6 (OpenStreetMap): carriageway, kerbs, pavements and markings
+  {
+    const S = [];
+    for (let x = BEND_X + 0.4; x > -159; x -= 0.8) S.push([x, roadZ(x)]);
+    const T = S.map((_, i) => { const a = S[Math.max(0, i - 1)], b = S[Math.min(S.length - 1, i + 1)], dx = b[0] - a[0], dz = b[1] - a[1], l = Math.hypot(dx, dz); return [dx / l, dz / l]; });
+    const P = (i, d) => [S[i][0] + T[i][1] * d, S[i][1] - T[i][0] * d];   // offset d towards the far side
+    let len = 0;
+    const _gc = new THREE.Color();
+    for (let i = 0; i + 1 < S.length; i++) {
+      const band = (mk, d0, d1, y, e0 = d0, e1 = d1) => {
+        const a0 = P(i, d0), b0 = P(i + 1, e0), b1 = P(i + 1, e1), a1 = P(i, d1);
+        bag(mk).quad([a0[0], y, a0[1]], [b0[0], y, b0[1]], [b1[0], y, b1[1]], [a1[0], y, a1[1]], [0, 1, 0]);
+      };
+      const face = (mk, d, y0, y1, side) => {
+        const a = P(i, d), b = P(i + 1, d);
+        bag(mk).quad([a[0], y0, a[1]], [b[0], y0, b[1]], [b[0], y1, b[1]], [a[0], y1, a[1]], [T[i][1] * side, 0, -T[i][0] * side]);
+      };
+      const x = S[i][0], pw = paveW(x), pw1 = paveW(S[i + 1][0]);
+      band('asphalt', -4.95, 4.95, 0);
+      band('curb', 4.95, 5.15, SW_Y + 0.01); face('curb', 4.95, 0, SW_Y + 0.01, -1);
+      band('pavement', 5.15, 9.2, SW_Y);
+      // our side, in front of No. 6: on-street parking in setts at road level along the kerb (Street View),
+      // then a red-brown pavement up to the wall; cobbled across the forest entrance; grey beyond it
+      const lane = x > -35;
+      const kd = lane ? -7.15 : -5.15;
+      if (lane) band('cobble', -6.95, -4.95, 0.014);
+      else band('cobble', -4.95, -4.65, 0.012);
+      band('curb', kd, kd + 0.2, SW_Y + 0.01); face('curb', kd + 0.2, 0, SW_Y + 0.01, 1);
+      const mk = x > ENTRY_X + 3.0 ? 'redway' : x > ENTRY_X - 3.0 ? 'cobble' : 'pavement';
+      band(mk, -5.15 - pw, kd, SW_Y, -5.15 - pw1, kd);
+      // verge behind the pavement (the terrain mesh is cut under the road): No. 6's raised garden behind its wall
+      const VD = [0, -0.4, -1.4, -3.2];
+      for (let k = 0; k + 1 < VD.length; k++) {
+        const q = (j, w, dd) => { const pp = P(j, -5.15 - w + dd); return [pp[0], groundH(pp[0], pp[1]) + 0.02, pp[1]]; };
+        const a0 = q(i, pw, VD[k]), b0 = q(i + 1, pw1, VD[k]), b1 = q(i + 1, pw1, VD[k + 1]), a1 = q(i, pw, VD[k + 1]);
+        bag('ground').quad(a0, b0, b1, a1, [0, 1, 0], groundCol((a0[0] + b1[0]) / 2, (a0[2] + b1[2]) / 2, _gc).toArray());
+      }
+      if (len % 6.5 < 3) band('white', -0.07, 0.07, 0.006);
+      band('white', 2.62, 2.74, 0.006);
+      len += Math.hypot(S[i + 1][0] - S[i][0], S[i + 1][1] - S[i][1]);
+    }
+  }
+  // ---- forest entrance: a light asphalt apron up from the cobbled crossing, a low wooden barrier, a lamp,
+  //      the ONF sign board and a recycling container (Street View)
+  {
+    const S0 = backPt(ENTRY_X), tgt = [-46.0, -18.4], dl = Math.hypot(tgt[0] - S0[0], tgt[1] - S0[1]);
+    const d = [(tgt[0] - S0[0]) / dl, (tgt[1] - S0[1]) / dl], r = [-d[1], d[0]];   // into the forest / to the right (No. 6)
+    const at = (u, v) => [S0[0] + d[0] * u + r[0] * v, S0[1] + d[1] * u + r[1] * v];
+    for (let u = 0; u < 8; u += 1) {
+      const w0 = lerp(2.9, 1.5, u / 8), w1 = lerp(2.9, 1.5, (u + 1) / 8);
+      const a0 = at(u, -w0), a1 = at(u, w0), b1 = at(u + 1, w1), b0 = at(u + 1, -w1), Y = (q) => [q[0], groundH(q[0], q[1]) + 0.07, q[1]];
+      bag('ramp').quad(Y(a0), Y(a1), Y(b1), Y(b0), [0, 1, 0]);
+    }
+    const post = (q, h, rad = 0.08) => { const y = groundH(q[0], q[1]); bag('bark').cyl([q[0], y - 0.1, q[1]], [q[0], y + h, q[1]], rad, rad * 0.9, 8, true); return y; };
+    // low wooden barrier across most of the path, a gap left for walkers
+    const p0 = at(8.6, 1.3), p1 = at(8.6, -0.5), y0 = post(p0, 0.75), y1 = post(p1, 0.75);
+    bag('bark').cyl([p0[0], y0 + 0.6, p0[1]], [p1[0], y1 + 0.6, p1[1]], 0.07, 0.07, 6);
+    // lamp post on the left, sign board on its post further up
+    const lq = at(2.5, -3.6), ly = groundH(lq[0], lq[1]);
+    bag('brown').cyl([lq[0], ly, lq[1]], [lq[0], ly + 3.6, lq[1]], 0.06, 0.045, 8);
+    bag('lampHead').cyl([lq[0], ly + 3.55, lq[1]], [lq[0], ly + 3.85, lq[1]], 0.16, 0.09, 10, true);
+    const sq = at(6.5, -2.8), sy = post(sq, 2.0, 0.07), sb0 = at(6.5, -3.2), sb1 = at(6.5, -2.4);
+    bag('brown').segBox(sb0[0], sb0[1], sb1[0], sb1[1], sy + 1.25, sy + 1.95, 0.06);
+    // recycling container on the pavement, left of the entrance
+    const c0 = roadPt(ENTRY_X - 5.2, paveD(ENTRY_X - 5.2) + 1.0), c1 = roadPt(ENTRY_X - 3.8, paveD(ENTRY_X - 3.8) + 1.0);
+    bag('metal').segBox(c0[0], c0[1], c1[0], c1[1], SW_Y, SW_Y + 1.55, 1.2);
+    bag('metal').segBox(c0[0], c0[1], c1[0], c1[1], SW_Y + 1.55, SW_Y + 1.7, 1.0, -0.1);
+    // a lamp post in front of No. 6, behind the parking lane, its arm over the road
+    {
+      const f = roadFrame(-31), b = roadPt(-31, -7.55), N = f.N;
+      bag('brown').cyl([b[0], SW_Y, b[1]], [b[0], 7.9, b[1]], 0.09, 0.055, 8);
+      bag('brown').cyl([b[0], 7.9, b[1]], [b[0] + N[0] * 0.35, 8.25, b[1] + N[1] * 0.35], 0.055, 0.05, 6);
+      bag('brown').cyl([b[0] + N[0] * 0.35, 8.25, b[1] + N[1] * 0.35], [b[0] + N[0] * 1.3, 8.3, b[1] + N[1] * 1.3], 0.05, 0.045, 6);
+      bag('lampHead').cyl([b[0] + N[0] * 1.45, 8.12, b[1] + N[1] * 1.45], [b[0] + N[0] * 1.45, 8.32, b[1] + N[1] * 1.45], 0.32, 0.12, 12, true);
+    }
+    // a small tree in a granite bed on the pavement, against No. 6's wall near the entrance
+    {
+      const f = roadFrame(-43.6), c = roadPt(-43.6, paveD(-43.6) + 0.8), T = f.T, N = f.N;
+      const cr = (u, v) => [c[0] + T[0] * u + N[0] * v, c[1] + T[1] * u + N[1] * v];
+      const ring = [cr(-1.2, -0.55), cr(1.2, -0.55), cr(1.2, 0.55), cr(-1.2, 0.55)];
+      for (let k = 0; k < 4; k++) { const a = ring[k], b = ring[(k + 1) % 4]; bag('granite').segBox(a[0], a[1], b[0], b[1], SW_Y - 0.02, SW_Y + 0.3, 0.24, 0.12); }
+      bag('mulch').prism([cr(-1.08, -0.43), cr(1.08, -0.43), cr(1.08, 0.43), cr(-1.08, 0.43)], SW_Y, SW_Y + 0.24, false, false);
+      POCKET_TREES.push([c[0], SW_Y + 0.22, c[1], 5.6, 909]);
+    }
+  }
+  // the forest paths
   FOREST_PATHS.forEach((P, k) => pathRibbon(P.pts, P.w, 0.05 + k * 0.008));
-  for (const x of [-50.4, -49.5, -48.6]) bag('bark').cyl([x, -0.05, 4.35], [x, 0.85, 4.35], 0.09, 0.08, 8, true);
   flushBags(group, ['yellow', 'white', 'redway']);
 }
 
@@ -1320,7 +1431,11 @@ function buildHedges(group) {
   geos.push(hedgeGeo(-2.42, -1.1, -12.28, -11.9, PORCH_Y + 0.5, PORCH_Y + 1.3, BOX, 97, 0.5));      // planter at the end of the walkway
   // neighbours' front hedges
   geos.push(hedgeGeo(53.4, 82, 2.8, 4.2, 0.0, 2.4, THUJA, 140, 0.15));
-  geos.push(hedgeGeo(-47.5, -16.2, 1.2, 2.4, 0.0, 1.9, BOX, 141, 0.3));
+  for (let x = -16.4, i = 0; x > -46.0; x -= 2.6, i++) {   // No. 6's hedge behind its wall, along the bend
+    const xa = Math.max(-46.2, x - 2.6), q = [backPt(x, 0.5), backPt(xa, 0.5), backPt(x, 1.7), backPt(xa, 1.7)];
+    const xs = q.map((v) => v[0]), zs = q.map((v) => v[1]);
+    geos.push(hedgeGeo(Math.min(...xs), Math.max(...xs), Math.min(...zs), Math.max(...zs), 1.4, 2.9 + (i % 2) * 0.2, i % 3 ? BOX : PHOTINIA, 160 + i, 0.3));
+  }
   const merged = mergeGeos(geos);
   const mesh = new THREE.Mesh(merged, M.hedge);
   mesh.castShadow = mesh.receiveShadow = true;
@@ -1405,8 +1520,24 @@ function buildNeighbours(group) {
     // chimneys
     bag('brick').boxAB(-31.4, top + 1.5, -13.7, -30.6, top + 4.6, -12.9);
     bag('brick').boxAB(-20.4, top + 1.5, -9.1, -19.6, top + 4.4, -8.3);
-    // low front wall, from the forest entrance to No. 6's gate (the corner pier with the "6" is built with the drive)
-    bag('concrete').boxAB(-47.9, 0, 4.6, -15.85, 0.9, 4.84);
+    // front: a millstone retaining wall along the back of the pavement, from No. 6's gate to the forest
+    // entrance, turning a little way up the entrance; a green rigid-mesh fence on top (Street View)
+    const WH = SW_Y + 1.9, W0 = -15.95, W1 = -46.6, wp = [];
+    for (let k = 0; k <= 32; k++) wp.push(backPt(lerp(W0, W1, k / 32), 0.2));
+    const S0 = backPt(ENTRY_X), tg = [-46.0, -18.4], tl = Math.hypot(tg[0] - S0[0], tg[1] - S0[1]), dir = [(tg[0] - S0[0]) / tl, (tg[1] - S0[1]) / tl];
+    const ret = [1.5, 3.0, 4.5, 6.0].map((u) => [wp[32][0] + dir[0] * u, wp[32][1] + dir[1] * u]);
+    for (let k = 0; k < 32; k++) {
+      const [a, b] = [wp[k], wp[k + 1]];
+      bag('meuliere').segBox(a[0], a[1], b[0], b[1], -0.3, WH, 0.4, 0.02);
+      bag('concrete').segBox(a[0], a[1], b[0], b[1], WH, WH + 0.06, 0.46, 0.02);
+    }
+    [wp[32], ...ret].forEach((a, k, all) => {
+      if (k === all.length - 1) return;
+      const b = all[k + 1], h = WH - 0.3 * k;
+      bag('meuliere').segBox(a[0], a[1], b[0], b[1], -0.3, h, 0.4, 0.02);
+      bag('concrete').segBox(a[0], a[1], b[0], b[1], h, h + 0.06, 0.46, 0.02);
+    });
+    fenceRun(wp.filter((_, k) => k % 2 === 0), () => WH + 0.06, 0.9, 'fenceGreen', 'railGreen');
   }
 
   // --- NW: modern white clinic building with glazed stair tower and slate mansard
@@ -1469,8 +1600,21 @@ function mansard(mk, x0, z0, x1, z1, y, h, inset) {
 function inRect(x, z, x0, z0, x1, z1) { return x >= x0 && x <= x1 && z >= z0 && z <= z1; }
 // The whole site rises evenly behind the building towards the woods: one slope across the full
 // width, no valley. Neighbouring plots sit near pavement level at the front and join the same slope.
-const hill = (z) => 1.05 + 0.15 * Math.max(0, -z - 26);
+const hill = (z) => {
+  const d = Math.max(0, -z - 26);   // gentle across our garden, much steeper in the woods beyond the back path
+  return 1.05 + 0.15 * Math.min(d, 11) + 0.3 * clamp(d - 11, 0, 50) + 0.17 * Math.max(0, d - 61);
+};
 function groundH(x, z) {
+  if (x < BEND_X) {   // along the bend: road, pavements and the far side are level
+    const off = roadOff(x, z), back = paveD(x);
+    if (off > back) return off > 9.2 ? 0.12 + (fbm2(x * 0.05, z * 0.05, 2, 3) - 0.5) * 0.15 : off > back + 0.6 ? -0.05 : 0.1;
+    const nat = lerp(0.15, naturalH(x, z), smooth(back, back - 6, off));
+    // No. 6's front garden is raised behind its retaining wall
+    return x > -46.6 && off < back - 0.35 ? Math.max(nat, SW_Y + 1.5) : nat;
+  }
+  return naturalH(x, z);
+}
+function naturalH(x, z) {
   const onPath = x >= -15.4 && x <= -11.9 && z <= RAMP0;   // No. 6's side path beside our retaining wall
   if (z > -0.4 && !onPath) return z > 24.3 ? 0.12 + (fbm2(x * 0.05, z * 0.05, 2, 3) - 0.5) * 0.15 : -0.05;
   const ours = smooth(-17.5, -14.5, x) * (1 - smooth(52, 56, x));    // 1 on our plot, 0 on No. 6 / the clinic
@@ -1484,21 +1628,26 @@ function groundH(x, z) {
   if (p6 > 0) h = Math.max(h, lerp(h, T_TOP - 0.03, p6));
   return h;
 }
+// ground colour: lawn on the plots, forest floor in the woods (beyond the back fence, and behind the pavement in the bend)
+const GCOL = { lawn: new THREE.Color('#6f8c4c'), forest: new THREE.Color('#4d5a35'), dry: new THREE.Color('#7a7a55') };
+function groundCol(x, z, c) {
+  const inside = z > BACK_Z && x > -12.5 && x < 55.5;
+  const fb = x < -44 ? smooth(-1, -8, roadOff(x, z) - paveD(x)) * 0.85 : 0;
+  const f = fb + smooth(BACK_Z, -38, z) * (x > -20 && x < 90 ? 1 : 0.7);
+  const n = fbm2(x * 0.08, z * 0.08, 3, 9);
+  return c.copy(GCOL.lawn).lerp(GCOL.forest, inside ? 0 : clamp(f + (n - 0.5) * 0.6, 0, 1)).lerp(GCOL.dry, clamp((n - 0.6) * 1.2, 0, inside ? 0.1 : 0.35));
+}
 function buildTerrain(group) {
   const W = 420, D = 360, nx = 210, nz = 180, X0 = -160, Z0 = -275;
   const g = new THREE.PlaneGeometry(W, D, nx, nz);
   g.rotateX(-Math.PI / 2);
   const pos = g.attributes.position, uv = g.attributes.uv, cols = new Float32Array(pos.count * 3), c = new THREE.Color();
-  const lawn = new THREE.Color('#6f8c4c'), forest = new THREE.Color('#4d5a35'), dry = new THREE.Color('#7a7a55');
   for (let i = 0; i < pos.count; i++) {
     const x = pos.getX(i) + X0 + W / 2, z = pos.getZ(i) + Z0 + D / 2;
     const h = groundH(x, z);
     pos.setXYZ(i, x, h, z);
     uv.setXY(i, x, z);
-    const inside = z > BACK_Z && x > -12.5 && x < 55.5;
-    const f = smooth(BACK_Z, -38, z) * (x > -20 && x < 90 ? 1 : 0.7);
-    const n = fbm2(x * 0.08, z * 0.08, 3, 9);
-    c.copy(lawn).lerp(forest, inside ? 0 : clamp(f + (n - 0.5) * 0.6, 0, 1)).lerp(dry, clamp((n - 0.6) * 1.2, 0, inside ? 0.1 : 0.35));
+    groundCol(x, z, c);
     cols[i * 3] = c.r; cols[i * 3 + 1] = c.g; cols[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(cols, 3));
@@ -1509,6 +1658,9 @@ function buildTerrain(group) {
     let cx = 0, cz = 0;
     for (let j = 0; j < 3; j++) { cx += pos.getX(idx[i + j]) / 3; cz += pos.getZ(idx[i + j]) / 3; }
     if (cx > -12 && cx < 0 && cz > -23 && cz < 5) continue;
+    // under the road, its pavements and the verge in the bend (all drawn explicitly)
+    const inBend = (j) => { const vx = pos.getX(idx[i + j]), vz = pos.getZ(idx[i + j]), o = vx < BEND_X ? roadOff(vx, vz) : 0; return vx < BEND_X && o > paveD(vx) - 3.0 && o < 9.1; };
+    if (inBend(0) && inBend(1) && inBend(2)) continue;
     keep.push(idx[i], idx[i + 1], idx[i + 2]);
   }
   g.setIndex(keep);
@@ -1583,6 +1735,7 @@ function conifer(seed, h) {
 }
 
 const FOLIAGE = [];   // deciduous leaf meshes (hidden in winter)
+const POCKET_TREES = [];   // single trees placed by the site builder: [x, y, z, height, seed]
 function buildVegetation(group) {
   const variants = [deciduous(11, 14, 3, 2.3), deciduous(23, 16, 3, 2.6), deciduous(37, 12, 3, 2.1)];
   const conifers = [conifer(5, 18), conifer(8, 15)];
@@ -1590,6 +1743,7 @@ function buildVegetation(group) {
   const r = rng(2024);
   const blocked = (x, z) =>
     inRect(x, z, -17, BACK_Z + 0.5, 68, 6) || inRect(x, z, -45, -23, -12, 26) || pathClear(x, z) < 1.6 ||
+    (x < BEND_X && roadOff(x, z) > paveD(x) - 1.5) ||
     inRect(x, z, 51, -18, 88, 26) || z > -1;
   const STEP = SMALL ? 10.5 : 7.2;   // a dense forest (lighter on phones)
   for (let gx = -150; gx < 175; gx += STEP) for (let gz = -200; gz < 0; gz += STEP) {
@@ -1600,8 +1754,8 @@ function buildVegetation(group) {
     if (r() < 0.27) spots.c[(r() * 2) | 0].push([x, y, z, s, rot]);
     else spots.d[(r() * 3) | 0].push([x, y, z, s, rot]);
   }
-  // street trees across the road, beyond the stretch opposite the residence (that side stays open lawn)
-  for (let x = -70; x < 140; x += 11) { if (x > -50 && x < 96) continue; spots.d[(Math.abs(x) / 11 | 0) % 3].push([x + (r() - 0.5) * 2, 0.12, 27 + r() * 3, 0.55 + r() * 0.15, r() * 6]); }
+  // street trees across the road, only well beyond the residence (the other side stays open lawn)
+  for (let x = -70; x < 140; x += 11) { if (x < 96) continue; spots.d[(Math.abs(x) / 11 | 0) % 3].push([x + (r() - 0.5) * 2, 0.12, 27 + r() * 3, 0.55 + r() * 0.15, r() * 6]); }
   const near = (it) => Math.hypot(it[0] - 24, it[2] + 10) < 95;
   const inst = (geo, mat, all, shadow = true, reg = null) => {
     for (const [list, sh] of [[all.filter(near), shadow], [all.filter((i) => !near(i)), false]]) if (list.length) { const m = instOne(geo, mat, list, sh); if (reg) reg.push(m); }
@@ -1615,6 +1769,18 @@ function buildVegetation(group) {
   };
   variants.forEach((v, i) => { inst(v.bark, M.bark, spots.d[i]); inst(v.leaf, M.leaf, spots.d[i], true, FOLIAGE); });
   conifers.forEach((v, i) => { inst(v.bark, M.bark, spots.c[i]); inst(v.leaf, M.leafDark, spots.c[i]); });
+  // by the forest entrance: a big cedar behind No. 6's wall, a weeping willow on the left (Street View)
+  {
+    const cd = conifer(9, 22), cp = [-45.6, 0, -7.6]; cp[1] = groundH(cp[0], cp[2]) - 0.1;
+    const cb = new THREE.Mesh(cd.bark, M.bark), cl = new THREE.Mesh(cd.leaf, M.leafDark);
+    cb.scale.set(1.25, 1, 1.25); cl.scale.set(1.35, 1, 1.35); cb.position.set(...cp); cl.position.set(...cp);
+    for (const o of [cb, cl]) { o.castShadow = o.receiveShadow = true; group.add(o); }
+  }
+  for (const [x, y, z, h, seed] of [[-57.5, null, -10.5, 11, 818], ...POCKET_TREES]) {
+    const t = deciduous(seed, h, 4, h > 8 ? 1.3 : 0.75, 1, 0.85), yy = y ?? groundH(x, z) - 0.05;
+    const b = new THREE.Mesh(t.bark, M.bark); b.position.set(x, yy, z); b.castShadow = b.receiveShadow = true; group.add(b);
+    const l = new THREE.Mesh(t.leaf, M.leaf); l.position.copy(b.position); l.castShadow = l.receiveShadow = true; group.add(l); FOLIAGE.push(l);
+  }
   // two little trees in the garden, near the inner corner of the L (residents + aerial view)
   for (const [seed, h, x, z] of [[303, 4.6, 17.4, -16.0], [404, 4.0, 16.4, -20.2]]) {
     const t = deciduous(seed, h, 4, 0.7, 1, 0.8), y = groundH(x, z) - 0.05;
