@@ -380,7 +380,7 @@ function makeMaterials() {
   M.garageDoorLow = std({ color: 0xc4c8cb, map: TEX.garageV, roughness: 0.5, metalness: 0.15 });
   M.railLight = std({ color: 0xf0eee8, roughness: 0.5, metalness: 0.1 });   // white-painted railings (photos)
   M.fence = std({ color: 0x8d9296, map: TEX.fence, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.6, metalness: 0.4 });
-  M.ramp = std({ color: 0x7a7670, map: TEX.asphalt, roughness: 0.95 });
+  M.ramp = std({ color: 0xa39c92, map: TEX.asphalt, roughness: 0.95 });   // light grey asphalt (photo)
   M.paving = std({ color: 0x9c9890, map: TEX.concrete, roughness: 0.92 });
   M.stone = std({ color: 0xb09a86, map: TEX.concrete, roughness: 0.85 });
   M.bin = std({ color: 0x5e3b27, roughness: 0.7 });
@@ -954,6 +954,11 @@ function buildDrive(group) {
     [[RAMP0, RAMP_Y0 - 0.02], [RAMP0, RAMP_Y0 + 0.16], [zEnd, upY(zEnd) + 0.16], [zEnd, upY(zEnd) - 0.02]]);
   kerb(ux0, ux0 + 0.24, GF);
   kerb(ux1 - 0.24, ux1, -9.2);
+  // narrow raised walkways along both walls of the down ramp, down to the lower garage door (photo)
+  const ledge = (x0, x1) => bag('darkConcrete').extrudeX(x0, x1,
+    [[RAMP0, RAMP_Y0 - 0.02], [RAMP0, RAMP_Y0 + 0.16], [DOWN_END, LOW + 0.16], [GF, LOW + 0.16], [GF, LOW - 0.02], [DOWN_END, LOW - 0.02]]);
+  ledge(dx0, dx0 + 0.45);
+  ledge(dx1 - 0.45, dx1);
 
   // ---- walls along the ramps
   bag(C).boxAB(DW.sep[0], LOW - 0.1, GF, DW.sep[1], 1.25, 2.4);          // separating wall
