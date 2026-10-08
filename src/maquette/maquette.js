@@ -856,12 +856,15 @@ function buildSite(group) {
   }
   yz.segBox(11.5, 10.35, 26.5, 10.35, 0.004, 0.009, 0.12);
   // parking bay on the pavement, between the vehicle crossing and the bus stop: a trapezoid, long side
-  // on the kerb, slanted ends (aerial view, residents' correction)
+  // on the kerb, slanted ends; cobbled like the crossing, two places, two bollards on it (residents' photos)
   const BAY = { x0: -2.4, x1: 11.2, i0: 0.4, i1: 8.6, zi: 7.05, zo: 9.85 };
   const by = SW_Y + 0.006;
-  bag('paving').quad([BAY.x0, by, BAY.zo], [BAY.x1, by, BAY.zo], [BAY.i1, by, BAY.zi], [BAY.i0, by, BAY.zi], [0, 1, 0]);
-  for (const [a0, a1, b0, b1] of [[BAY.x0, BAY.zo, BAY.i0, BAY.zi], [BAY.i0, BAY.zi, BAY.i1, BAY.zi], [BAY.i1, BAY.zi, BAY.x1, BAY.zo]]) wm.segBox(a0, a1, b0, b1, by, by + 0.004, 0.12);
-  for (const x of [3.0, 5.9]) wm.segBox(x, BAY.zi, x, BAY.zo, by, by + 0.004, 0.1);   // three places
+  bag('cobble').quad([BAY.x0, by, BAY.zo], [BAY.x1, by, BAY.zo], [BAY.i1, by, BAY.zi], [BAY.i0, by, BAY.zi], [0, 1, 0]);
+  for (const [a0, a1, b0, b1] of [[BAY.x0, BAY.zo, BAY.i0, BAY.zi], [BAY.i0, BAY.zi, BAY.i1, BAY.zi], [BAY.i1, BAY.zi, BAY.x1, BAY.zo]]) bag('curb').segBox(a0, a1, b0, b1, SW_Y - 0.02, SW_Y + 0.07, 0.16);
+  // the two bollards: a tall grey post at the back of the bay, a low cast-iron one in front of it
+  bag('darkConcrete').cyl([1.2, SW_Y, 7.45], [1.2, SW_Y + 0.75, 7.45], 0.13, 0.12, 12, true);
+  bag('metal').cyl([2.6, SW_Y, 8.3], [2.6, SW_Y + 0.42, 8.3], 0.13, 0.11, 12, true);
+  bag('metal').cyl([2.6, SW_Y + 0.42, 8.3], [2.6, SW_Y + 0.5, 8.3], 0.17, 0.08, 12, true);
 
   // street furniture ------------------------------------------------
   // bus shelter "Sarraut"
