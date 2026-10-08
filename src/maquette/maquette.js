@@ -948,7 +948,7 @@ function buildDrive(group) {
   bag('ramp').quad([ux0, RAMP_Y0, RAMP0], [ux1, RAMP_Y0, RAMP0], [ux1, UP, GF], [ux0, UP, GF], [0, 1, 0]);
   bag('ramp').quad([dx0, RAMP_Y0, RAMP0], [dx1, RAMP_Y0, RAMP0], [dx1, LOW, DOWN_END], [dx0, LOW, DOWN_END], [0, 1, 0]);
   bag('ramp').quad([dx0, LOW, DOWN_END], [dx1, LOW, DOWN_END], [dx1, LOW, GF], [dx0, LOW, GF], [0, 1, 0]);
-  bag('metal').boxAB(dx0 + 0.05, LOW - 0.02, DOWN_END - 0.55, dx1 - 0.05, LOW + 0.012, DOWN_END - 0.25); // drain
+  bag('metal').boxAB(dx0 + 0.45, LOW - 0.02, GF + 0.3, dx1 - 0.45, LOW + 0.012, GF + 0.6); // drain, at the lowest point just in front of the door
   // mossy kerbs along both sides of the up ramp
   const kerb = (x0, x1, zEnd) => bag('darkConcrete').extrudeX(x0, x1,
     [[RAMP0, RAMP_Y0 - 0.02], [RAMP0, RAMP_Y0 + 0.16], [zEnd, upY(zEnd) + 0.16], [zEnd, upY(zEnd) - 0.02]]);
