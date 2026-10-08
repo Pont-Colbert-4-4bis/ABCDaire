@@ -359,6 +359,8 @@ function makeMaterials() {
   M.curtain = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6 });
   M.curtainLit = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6, emissive: 0xffc98f, emissiveMap: TEX.curtain, emissiveIntensity: 0 });
   M.metal = std({ color: 0x34383c, roughness: 0.45, metalness: 0.55 });
+  M.cabinet = std({ color: 0xe6e0d2, roughness: 0.6 });
+  M.duct = std({ color: 0xb9bdc0, roughness: 0.4, metalness: 0.6 });   // galvanised VMC ducts and fans
   M.roof = std({ color: 0xffffff, map: TEX.gravel, roughness: 1 });
   M.concrete = std({ color: 0xd3cec4, map: TEX.concrete, roughness: 0.95 });
   M.darkConcrete = std({ color: 0x9d988f, map: TEX.concrete, roughness: 1 });
@@ -734,16 +736,36 @@ function buildBuilding(group) {
   rf.boxAB(2.4, TOP_WING - 0.25, -10.6, 51.9, TOP_WING + 0.02, -2.0, true);
   rf.boxAB(2.4, TOP_WING - 0.25, -12.4, 13.3, TOP_WING + 0.02, -10.6, true);
   rf.boxAB(-1.5, TOP_WING - 0.25, -24.4, 13.3, TOP_WING + 0.02, -12.4, true);
-  // rooftop: lift motor rooms, ducts, antenna
-  bag('wall').boxAB(40.3, TOP_WING, -7.0, 43.9, TOP_WING + 2.5, -4.2, true);
-  bag('flashing').boxAB(40.2, TOP_WING + 2.5, -7.1, 44.0, TOP_WING + 2.6, -4.1, true);
-  bag('wall').boxAB(8.0, TOP_WING, -9.6, 11.2, TOP_WING + 2.4, -6.2, true);
-  bag('flashing').boxAB(7.9, TOP_WING + 2.4, -9.7, 11.3, TOP_WING + 2.5, -6.1, true);
-  for (const [x0, z0, x1, z1] of [[6, -4.2, 22, -3.9], [22, -4.2, 22.3, -8.5], [30, -6, 39, -5.7], [14, -8.2, 14.3, -11.5], [46, -4.5, 46.3, -8.8], [3, -16, 9, -15.7], [9, -16, 9.3, -21]]) bag('darkConcrete').boxAB(x0, TOP_WING, z0, x1, TOP_WING + 0.35, z1, true);
-  for (const [x, z] of [[18, -6], [27, -8], [35, -4.6], [49, -7.5], [5, -19], [11, -22]]) bag('darkConcrete').boxAB(x - 0.3, TOP_WING, z - 0.3, x + 0.3, TOP_WING + 0.8, z + 0.3, true);
-  const ant = bag('metal');
-  ant.cyl([6.5, TOP_WING, -6.5], [6.5, TOP_WING + 3.6, -6.5], 0.03, 0.025, 5);
-  for (const y of [2.6, 3.0, 3.4]) ant.segBox(5.6, -6.5, 7.4, -6.5, TOP_WING + y, TOP_WING + y + 0.025, 0.025);
+  // rooftop, traced from the aerial view: two lift machine rooms (one near each end), the ventilation (VMC)
+  // ducts running on low supports, and the VMC fan boxes along them
+  const lift = (x0, z0, x1, z1) => {
+    bag('wall').boxAB(x0, TOP_WING, z0, x1, TOP_WING + 2.5, z1, true);
+    bag('flashing').boxAB(x0 - 0.1, TOP_WING + 2.5, z0 - 0.1, x1 + 0.1, TOP_WING + 2.6, z1 + 0.1, true);
+    bag('metal').boxAB(x0 + 0.6, TOP_WING + 2.6, z0 + 0.6, x0 + 1.4, TOP_WING + 2.95, z0 + 1.2, true);   // vent on its roof
+  };
+  lift(38.6, -6.4, 42.0, -2.8);   // No. 4, near the NW end
+  lift(7.6, -7.6, 11.0, -4.0);    // No. 4 bis, near the wing
+  const DY = TOP_WING + 0.15;
+  const duct = (pts, w = 0.36) => {
+    for (let i = 0; i + 1 < pts.length; i++) {
+      const [ax, az] = pts[i], [bx, bz] = pts[i + 1];
+      bag('duct').segBox(ax, az, bx, bz, DY, DY + w, w + 0.02, 0);
+      const L = Math.hypot(bx - ax, bz - az), n = Math.max(1, Math.round(L / 2));
+      for (let k = 0; k <= n; k++) { const u = k / n, x = lerp(ax, bx, u), z = lerp(az, bz, u); bag('darkConcrete').boxAB(x - 0.12, TOP_WING, z - 0.12, x + 0.12, DY, z + 0.12, true); }
+    }
+  };
+  duct([[51.2, -4.4], [49.1, -7.1], [43.0, -5.8], [42.0, -5.6]]);           // NW end into the first lift room
+  duct([[38.6, -3.4], [29.5, -2.7], [29.0, -4.2]]);                          // along the street side towards the middle
+  duct([[25.6, -4.6], [21.5, -4.6], [17.5, -4.2], [14.6, -4.4]]);            // middle run with the fan boxes
+  duct([[15.2, -2.9], [11.0, -2.9]]);                                        // street side into the second lift room
+  duct([[7.4, -8.0], [7.4, -10.3], [8.0, -18.3]]);                           // down the wing
+  duct([[7.9, -13.6], [5.4, -13.7]]);
+  const fan = (x, z) => {   // VMC extract fan: galvanised box with a round outlet
+    bag('duct').boxAB(x - 0.55, TOP_WING, z - 0.45, x + 0.55, TOP_WING + 0.7, z + 0.45, true);
+    bag('duct').cyl([x, TOP_WING + 0.7, z], [x, TOP_WING + 0.95, z], 0.3, 0.3, 12, true);
+    bag('metal').cyl([x, TOP_WING + 0.95, z], [x, TOP_WING + 0.98, z], 0.32, 0.32, 12, true);
+  };
+  for (const [x, z] of [[21.5, -6.1], [17.5, -5.2], [15.2, -4.8], [29.0, -5.0], [49.1, -8.2], [8.0, -18.9], [5.0, -13.7]]) fan(x, z);
 
   // --- plinths (the SE garage block, ramps and the 4 bis porch are in buildDrive)
   const pl = bag('concrete');
@@ -945,6 +967,10 @@ function buildSite(group) {
   bag('shelter').boxAB(-0.15, SW_Y, 6.75, 0.2, SW_Y + 1.55, 7.07, true);   // at the SE end of the parking bay
   bag('hydrant').cyl([3.4, SW_Y, 5.3], [3.4, SW_Y + 0.95, 5.3], 0.13, 0.13, 10, true);
   bag('hydrant').cyl([3.4, SW_Y + 0.95, 5.3], [3.4, SW_Y + 1.1, 5.3], 0.13, 0.05, 10, true);
+  // beige electrical cabinet against the garden wall, a few metres NW of the hydrant (Street View)
+  bag('cabinet').boxAB(6.3, SW_Y, 4.86, 7.05, SW_Y + 0.98, 5.22, true);
+  bag('cabinet').boxAB(6.27, SW_Y + 0.98, 4.86, 7.08, SW_Y + 1.02, 5.25, true);
+  bag('darkConcrete').boxAB(6.67, SW_Y + 0.1, 5.22, 6.68, SW_Y + 0.9, 5.225);   // the line between its two doors
   // bollard at the NW edge of the crossing
   bag('brown').cyl([-1.6, SW_Y, 8.9], [-1.6, SW_Y + 0.82, 8.9], 0.065, 0.06, 8, true);
 
