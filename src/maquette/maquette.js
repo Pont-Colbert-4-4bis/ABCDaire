@@ -891,6 +891,15 @@ const CROSS_X = 56.5;   // the signalled pedestrian crossing in front of No. 2 (
 // heading NW on the far side (OpenStreetMap), so it sits nearer our kerb than the middle of the road
 const ISL = { x0: 44.0, x1: 54.3, z0: 13.2, z1: 14.3 };
 const ISL_Z = (ISL.z0 + ISL.z1) / 2;
+// Rue Albert Sarraut leaves the far side square to our street, opposite No. 2 (OpenStreetMap + aerial view):
+// axis through a, direction u (it leans slightly towards the SE as it climbs), v across it towards the NW;
+// carriageway 2 x half wide, pavements, corner radii r1 (SE corner) and r2 (NW corner), drawn to the end of the terrain
+const SIDE = (() => {
+  const l = Math.hypot(-0.124, 0.992), u = [-0.124 / l, 0.992 / l];
+  return { a: [71.2, 24.7], u, v: [u[1], -u[0]], half: 3.6, pave: 4.25, r1: 5.0, r2: 4.0, end: 61 };
+})();
+const sideST = (x, z) => { const dx = x - SIDE.a[0], dz = z - SIDE.a[1]; return [dx * SIDE.u[0] + dz * SIDE.u[1], dx * SIDE.v[0] + dz * SIDE.v[1]]; };
+const sidePt = (s, t) => [SIDE.a[0] + SIDE.u[0] * s + SIDE.v[0] * t, SIDE.a[1] + SIDE.u[1] * s + SIDE.v[1] * t];
 const ROAD_CP = [[-6, 15], [-16, 15], [-26, 14.4], [-36, 10.6], [-48, 5.4], [-62, 0.8], [-80, -4.6], [-100, -10.2], [-130, -18.3], [-170, -29], [-215, -41]];
 function roadZ(x) {
   if (x >= BEND_X) return 15;
@@ -987,6 +996,64 @@ function railingRun(pts, y0, h = 1.0, mk = 'metal', spacing = 0.12) {
    SITE: front gardens, entrance steps, ramp, pavements, street, furniture
    ===================================================================== */
 const SW_Y = 0.15;   // pavement top
+// flat polygon [[x, z], ...] (concave allowed) at height y, optionally with vertical sides down to 0
+function flatPoly(mk, pts, y, walls = false) {
+  const tris = THREE.ShapeUtils.triangulateShape(pts.map(([x, z]) => new THREE.Vector2(x, z)), []);
+  for (const [a, b, c] of tris) bag(mk).tri([pts[a][0], y, pts[a][1]], [pts[b][0], y, pts[b][1]], [pts[c][0], y, pts[c][1]], [0, 1, 0]);
+  if (!walls) return;
+  let area = 0;
+  for (let i = 0; i < pts.length; i++) { const p = pts[i], q = pts[(i + 1) % pts.length]; area += p[0] * q[1] - q[0] * p[1]; }
+  const sg = area > 0 ? 1 : -1;
+  for (let i = 0; i < pts.length; i++) {
+    const p = pts[i], q = pts[(i + 1) % pts.length], dx = q[0] - p[0], dz = q[1] - p[1];
+    bag(mk).quad([p[0], 0, p[1]], [q[0], 0, q[1]], [q[0], y, q[1]], [p[0], y, p[1]], [dz * sg, 0, -dx * sg]);
+  }
+}
+function inPoly([x, z], P) {
+  let inside = false;
+  for (let i = 0, j = P.length - 1; i < P.length; j = i++) {
+    const [xi, zi] = P[i], [xj, zj] = P[j];
+    if ((zi > z) !== (zj > z) && x < ((xj - xi) * (z - zi)) / (zj - zi) + xi) inside = !inside;
+  }
+  return inside;
+}
+// far side of the street: kerb and pavement from the bend to the end of the modelled stretch, opened for the
+// first stretch of Rue Albert Sarraut with rounded corners, its carriageway and pavements and the zebra across
+// its mouth (aerial view: the zebra is in line with the far pavement)
+function buildFarSide() {
+  const { u, v, half, pave, r1, r2, end } = SIDE, K = 0.2, FK = 19.95, FB = 24.2, X1 = 220;
+  const corner = (sg, r) => { const p = sidePt(0, sg * (half + r)), s = (FK + r - p[1]) / u[1]; return [p[0] + u[0] * s, FK + r]; };
+  const C1 = corner(-1, r1), C2 = corner(1, r2);   // centres of the rounded kerbs, r away from both kerb lines
+  const arc = (C, r, a0, a1, n = 12) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + ((a1 - a0) * i) / n; return [C[0] + Math.cos(a) * r, C[1] + Math.sin(a) * r]; });
+  const av = Math.atan2(v[1], v[0]), A1 = [-Math.PI / 2, av], A2 = [av - Math.PI, -Math.PI / 2];
+  const towards = (C) => (p) => { const dx = C[0] - p[0], dz = C[1] - p[1], l = Math.hypot(dx, dz); return [dx / l, dz / l]; };
+  // kerbs: a 0.2 m strip on the pavement side of each road edge (nrm: unit normals towards the pavement)
+  const kerb = (pts, nrm) => {
+    const top = SW_Y + 0.01, B = bag('curb');
+    for (let i = 0; i + 1 < pts.length; i++) {
+      const a = pts[i], b = pts[i + 1], na = nrm[i], nb = nrm[i + 1];
+      const a2 = [a[0] + na[0] * K, a[1] + na[1] * K], b2 = [b[0] + nb[0] * K, b[1] + nb[1] * K];
+      B.quad([a[0], top, a[1]], [b[0], top, b[1]], [b2[0], top, b2[1]], [a2[0], top, a2[1]], [0, 1, 0]);
+      B.quad([a[0], 0, a[1]], [b[0], 0, b[1]], [b[0], top, b[1]], [a[0], top, a[1]], [-(na[0] + nb[0]), 0, -(na[1] + nb[1])]);
+    }
+  };
+  const se = arc(C1, r1, ...A1), nw = arc(C2, r2, ...A2), up = [0, 1], mv = [-v[0], -v[1]];
+  kerb([[BEND_X, FK], ...se, sidePt(end, -half)], [up, ...se.map(towards(C1)), mv]);
+  kerb([sidePt(end, half), ...nw, [X1, FK]], [v, ...nw.map(towards(C2)), up]);
+  // pavements, L-shaped round each corner
+  const back = (sg) => { const t = sg * (half + pave), s = (FB - SIDE.a[1] - v[1] * t) / u[1]; return sidePt(s, t); };
+  flatPoly('pavement', [[BEND_X, FK + K], ...arc(C1, r1 - K, ...A1), sidePt(end, -(half + K)), sidePt(end, -(half + pave)), back(-1), [BEND_X, FB]], SW_Y, true);
+  flatPoly('pavement', [sidePt(end, half + K), ...arc(C2, r2 - K, ...A2), [X1, FK + K], [X1, FB], back(1), sidePt(end, half + pave)], SW_Y, true);
+  // the side street's carriageway, continuing ours
+  const road = [...se, sidePt(end, -half), sidePt(end, half), ...nw];
+  flatPoly('asphalt', road, 0);
+  // zebra across its mouth: 0.5 m bands along the side street, 2.5 m long, kept clear of the rounded kerbs
+  const sAt = (z, t) => (z - SIDE.a[1] - v[1] * t) / u[1];
+  for (let t = -6; t <= 6; t += 1) {
+    const q = [[t - 0.25, FK + 0.1], [t + 0.25, FK + 0.1], [t + 0.25, FK + 2.6], [t - 0.25, FK + 2.6]].map(([tt, z]) => sidePt(sAt(z, tt), tt));
+    if (q.every((p) => inPoly(p, road))) bag('white').quad([q[0][0], 0.007, q[0][1]], [q[1][0], 0.007, q[1][1]], [q[2][0], 0.007, q[2][1]], [q[3][0], 0.007, q[3][1]], [0, 1, 0]);
+  }
+}
 function buildSite(group) {
   // front garden soil (raised planters behind the low wall); the strip along the SE gable is in buildDrive
   // the corner of the front garden at the 4 bis walkway is cut on a slant, so the walkway opens as a
@@ -1056,11 +1123,11 @@ function buildSite(group) {
   bag('cobble').boxAB(-15.8, 0, RAMP0, -3.0, SW_Y - 0.03, 9.85, true);
   // kerbs
   bag('curb').boxAB(BEND_X, 0, 9.85, 220, SW_Y + 0.01, 10.05, true);
-  bag('curb').boxAB(BEND_X, 0, 19.95, 220, SW_Y + 0.01, 20.15, true);
   // road
   bag('asphalt').quad([BEND_X, 0, 10.05], [260, 0, 10.05], [260, 0, 19.95], [BEND_X, 0, 19.95], [0, 1, 0]);
-  // far pavement
-  bag('pavement').boxAB(BEND_X, 0, 20.15, 220, SW_Y, 24.2, true);
+  // far side: kerb and pavement, opened opposite No. 2 for the first stretch of Rue Albert Sarraut (rounded
+  // corners, its own pavements, the zebra across its mouth); no cars, no buildings (aerial view, Street View)
+  buildFarSide();
   // markings (Street View, Feb 2026; OpenStreetMap: one lane heading SE, two heading NW, the right-hand one
   // for the turn into Rue Albert Sarraut). The centre line moves over to the axis of the island after the bus
   // stop and runs into its nose as a wide continuous line; the lane line between the two lanes heading NW turns
@@ -1870,7 +1937,13 @@ function groundH(x, z) {
 }
 function naturalH(x, z) {
   const onPath = x >= -15.4 && x <= -11.9 && z <= RAMP0;   // No. 6's side path beside our retaining wall
-  if (z > -0.4 && !onPath) return z > 24.3 ? 0.12 + (fbm2(x * 0.05, z * 0.05, 2, 3) - 0.5) * 0.15 : -0.05;
+  if (z > -0.4 && !onPath) {
+    if (z <= 24.3) return -0.05;                                      // under the road and its pavements
+    const t = Math.abs(sideST(x, z)[1]);                              // Rue Albert Sarraut, drawn explicitly:
+    if (t < SIDE.half + 2.0) return -0.05;                            // under its carriageway and kerbs
+    if (t < SIDE.half + SIDE.pave + 0.45) return 0.1;                 // just under its pavements
+    return 0.12 + (fbm2(x * 0.05, z * 0.05, 2, 3) - 0.5) * 0.15;      // the lawn across the street
+  }
   const ours = smooth(-17.5, -14.5, x) * (1 - smooth(52, 56, x));    // 1 on our plot, 0 on No. 6 / the clinic
   let h = lerp(lerp(0.15, 1.05, ours), hill(z), Math.max(ours, smooth(-12, -40, z)));
   h += (fbm2(x * 0.03, z * 0.03, 3, 5) - 0.5) * 1.4 * smooth(0, 30, Math.max(0, -z - 29));   // gentle undulation

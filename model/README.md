@@ -37,7 +37,7 @@ Chaque façade est décrite niveau par niveau par un motif d’ouvertures (fenê
 - l’entrée du 4 : escalier de huit marches, porte vitrée, renfoncement orange planté sous les balcons, jardinières surélevées ;
 - haies, arbres de rue, abri de bus et mobilier ; les bâtiments voisins (immeuble en meulière au sud-est, bâtiment blanc avec cage vitrée au nord-ouest) ;
 - devant le n° 2, le passage piéton à feux : îlot central avec son feu et ses balises, potence à deux feux de l’autre côté, marquage au sol (voies, flèches, lignes d’effet des feux, ligne de rive) ;
-- le terrain qui monte régulièrement derrière l’immeuble jusqu’aux bois ; de l’autre côté de la rue, une pelouse.
+- le terrain qui monte régulièrement derrière l’immeuble jusqu’aux bois ; de l’autre côté de la rue, une pelouse, traversée en face du n° 2 par le début de la rue Albert Sarraut (chaussée, trottoirs, angles arrondis, passage piéton).
 
 ## Dimensions estimées
 
