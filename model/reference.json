@@ -40,7 +40,7 @@
   "limits": [
     "Pas de releve metrique ni plan d'architecte fourni: cotes, pentes et profondeur des balcons estimees.",
     "Cote jardin, aile et toiture partiellement caches: volumes reconstitues a partir de la vue aerienne, balcons et ouvertures extrapoles, non inventories.",
-    "Arbres, haies, voisins et vehicules simplifies; personnes, plaques et contenu des affiches exclus.",
+    "Arbres, haies et voisins simplifies; aucune voiture representee; personnes, plaques et contenu des affiches exclus.",
     "Les captures de reference restent hors du depot public; aucune photographie n'est utilisee comme texture."
   ]
 }

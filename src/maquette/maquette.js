@@ -893,12 +893,7 @@ function buildSite(group) {
   // bollard at the NW edge of the crossing
   bag('brown').cyl([-1.6, SW_Y, 8.9], [-1.6, SW_Y + 0.82, 8.9], 0.065, 0.06, 8, true);
 
-  // parked cars
-  const carCols = [0x8b9096, 0x1f2328, 0xe7e7e3, 0x5d6670, 0x2d3e57, 0xa8aaa9, 0x6f2f2a, 0x34373a];
-  const cars = [[-30, 11.3, 1], [-21, 11.3, 1], [-58, 18.9, -1], [-44, 18.9, -1], [-9, 18.9, -1], [3.5, 18.9, -1], [10.5, 18.9, -1], [31, 18.9, -1], [37.5, 18.9, -1], [57, 18.9, -1], [70, 18.9, -1], [84, 18.9, -1]];
-  cars.forEach(([x, z, dir], i) => car(x, z, dir, carCols[i % carCols.length], i));
-  // two cars in the parking bay on the pavement
-  car(1.6, 8.55, 1, carCols[1], 31, SW_Y); car(7.4, 8.55, 1, carCols[3 % carCols.length], 37, SW_Y);
+  // no cars: the street is shown empty (residents' request)
 
   flushBags(group, ['yellow', 'white', 'redway']);
 }
@@ -1065,17 +1060,6 @@ function buildDrive(group) {
 }
 
 const carMats = {};
-function car(x, z, dir, col, seed, y = 0) {
-  const k = 'car' + col.toString(16);
-  if (!M[k]) M[k] = new THREE.MeshStandardMaterial({ color: col, roughness: 0.35, metalness: 0.55 });
-  const r = rng(seed + 3), L = 4.1 + r() * 0.6, W = 1.8, h0 = 0.32 + y;
-  const b = bag(k);
-  b.boxAB(x - L / 2, h0, z - W / 2, x + L / 2, h0 + 0.62, z + W / 2);
-  const cx = x - dir * 0.25, cl = L * 0.52;
-  bag('carGlass').boxAB(cx - cl / 2, h0 + 0.62, z - W / 2 + 0.1, cx + cl / 2, h0 + 1.15, z + W / 2 - 0.1);
-  b.boxAB(cx - cl / 2 + 0.15, h0 + 1.15, z - W / 2 + 0.14, cx + cl / 2 - 0.12, h0 + 1.2, z + W / 2 - 0.14);
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) bag('tyre').cyl([x + sx * L * 0.33, 0.32 + y, z + sz * (W / 2 - 0.05)], [x + sx * L * 0.33, 0.32 + y, z + sz * (W / 2 + 0.03)], 0.32, 0.32, 10, true);
-}
 
 /* ---------------------------------------------------------- hedges */
 function hedgeGeo(x0, x1, z0, z1, y0, y1, palette, seed, round = 0.35) {
