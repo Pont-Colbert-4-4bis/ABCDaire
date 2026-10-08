@@ -647,9 +647,9 @@ function buildBuilding(group) {
   L(GARDEN, R05, (k) => pat(k === 0 ? G_RDC : k % 2 ? G_ODD : G_EVEN));
   for (const k of R15) {
     wedge(GARDEN, k, 4.2, 7.8, 1.5, 'rail');
-    wedge(GARDEN, k, 13.6, 10.2, 1.5, 'solid');
-    wedge(GARDEN, k, 20.0, 23.4, 1.5, 'rail');
-    wedge(GARDEN, k, 29.4, 26.0, 1.5, 'rail');
+    wedge(GARDEN, k, 10.2, 13.6, 1.5, 'solid');  // 2, 3 and 4 point the other way (residents' correction)
+    wedge(GARDEN, k, 23.4, 20.0, 1.5, 'rail');
+    wedge(GARDEN, k, 26.0, 29.4, 1.5, 'rail');
     wedge(GARDEN, k, 31.6, 35.0, 1.5, 'solid');
   }
   coping(GARDEN, TOP_SLAB);
@@ -676,8 +676,8 @@ function buildBuilding(group) {
   for (const k of R15) { wedge(WSW, k, 4.4, 1.0, 1.5, 'rail'); wedge(WSW, k, 10.4, 13.8, 1.5, 'rail'); }
   coping(WSW, TOP_WING);
 
-  L(WNW, R05, (k) => pat(k === 0 ? 'w1.2-2.4 w6.4-7.8 w9.8-11' : k % 2 ? 'w1.2-2.4 o2.5-4.2 f6.4-7.8 w9.8-11' : 'w1.2-2.4 f6.4-7.8 o8.9-9.7 w9.8-11'));
-  for (const k of R15) wedge(WNW, k, 5.0, 8.6, 1.5, 'solid');
+  // the side of the wing that runs out into the woods has no balconies (residents' correction)
+  L(WNW, R05, (k) => pat(k === 0 ? 'w1.2-2.4 w6.4-7.8 w9.8-11' : k % 2 ? 'w1.2-2.4 o2.5-4.2 w6.4-7.8 w9.8-11' : 'w1.2-2.4 w6.4-7.8 o8.9-9.7 w9.8-11'));
   buildLevel(WNW6, 6, pat('w3-4.2 o4.4-6 w8.2-9.6 o9.8-11.4 w11.6-12.8'));
   coping(WNW6, TOP_WING);
 
