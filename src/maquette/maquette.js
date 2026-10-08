@@ -315,6 +315,30 @@ function makeTextures() {
     g.fillText('6', 64, 51);
     TEX.plate6 = finish(c, { tile: 1 }); TEX.plate6.repeat.set(1, 1);
   }
+  // light stone panels of the office building next door (No. 2): 1.2 x 0.6 m, stacked joints
+  {
+    const c = canvas(256, 128), g = c.getContext('2d'), r = rng(2222);
+    for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+      const v = 228 + r() * 14;
+      g.fillStyle = `rgb(${v}, ${v - 6}, ${v - 17})`; g.fillRect(i * 128, j * 64, 128, 64);
+    }
+    g.fillStyle = 'rgba(120, 108, 92, 0.55)';
+    for (let k = 0; k <= 2; k++) { g.fillRect(k * 128 - 1, 0, 2, 128); g.fillRect(0, k * 64 - 1, 256, 2); }
+    TEX.ashlar = finish(c, { tile: 2.4, tileY: 1.2 });
+  }
+  // office curtain wall: white mullions, panes alternately reflecting the sky and dark
+  {
+    const c = canvas(256, 256), g = c.getContext('2d');
+    const tint = [['#9fb4c6', '#2f3d52'], ['#36465b', '#a9bccb']];
+    for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+      const grd = g.createLinearGradient(i * 128, j * 128, i * 128 + 128, j * 128 + 128);
+      grd.addColorStop(0, tint[j][i]); grd.addColorStop(1, j === i ? '#7f97ab' : '#26313f');
+      g.fillStyle = grd; g.fillRect(i * 128, j * 128, 128, 128);
+    }
+    g.fillStyle = '#eef0ef';
+    for (let k = 0; k <= 2; k++) { g.fillRect(k * 128 - 4, 0, 8, 256); g.fillRect(0, k * 128 - 4, 256, 8); }
+    TEX.officeGlass = finish(c, { tile: 3.46, tileY: 3.04 });
+  }
   // glass curtain wall (neighbour stair tower)
   {
     const c = canvas(128, 128), g = c.getContext('2d');
@@ -405,6 +429,12 @@ function makeMaterials() {
   M.brick = std({ color: 0x9b5440, map: TEX.concrete, roughness: 0.9 });
   M.slate = std({ color: 0xffffff, map: TEX.slate, roughness: 0.75 });
   M.cladding = std({ color: 0xece9e1, map: TEX.concrete, roughness: 0.8 });
+  M.ashlar = std({ color: 0xffffff, map: TEX.ashlar, roughness: 0.75 });
+  M.officeGlass = std({ color: 0xffffff, map: TEX.officeGlass, roughness: 0.12, metalness: 0.55, envMapIntensity: 1.1 });
+  M.signBlue = std({ color: 0x1f5fae, roughness: 0.5 });
+  M.sigHead = std({ color: 0x1b1d1e, roughness: 0.6 });
+  M.sigRed = std({ color: 0x4a0b08, roughness: 0.3, emissive: 0xff2b16, emissiveIntensity: 1.8 });
+  M.sigOff = std({ color: 0x23292b, roughness: 0.25 });
   M.curtainWall = std({ color: 0xffffff, map: TEX.curtainWall, roughness: 0.15, metalness: 0.5, envMapIntensity: 1.1 });
   M.bgRoof = std({ color: 0x7c7a76, roughness: 1 });
   M.hydrant = std({ color: 0xd2492c, roughness: 0.55 });
@@ -446,7 +476,7 @@ makeMaterials();
 // bags per material
 const BG = {};
 const bag = (k) => (BG[k] ||= new Bag());
-const SHADOWLESS = new Set(['fenceGreen', 'glass', 'glassLit', 'curtain', 'curtainLit', 'frame', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
+const SHADOWLESS = new Set(['sigRed', 'sigOff', 'signBlue', 'fenceGreen', 'glass', 'glassLit', 'curtain', 'curtainLit', 'frame', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
 function flushBags(group, receiveOnly = []) {
   for (const [k, b] of Object.entries(BG)) {
     if (!b.p.length) continue;
@@ -820,6 +850,7 @@ const NW_WALL = [[52.95, -12.3], [56.1, BACK_Z]];   // boundary wall with the pr
 // Rue du Pont Colbert bends towards the forest past No. 6 (OpenStreetMap): straight along our façade
 // (centre z = 15) up to BEND_X, then a smooth curve (Catmull-Rom through the control points).
 const BEND_X = -16;
+const CROSS_X = 56.5;   // the signalled pedestrian crossing in front of No. 2 (OpenStreetMap)
 const ROAD_CP = [[-6, 15], [-16, 15], [-26, 14.4], [-36, 10.6], [-48, 5.4], [-62, 0.8], [-80, -4.6], [-100, -10.2], [-130, -18.3], [-170, -29], [-215, -41]];
 function roadZ(x) {
   if (x >= BEND_X) return 15;
@@ -924,7 +955,7 @@ function buildSite(group) {
   bag('soil').prism([[WK1 + 0.12, 2.3], [36.3, 2.3], [36.3, 2.84], [0.17, 2.84]], 0, 0.95);
   bag('soil').prism([[0.17, 2.84], [35.6, 2.84], [35.6, 4.6], [1.62, 4.6]], 0, 0.95);
   bag('soil').boxAB(40.6, 0, 0.0, 44.65, 0.95, 4.6, true);
-  bag('soil').boxAB(44.75, 0, 0.0, 52.9, 1.25, 4.6, true);
+  bag('soil').boxAB(44.75, 0, 0.0, 52.5, 1.25, 4.6, true);
   // low white wall along the pavement, gap at the entrance; starts at the drive
   const lw = bag('concrete');
   lw.boxAB(-3.0, 0, 4.6, WK0, 1.0, 4.84, true);               // beside the "4" (walkway opening follows)
@@ -934,9 +965,10 @@ function buildSite(group) {
   lw.boxAB(WK1, -0.3, 0, WK1 + 0.12, 1.0, 2.3, true);           // front garden edge along the walkway
   lw.segBox(WK1 + 0.06, 2.3, 1.7, 4.72, -0.3, 1.0, 0.14, 0.07);   // ... then on the slant to the pavement
   bag('cobble').prism([[WK1, 4.84], [1.72, 4.84], [WK1, 2.3]], -0.3, SW_Y + 0.012);   // cobbled mouth of the walkway
-  lw.boxAB(44.65, 0, 4.6, 53.1, 1.32, 4.84, true);
+  lw.boxAB(44.65, 0, 4.6, 52.75, 1.32, 4.84, true);
+  lw.boxAB(52.5, 0, 0, 52.75, 1.32, 4.6, true);                  // its NW end, against the neighbour's forecourt
   bag('frame').boxAB(46.6, 0.18, 4.845, 47.55, 1.12, 4.86); // utility hatch in the raised wall
-  railingRun([[44.75, 4.72], [53.0, 4.72]], 1.32, 0.95, 'metal', 0.13);
+  railingRun([[44.75, 4.72], [52.65, 4.72]], 1.32, 0.95, 'metal', 0.13);
 
   // entrance 4: eight risers from the pavement to the door. The upper flight is narrow, with a sloped
   // tiled cheek on its right against the raised planter; the lower flight fans out to the pavement.
@@ -991,8 +1023,12 @@ function buildSite(group) {
   bag('pavement').boxAB(BEND_X, 0, 20.15, 220, SW_Y, 24.2, true);
   // markings: centre dashes, parking line, bus-stop zigzag
   const wm = bag('white');
-  for (let x = BEND_X + 0.5; x < 256; x += 6.5) wm.quad([x, 0.006, 14.94], [x + 3, 0.006, 14.94], [x + 3, 0.006, 15.08], [x, 0.006, 15.08], [0, 1, 0]);
-  wm.quad([BEND_X, 0.006, 17.62], [260, 0.006, 17.62], [260, 0.006, 17.74], [BEND_X, 0.006, 17.74], [0, 1, 0]);
+  for (let x = BEND_X + 0.5; x < 256; x += 6.5) if (x + 3 < CROSS_X - 3.6 || x > CROSS_X + 3.6) wm.quad([x, 0.006, 14.94], [x + 3, 0.006, 14.94], [x + 3, 0.006, 15.08], [x, 0.006, 15.08], [0, 1, 0]);
+  for (const [x0, x1] of [[BEND_X, CROSS_X - 3.4], [CROSS_X + 3.4, 260]]) wm.quad([x0, 0.006, 17.62], [x1, 0.006, 17.62], [x1, 0.006, 17.74], [x0, 0.006, 17.74], [0, 1, 0]);
+  // pedestrian crossing with traffic lights in front of No. 2 (OpenStreetMap + Street View)
+  for (let k = 0; k < 9; k++) wm.quad([CROSS_X - 2, 0.007, 10.6 + k], [CROSS_X + 2, 0.007, 10.6 + k], [CROSS_X + 2, 0.007, 11.1 + k], [CROSS_X - 2, 0.007, 11.1 + k], [0, 1, 0]);
+  wm.quad([CROSS_X + 2.8, 0.007, 10.4], [CROSS_X + 3.1, 0.007, 10.4], [CROSS_X + 3.1, 0.007, 14.94], [CROSS_X + 2.8, 0.007, 14.94], [0, 1, 0]);   // stop lines
+  wm.quad([CROSS_X - 3.1, 0.007, 15.08], [CROSS_X - 2.8, 0.007, 15.08], [CROSS_X - 2.8, 0.007, 17.62], [CROSS_X - 3.1, 0.007, 17.62], [0, 1, 0]);
   const yz = bag('yellow');
   const zig = [10.35, 11.9];
   for (let x = 11.5, i = 0; x < 26.5; x += 2.5, i++) {
@@ -1027,17 +1063,45 @@ function buildSite(group) {
   bag('metal').boxAB(sx + 2.9, SW_Y, sz0 + 0.3, sx + 3.25, SW_Y + 0.75, sz0 + 0.62); // litter bin
 
   // lamp posts (brown, curved arm towards the road)
-  const lamps = [[12.6, 9.2], [34.5, 9.25], [-14.5, 9.25], [63, 9.25]];   // the first between the parking bay and the tree
+  const lamps = [[12.6, 9.2], [34.5, 9.25], [-14.5, 9.25], [72.2, 9.25]];   // the first between the parking bay and the tree
   for (const [x, z] of lamps) {
     bag('brown').cyl([x, SW_Y, z], [x, 7.9, z], 0.09, 0.055, 8);
     bag('brown').cyl([x, 7.9, z], [x, 8.25, z + 0.35], 0.055, 0.05, 6);
     bag('brown').cyl([x, 8.25, z + 0.35], [x, 8.3, z + 1.3], 0.05, 0.045, 6);
     bag('lampHead').cyl([x, 8.12, z + 1.45], [x, 8.32, z + 1.45], 0.32, 0.12, 12, true);
   }
-  // bollards along the kerb
-  for (const x of [27.2, 29.8, 32.4, 37, 39.2, 45.8, 48.4, 51, 55]) {
-    bag('brown').cyl([x, SW_Y, 9.6], [x, SW_Y + 0.82, 9.6], 0.065, 0.06, 8, true);
+  // bollards along the kerb, and two in front of No. 2's doors
+  for (const [x, z] of [[27.2, 9.6], [29.8, 9.6], [32.4, 9.6], [37, 9.6], [39.2, 9.6], [45.8, 9.6], [48.4, 9.6], [51, 9.6], [55.7, 2.7]]) {
+    bag('brown').cyl([x, SW_Y, z], [x, SW_Y + 0.82, z], 0.065, 0.06, 8, true);
   }
+  // traffic lights: on the far side for traffic heading NW, on our side for traffic heading SE, each with
+  // a pedestrian light facing the other end of the crossing
+  const signal = (x, z, top, heads) => {
+    bag('brown').cyl([x, SW_Y, z], [x, top, z], 0.07, 0.06, 8, true);
+    const head = (y0, h, w, faceX, faceZ, lights) => {   // box centred on the pole, lenses on the face
+      const px = -faceZ, pz = faceX, cx = x + faceX * 0.12, cz = z + faceZ * 0.12;
+      bag('sigHead').segBox(cx - px * w / 2, cz - pz * w / 2, cx + px * w / 2, cz + pz * w / 2, y0, y0 + h, 0.24);
+      lights.forEach((mk, i) => {
+        const y = y0 + h - (h / lights.length) * (i + 0.5), lx = cx + faceX * 0.125, lz = cz + faceZ * 0.125;
+        bag(mk).cyl([lx, y, lz], [lx + faceX * 0.02, y, lz + faceZ * 0.02], w * 0.32, w * 0.32, 12, true);
+      });
+    };
+    for (const [y0, h, w, dir, lights] of heads) head(y0, h, w, dir[0], dir[1], lights);
+  };
+  const CAR = ['sigRed', 'sigOff', 'sigOff'], PED = ['sigRed', 'sigOff'];
+  // far side, for traffic heading NW: main light on a tall pole, a repeater at eye height, the pedestrian light
+  signal(CROSS_X - 5.5, 20.7, 4.6, [[3.65, 0.95, 0.32, [-1, 0], CAR], [1.6, 0.5, 0.18, [-1, 0], CAR], [2.3, 0.55, 0.26, [0, -1], PED]]);
+  // our side, for traffic heading SE: a short pole with the light at eye height and the pedestrian light on top
+  signal(CROSS_X + 3.2, 9.55, 3.3, [[1.85, 0.8, 0.26, [1, 0], CAR], [2.75, 0.55, 0.26, [0, 1], PED]]);
+  // brown kerb fence with St Andrew's crosses, from the crossing to the end of the modelled stretch
+  for (let x = CROSS_X + 4.5; x < 71.0; x += 2.0) {
+    const x1 = Math.min(71.0, x + 2.0), fz = 9.5, y0 = SW_Y + 0.2, y1 = SW_Y + 1.0, F = bag('brown');
+    F.boxAB(x - 0.03, SW_Y, fz - 0.03, x + 0.03, y1 + 0.05, fz + 0.03); F.boxAB(x1 - 0.03, SW_Y, fz - 0.03, x1 + 0.03, y1 + 0.05, fz + 0.03);
+    F.boxAB(x, y1 - 0.04, fz - 0.02, x1, y1, fz + 0.02); F.boxAB(x, y0, fz - 0.02, x1, y0 + 0.04, fz + 0.02);
+    F.cyl([x + 0.05, y0 + 0.04, fz], [x1 - 0.05, y1 - 0.04, fz], 0.016, 0.016, 5); F.cyl([x + 0.05, y1 - 0.04, fz], [x1 - 0.05, y0 + 0.04, fz], 0.016, 0.016, 5);
+  }
+  // white utility cabinet against our planter wall, at the NW end
+  bag('cabinet').boxAB(50.4, SW_Y, 4.86, 51.05, SW_Y + 1.3, 5.2, true);
   // tree beds: low raised beds of granite blocks (two courses), elongated hexagons, wood-chip mulch and
   // tufts of grass (Street View, Feb 2026)
   const treeBed = (cx, cz, rx, rz, seed) => {
@@ -1399,7 +1463,7 @@ function buildHedges(group) {
   // photinia hedge on the street planter, a few segments with natural breaks
   const segs = [[1.7, 7.5], [7.7, 16.2], [16.5, 25.5], [25.8, 33.4], [33.6, 35.5]];
   segs.forEach(([a, b], i) => geos.push(hedgeGeo(a, b, 3.35, 4.5, 0.95, 2.62 + (i % 2) * 0.12, PHOTINIA, 10 + i)));
-  geos.push(hedgeGeo(45.0, 52.8, 3.2, 4.45, 1.25, 3.5, THUJA, 31, 0.15));
+  geos.push(hedgeGeo(45.0, 52.4, 3.2, 4.45, 1.25, 3.5, THUJA, 31, 0.15));
   // around the entrance of the 4: tall photinia beside the stair, planted recess, shrubs to the right
   geos.push(hedgeGeo(34.9, 36.25, 0.4, 2.7, 0.95, 2.75, PHOTINIA, 150, 0.45));
   geos.push(hedgeGeo(38.95, 39.85, -1.25, -0.3, 2.07, 2.95, VARIEG, 151, 0.55));
@@ -1430,7 +1494,6 @@ function buildHedges(group) {
     .forEach(([z0, z1], i) => geos.push(hedgeGeo(WK1 + 0.1, -0.04, z0, z1, walkY(z1) + 0.44, walkY(z1) + 0.95 + (i % 2) * 0.2, i % 2 ? PHOTINIA : BOX, 110 + i, 0.5)));
   geos.push(hedgeGeo(-2.42, -1.1, -12.28, -11.9, PORCH_Y + 0.5, PORCH_Y + 1.3, BOX, 97, 0.5));      // planter at the end of the walkway
   // neighbours' front hedges
-  geos.push(hedgeGeo(53.4, 82, 2.8, 4.2, 0.0, 2.4, THUJA, 140, 0.15));
   for (let x = -16.4, i = 0; x > -46.0; x -= 2.6, i++) {   // No. 6's hedge behind its wall, along the bend
     const xa = Math.max(-46.2, x - 2.6), q = [backPt(x, 0.5), backPt(xa, 0.5), backPt(x, 1.7), backPt(xa, 1.7)];
     const xs = q.map((v) => v[0]), zs = q.map((v) => v[1]);
@@ -1540,38 +1603,81 @@ function buildNeighbours(group) {
     fenceRun(wp.filter((_, k) => k % 2 === 0), () => WH + 0.06, 0.9, 'fenceGreen', 'railGreen');
   }
 
-  // --- NW: modern white clinic building with glazed stair tower and slate mansard
+  // --- NW: No. 2, an office building attached to our NW gable (OpenStreetMap footprint + Street View).
+  //     From our gable: a glazed stair tower over the car-park entrance, then a projecting section in
+  //     light stone panels with a big glazed bay, under a zinc mansard. Modelled up to the MONTCALM
+  //     entrance, which is left out (residents' request).
   {
-    const x0 = 57.6, x1 = 84, z0 = -14, z1 = -0.9, top = 15.2;
-    const cl = bag('cladding');
-    cl.quad([x0, 0, z1], [x1, 0, z1], [x1, top, z1], [x0, top, z1], [0, 0, 1]);
-    cl.quad([x1, 0, z0], [x1, 0, z1], [x1, top, z1], [x1, top, z0], [1, 0, 0]);
-    cl.quad([x0, 0, z0], [x1, 0, z0], [x1, top, z0], [x0, top, z0], [0, 0, -1]);
-    cl.quad([x0, 0, z0], [x0, 0, z1], [x0, top, z1], [x0, top, z0], [-1, 0, 0]);
-    for (let f = 0; f < 5; f++) {
-      const y = 0.5 + f * 3.0;
-      bag('cladding').boxAB(x0, y + 2.4, z1, x1, y + 2.75, z1 + 0.18);
-      for (let i = 0; i < 8; i++) {
-        const cx = x0 + 1.7 + i * 3.2;
-        bag('glass').quad([cx - 0.9, y + 0.5, z1 + 0.02], [cx + 0.9, y + 0.5, z1 + 0.02], [cx + 0.9, y + 2.3, z1 + 0.02], [cx - 0.9, y + 2.3, z1 + 0.02], [0, 0, 1]);
-        bag('frame').boxAB(cx - 0.03, y + 0.5, z1 + 0.02, cx + 0.03, y + 2.3, z1 + 0.06);
+    const X0 = 52.75, XT = 58.0, X1 = 70.7, ZB = -10.8, ZF = 0.1, ZP = 2.1;   // gable, tower / stone, end; back, front, projection
+    const GF_H = 4.6, TOWER_TOP = 15.3, BAND_TOP = 16.3, CORN = 16.0;
+    const A = bag('ashlar');
+    const wallZ = (x0, x1, z, y0, y1, nz) => A.quad([x0, y0, z], [x1, y0, z], [x1, y1, z], [x0, y1, z], [0, 0, nz]);
+    const wallX = (x, z0, z1, y0, y1, nx) => A.quad([x, y0, z0], [x, y0, z1], [x, y1, z1], [x, y1, z0], [nx, 0, 0]);
+    // -- stair tower, x X0..XT: stone ground floor with the car-park door, curtain wall above, dark attic band
+    wallZ(X0, 53.1, ZF, -0.3, GF_H, 1); wallZ(55.7, 56.2, ZF, -0.3, GF_H, 1); wallZ(57.1, XT, ZF, -0.3, GF_H, 1);
+    wallZ(53.1, 55.7, ZF, 2.75, GF_H, 1); wallZ(56.2, 57.1, ZF, 2.2, GF_H, 1);
+    for (const [x0, x1, top] of [[53.1, 55.7, 2.75], [56.2, 57.1, 2.2]]) {   // reveals of the two openings
+      A.quad([x0, -0.3, ZF], [x0, -0.3, ZF - 0.25], [x0, top, ZF - 0.25], [x0, top, ZF], [1, 0, 0]);
+      A.quad([x1, -0.3, ZF], [x1, -0.3, ZF - 0.25], [x1, top, ZF - 0.25], [x1, top, ZF], [-1, 0, 0]);
+      A.quad([x0, top, ZF], [x1, top, ZF], [x1, top, ZF - 0.25], [x0, top, ZF - 0.25], [0, -1, 0]);
+    }
+    bag('garageDoor').quad([53.1, 0, ZF - 0.25], [55.7, 0, ZF - 0.25], [55.7, 2.75, ZF - 0.25], [53.1, 2.75, ZF - 0.25], [0, 0, 1]);   // white grille door
+    bag('white').quad([56.2, 0, ZF - 0.2], [57.1, 0, ZF - 0.2], [57.1, 2.2, ZF - 0.2], [56.2, 2.2, ZF - 0.2], [0, 0, 1]);              // service door
+    bag('metal').boxAB(53.1, 0.0, ZF - 0.25, 55.7, 0.03, ZF + 0.9);                                                                // drain grate in front of the car-park door
+    bag('signBlue').cyl([54.4, 3.3, ZF + 0.01], [54.4, 3.3, ZF + 0.04], 0.19, 0.19, 16, true);                                     // the blue "i" disc
+    bag('officeGlass').quad([X0 + 0.12, GF_H, ZF + 0.02], [XT - 0.12, GF_H, ZF + 0.02], [XT - 0.12, TOWER_TOP, ZF + 0.02], [X0 + 0.12, TOWER_TOP, ZF + 0.02], [0, 0, 1]);
+    bag('frame').boxAB(X0, GF_H, ZF, X0 + 0.14, TOWER_TOP, ZF + 0.06); bag('frame').boxAB(XT - 0.14, GF_H, ZF, XT, TOWER_TOP, ZF + 0.06);
+    bag('frame').boxAB(X0, GF_H - 0.1, ZF, XT, GF_H + 0.04, ZF + 0.08);
+    bag('slate').boxAB(X0, TOWER_TOP, ZB, XT, BAND_TOP, ZF + 0.04);                                                                 // dark zinc attic band
+    mansard('slate', X0, ZB, XT, ZF + 0.04, BAND_TOP, 0.9, 0.8);
+    wallZ(X0, XT, ZB, -0.3, TOWER_TOP, -1);
+    // -- stone section, x XT..X1, projecting to ZP: ground-floor window band, big glazed bay, cornice, mansard
+    const W = (x0, x1, y0, y1, z, mk = 'glass') => bag(mk).quad([x0, y0, z], [x1, y0, z], [x1, y1, z], [x0, y1, z], [0, 0, 1]);
+    const holes = [[61.6, 69.5, 0.6, 2.9], [61.2, 68.35, GF_H, 12.2], [62.55, 66.6, 12.2, 15.0], [59.75, 61.0, 14.0, 15.1], [68.1, 69.25, 14.0, 15.1]];
+    // stone face around the openings, as horizontal bands split at the openings
+    const ys = [...new Set([-0.3, CORN, ...holes.flatMap((h) => [h[2], h[3]])])].sort((m, n) => m - n);
+    for (let k = 0; k + 1 < ys.length; k++) {
+      const y0 = ys[k], y1 = ys[k + 1], cut = holes.filter((h) => h[2] <= y0 + 1e-6 && h[3] >= y1 - 1e-6).sort((m, n) => m[0] - n[0]);
+      let x = XT;
+      for (const h of cut) { if (h[0] > x) wallZ(x, h[0], ZP, y0, y1, 1); x = h[1]; }
+      if (x < X1) wallZ(x, X1, ZP, y0, y1, 1);
+    }
+    for (const [x0, x1, y0, y1] of holes) {   // reveals and frames
+      const d = 0.18;
+      A.quad([x0, y0, ZP], [x0, y0, ZP - d], [x0, y1, ZP - d], [x0, y1, ZP], [1, 0, 0]);
+      A.quad([x1, y0, ZP], [x1, y0, ZP - d], [x1, y1, ZP - d], [x1, y1, ZP], [-1, 0, 0]);
+      A.quad([x0, y1, ZP], [x1, y1, ZP], [x1, y1, ZP - d], [x0, y1, ZP - d], [0, -1, 0]);
+      bag('sill').boxAB(x0 - 0.05, y0 - 0.06, ZP - d, x1 + 0.05, y0, ZP + 0.05);
+      const big = x1 - x0 > 3;
+      W(x0, x1, y0, y1, ZP - d, big && y0 >= GF_H - 0.01 ? 'officeGlass' : 'glass');
+      if (!big || y0 < 1) {   // small windows and the ground-floor band: dark mullions
+        const n = Math.max(2, Math.round((x1 - x0) / 0.9));
+        for (let i = 1; i < n; i++) { const x = lerp(x0, x1, i / n); bag(y0 < 1 ? 'metal' : 'frame').boxAB(x - 0.03, y0, ZP - d, x + 0.03, y1, ZP - d + 0.05); }
+        bag(y0 < 1 ? 'metal' : 'frame').boxAB(x0, (y0 + y1) / 2 - 0.03, ZP - d, x1, (y0 + y1) / 2 + 0.03, ZP - d + 0.05);
       }
     }
-    // stair tower (curtain wall) against our NW gable
-    const t0 = 53.2, t1 = 57.6, tz0 = -7.8, tz1 = -0.4, ttop = 16.6;
-    const cw = bag('curtainWall');
-    cw.quad([t0, 0, tz1], [t1, 0, tz1], [t1, ttop, tz1], [t0, ttop, tz1], [0, 0, 1]);
-    cw.quad([t1, 0, tz0], [t1, 0, tz1], [t1, ttop, tz1], [t1, ttop, tz0], [1, 0, 0]);
-    bag('cladding').boxAB(t0, ttop, tz0, t1, ttop + 0.35, tz1);
-    bag('cladding').boxAB(t0 - 0.05, 0, tz1 - 0.1, t0 + 0.35, ttop + 0.35, tz1 + 0.05);
-    // mansard
-    mansard('slate', x0 - 0.2, z0 - 0.2, x1 + 0.2, z1 + 0.2, top, 3.2, 2.2);
-    for (let i = 0; i < 6; i++) {
-      const cx = x0 + 3 + i * 4;
-      bag('cladding').boxAB(cx - 0.8, top + 0.6, z1 - 1.3, cx + 0.8, top + 2.4, z1 - 0.4);
-      bag('glass').quad([cx - 0.55, top + 0.8, z1 - 0.39], [cx + 0.55, top + 0.8, z1 - 0.39], [cx + 0.55, top + 2.1, z1 - 0.39], [cx - 0.55, top + 2.1, z1 - 0.39], [0, 0, 1]);
+    A.quad([64.1, 0.6, ZP - 0.18], [64.8, 0.6, ZP - 0.18], [64.8, 2.9, ZP - 0.18], [64.1, 2.9, ZP - 0.18], [0, 0, 1]);   // pier in the window band
+    bag('concrete').boxAB(XT + 0.2, 0, ZP, X1 - 0.2, 0.55, ZP + 0.32, true);                                           // low plinth along the base
+    wallX(XT, ZF, ZP, -0.3, CORN, -1);   // returns of the projection
+    wallX(X1, ZB, ZP, -0.3, CORN, 1);    // end of the modelled part, before the MONTCALM entrance
+    wallZ(XT, X1, ZB, -0.3, CORN, -1);
+    for (let f = 0; f < 3; f++) for (let i = 0; i < 5; i++) {   // back windows
+      const x = XT + 1.4 + i * 2.5, y = GF_H + 1.0 + f * 3.4;
+      bag('glass').quad([x, y, ZB - 0.02], [x + 1.4, y, ZB - 0.02], [x + 1.4, y + 1.7, ZB - 0.02], [x, y + 1.7, ZB - 0.02], [0, 0, -1]);
     }
+    bag('cladding').boxAB(XT - 0.25, CORN, ZB - 0.25, X1 + 0.25, CORN + 0.4, ZP + 0.28);   // cornice
+    mansard('slate', XT - 0.05, ZB - 0.05, X1 + 0.05, ZP + 0.05, CORN + 0.4, 2.6, 2.0);
+    {   // three roof windows on the street slope
+      const sl = (x, t) => [x, lerp(CORN + 0.4, CORN + 3.0, t) + 0.03 * 0.79, lerp(ZP + 0.05, ZP - 1.95, t) + 0.03 * 0.61];
+      for (const [x0, x1] of [[62.3, 63.5], [64.0, 66.3], [66.8, 68.0]]) bag('glass').quad(sl(x0, 0.3), sl(x1, 0.3), sl(x1, 0.68), sl(x0, 0.68), [0, 0.61, 0.79]);
+    }
+    // single-storey annex at the back
+    bag('ashlar').boxAB(XT, -0.3, -12.7, X1, GF_H, ZB, true);
+    bag('roof').boxAB(XT, GF_H, -12.7, X1, GF_H + 0.12, ZB);
+    // forecourt in front: pavement up to the façade
+    bag('pavement').boxAB(X0, 0, 0.0, 72.0, SW_Y, 4.84, true);
   }
+
   // across the street: kept as plain lawn beyond the far pavement (terrain), no buildings or parking
   flushBags(group);
 }
@@ -1744,7 +1850,7 @@ function buildVegetation(group) {
   const blocked = (x, z) =>
     inRect(x, z, -17, BACK_Z + 0.5, 68, 6) || inRect(x, z, -45, -23, -12, 26) || pathClear(x, z) < 1.6 ||
     (x < BEND_X && roadOff(x, z) > paveD(x) - 1.5) ||
-    inRect(x, z, 51, -18, 88, 26) || z > -1;
+    inRect(x, z, 51, -18, 112, 26) || z > -1;
   const STEP = SMALL ? 10.5 : 7.2;   // a dense forest (lighter on phones)
   for (let gx = -150; gx < 175; gx += STEP) for (let gz = -200; gz < 0; gz += STEP) {
     const x = gx + (r() - 0.5) * STEP * 0.8, z = gz + (r() - 0.5) * STEP * 0.8;
@@ -1858,7 +1964,7 @@ const moon = new THREE.DirectionalLight(0x8fa6d6, 0);
 moon.position.set(-60, 120, 80);
 scene.add(moon);
 const lampLights = [];
-for (const [x, z] of [[6.3, 10.7], [34.5, 10.7], [-14.5, 10.7]]) {
+for (const [x, z] of [[12.6, 10.65], [34.5, 10.7], [-14.5, 10.7]]) {
   const l = new THREE.PointLight(0xffc98a, 0, 26, 1.6); l.position.set(x, 7.6, z); scene.add(l); lampLights.push(l);
 }
 
