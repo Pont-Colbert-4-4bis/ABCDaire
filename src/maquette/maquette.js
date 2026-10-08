@@ -195,6 +195,13 @@ function makeTextures() {
     const val = 241 + (n - 0.5) * 22 + (f - 0.5) * 9 - Math.max(0, streak - 0.62) * 22;
     return [val, val, val];
   }, { srgb: false, tile: 4 });
+  // gravel: the roof and the 6th-floor terrace are covered with small stones
+  TEX.gravel = pixelTex(256, (u, v) => {
+    const a = tnoise(u * 96, v * 96, 96, 31), b = tnoise(u * 170, v * 170, 170, 37), c = tfbm(u * 6, v * 6, 6, 3, 41);
+    let val = 214 + (a - 0.5) * 62 + (b - 0.5) * 46 + (c - 0.5) * 14;
+    if (b < 0.3) val -= 38;
+    return [val, val * 0.985, val * 0.95];
+  }, { srgb: false, tile: 2.5 });
   // concrete
   TEX.concrete = pixelTex(256, (u, v) => {
     const n = tfbm(u * 8, v * 8, 8, 4, 21), f = tnoise(u * 90, v * 90, 90, 3);
@@ -339,7 +346,7 @@ function makeMaterials() {
   M.curtain = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6 });
   M.curtainLit = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6, emissive: 0xffc98f, emissiveMap: TEX.curtain, emissiveIntensity: 0 });
   M.metal = std({ color: 0x34383c, roughness: 0.45, metalness: 0.55 });
-  M.roof = std({ color: 0x8d8b86, map: TEX.concrete, roughness: 1 });
+  M.roof = std({ color: 0xbab4aa, map: TEX.gravel, roughness: 1 });
   M.concrete = std({ color: 0xd3cec4, map: TEX.concrete, roughness: 0.95 });
   M.darkConcrete = std({ color: 0x9d988f, map: TEX.concrete, roughness: 1 });
   M.asphalt = std({ color: 0x4a4c4f, map: TEX.asphalt, roughness: 0.97 });
@@ -518,6 +525,8 @@ function opening(F, a, b, ya, yb, kind) {
 }
 
 function buildLevel(F, k, els, wk = 'wall') {
+  // 6th floor: windows only, no French windows (the terrace in front is not a balcony)
+  if (k === 6) els = els.map((e) => (e.t === 'f' ? { ...e, t: 'w' } : e));
   const y0 = LV(k), yS = y0 + SILL, yH = y0 + HEAD, yT = y0 + FH;
   const iv = (f) => els.filter(f).map((e) => [e.a, e.b]);
   const holesLow = iv((e) => e.t === 'f' || e.t === 'd' || e.t === 'p');

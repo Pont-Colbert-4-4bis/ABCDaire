@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Maquette 3D interactive (Three.js) sur l’accueil et dans la page « La résidence en 3D ».
+Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 
@@ -40,7 +40,7 @@ Les composants tiers conservent leurs licences respectives. Seules les copies pu
 
 ## Maquette 3D
 
-La maquette est construite par le code, dans le navigateur, à partir de `src/maquette/` : `maquette.js` produit le bâtiment, les parkings, les entrées 4 et 4 bis, les abords, les bâtiments voisins, le terrain et les bois ; `strings.mjs` contient les textes (français pour le guide, anglais pour la copie autonome) ; `markup.mjs` et `maquette.css` l’interface. `scripts/build.mjs` la compile avec esbuild dans `dist/maquette/`, sans CDN ni texture photographique. L’accueil l’affiche en cadre compact (`?mode=hero`, sans zoom à la molette pour laisser défiler la page) et `/residence/` en grand (`?mode=explore`). Voir [la documentation de la maquette](model/README.md) et `model/reference.json` pour la provenance, les estimations et les limites.
+La maquette est construite par le code, dans le navigateur, à partir de `src/maquette/` : `maquette.js` produit le bâtiment, les parkings, les entrées 4 et 4 bis, les abords, les bâtiments voisins, le terrain et les bois ; `strings.mjs` contient les textes (français pour le guide, anglais pour la copie autonome) ; `markup.mjs` et `maquette.css` l’interface. `scripts/build.mjs` la compile avec esbuild dans `dist/maquette/`, sans CDN ni texture photographique. La page `/residence/` l’affiche en grand (`?mode=explore`). L’accueil montre un dessin aquarellé de la résidence (`assets/villa-colbert-dessin.webp`) avec le lien « Découvrir le bâtiment » vers cette page. Voir [la documentation de la maquette](model/README.md) et `model/reference.json` pour la provenance, les estimations et les limites.
 
 Entrée **4 bis à gauche près des parkings** : une allée longe le pignon entre l’accès haut des parkings et le bâtiment, avec une jardinière le long du mur ; la porte s’ouvre sur la droite, au bout de l’allée, sous la terrasse. Entrée **4 à droite depuis la rue** : escalier de huit marches, porte vitrée et renfoncement planté. Les deux accès aux parkings (rampe descendante et accès plus haut), le terrain qui monte derrière l’immeuble et la pelouse de l’autre côté de la rue sont représentés. Les cotes sont estimées d’après les vues de rue, une vue aérienne et les précisions de résidents : ce modèle n’est pas un relevé ni un plan d’architecte.
 

@@ -10,4 +10,10 @@
 /* the stage label now sits over trees and sky: give it a small light card so it stays legible */
 .has-maquette .model-kicker{top:22px;left:38px;padding:6px 11px;border-radius:999px;background:rgba(255,253,248,.84);color:#3f4b42;box-shadow:0 2px 8px rgba(25,54,76,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 @media(max-width:760px){.has-maquette .model-kicker{top:16px;left:24px}}
+/* home page: the drawing of the residence, a link to the 3D model */
+.hero-art.has-picture{display:block;aspect-ratio:1576/998;max-height:none}
+.hero-art.has-picture .illustration{object-fit:cover;-webkit-mask-image:none;mask-image:none;transition:transform .5s ease}
+.hero-art.has-picture:hover .illustration{transform:scale(1.015)}
+.hero-art.has-picture:focus-visible{outline:2px solid var(--navy);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.hero-art.has-picture .illustration{transition:none}}
 @media print{.maquette-frame{display:none!important}}
