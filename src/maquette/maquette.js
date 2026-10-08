@@ -842,6 +842,13 @@ function buildSite(group) {
     yz.segBox(x, za, x + 2.5, zc, 0.004, 0.009, 0.12, 0.05);
   }
   yz.segBox(11.5, 10.35, 26.5, 10.35, 0.004, 0.009, 0.12);
+  // parking bay on the pavement, between the vehicle crossing and the bus stop: a trapezoid, long side
+  // on the kerb, slanted ends (aerial view, residents' correction)
+  const BAY = { x0: -2.4, x1: 11.2, i0: 0.4, i1: 8.6, zi: 7.05, zo: 9.85 };
+  const by = SW_Y + 0.006;
+  bag('paving').quad([BAY.x0, by, BAY.zo], [BAY.x1, by, BAY.zo], [BAY.i1, by, BAY.zi], [BAY.i0, by, BAY.zi], [0, 1, 0]);
+  for (const [a0, a1, b0, b1] of [[BAY.x0, BAY.zo, BAY.i0, BAY.zi], [BAY.i0, BAY.zi, BAY.i1, BAY.zi], [BAY.i1, BAY.zi, BAY.x1, BAY.zo]]) wm.segBox(a0, a1, b0, b1, by, by + 0.004, 0.12);
+  for (const x of [3.0, 5.9]) wm.segBox(x, BAY.zi, x, BAY.zo, by, by + 0.004, 0.1);   // three places
 
   // street furniture ------------------------------------------------
   // bus shelter "Sarraut"
@@ -859,7 +866,7 @@ function buildSite(group) {
   bag('metal').boxAB(sx + 2.9, SW_Y, sz0 + 0.3, sx + 3.25, SW_Y + 0.75, sz0 + 0.62); // litter bin
 
   // lamp posts (brown, curved arm towards the road)
-  const lamps = [[6.3, 9.25], [34.5, 9.25], [-14.5, 9.25], [63, 9.25]];
+  const lamps = [[6.3, 6.75], [34.5, 9.25], [-14.5, 9.25], [63, 9.25]];   // the first stands at the back of the parking bay
   for (const [x, z] of lamps) {
     bag('brown').cyl([x, SW_Y, z], [x, 7.9, z], 0.09, 0.055, 8);
     bag('brown').cyl([x, 7.9, z], [x, 8.25, z + 0.35], 0.055, 0.05, 6);
@@ -872,7 +879,7 @@ function buildSite(group) {
   }
   // tree planters: elongated hexagon (SE) and square stone pit (entrance)
   {
-    const hx = 4.2, hz = 8.25, pts = [];
+    const hx = 13.4, hz = 8.25, pts = [];
     for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2 + 0.3; pts.push([hx + Math.cos(a) * 1.55, hz + Math.sin(a) * 0.95]); }
     for (let i = 0; i < 6; i++) { const a = pts[i], b = pts[(i + 1) % 6]; bag('curb').segBox(a[0], a[1], b[0], b[1], SW_Y - 0.02, SW_Y + 0.3, 0.22, 0.1); }
     bag('soil').prism(pts, SW_Y, SW_Y + 0.22, false, false);
@@ -880,7 +887,7 @@ function buildSite(group) {
     bag('soil').boxAB(41.4, SW_Y, 7.35, 43.4, SW_Y + 0.25, 9.35, true);
   }
   // parking meter + red fire hydrant in front of the SE end of the front garden
-  bag('shelter').boxAB(8.8, SW_Y, 9.1, 9.15, SW_Y + 1.55, 9.42, true);
+  bag('shelter').boxAB(8.95, SW_Y, 6.55, 9.3, SW_Y + 1.55, 6.87, true);   // at the back of the parking bay
   bag('hydrant').cyl([3.4, SW_Y, 5.3], [3.4, SW_Y + 0.95, 5.3], 0.13, 0.13, 10, true);
   bag('hydrant').cyl([3.4, SW_Y + 0.95, 5.3], [3.4, SW_Y + 1.1, 5.3], 0.13, 0.05, 10, true);
   // bollard at the NW edge of the crossing
@@ -890,6 +897,8 @@ function buildSite(group) {
   const carCols = [0x8b9096, 0x1f2328, 0xe7e7e3, 0x5d6670, 0x2d3e57, 0xa8aaa9, 0x6f2f2a, 0x34373a];
   const cars = [[-30, 11.3, 1], [-21, 11.3, 1], [-58, 18.9, -1], [-44, 18.9, -1], [-9, 18.9, -1], [3.5, 18.9, -1], [10.5, 18.9, -1], [31, 18.9, -1], [37.5, 18.9, -1], [57, 18.9, -1], [70, 18.9, -1], [84, 18.9, -1]];
   cars.forEach(([x, z, dir], i) => car(x, z, dir, carCols[i % carCols.length], i));
+  // two cars in the parking bay on the pavement
+  car(1.6, 8.55, 1, carCols[1], 31, SW_Y); car(7.4, 8.55, 1, carCols[3 % carCols.length], 37, SW_Y);
 
   flushBags(group, ['yellow', 'white', 'redway']);
 }
@@ -1056,16 +1065,16 @@ function buildDrive(group) {
 }
 
 const carMats = {};
-function car(x, z, dir, col, seed) {
+function car(x, z, dir, col, seed, y = 0) {
   const k = 'car' + col.toString(16);
   if (!M[k]) M[k] = new THREE.MeshStandardMaterial({ color: col, roughness: 0.35, metalness: 0.55 });
-  const r = rng(seed + 3), L = 4.1 + r() * 0.6, W = 1.8, h0 = 0.32;
+  const r = rng(seed + 3), L = 4.1 + r() * 0.6, W = 1.8, h0 = 0.32 + y;
   const b = bag(k);
   b.boxAB(x - L / 2, h0, z - W / 2, x + L / 2, h0 + 0.62, z + W / 2);
   const cx = x - dir * 0.25, cl = L * 0.52;
   bag('carGlass').boxAB(cx - cl / 2, h0 + 0.62, z - W / 2 + 0.1, cx + cl / 2, h0 + 1.15, z + W / 2 - 0.1);
   b.boxAB(cx - cl / 2 + 0.15, h0 + 1.15, z - W / 2 + 0.14, cx + cl / 2 - 0.12, h0 + 1.2, z + W / 2 - 0.14);
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) bag('tyre').cyl([x + sx * L * 0.33, 0.32, z + sz * (W / 2 - 0.05)], [x + sx * L * 0.33, 0.32, z + sz * (W / 2 + 0.03)], 0.32, 0.32, 10, true);
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) bag('tyre').cyl([x + sx * L * 0.33, 0.32 + y, z + sz * (W / 2 - 0.05)], [x + sx * L * 0.33, 0.32 + y, z + sz * (W / 2 + 0.03)], 0.32, 0.32, 10, true);
 }
 
 /* ---------------------------------------------------------- hedges */
@@ -1425,7 +1434,7 @@ function buildVegetation(group) {
   conifers.forEach((v, i) => { inst(v.bark, M.bark, spots.c[i]); inst(v.leaf, M.leafDark, spots.c[i]); });
   // the two pavement trees from the photos (finer twigs)
   const t1 = deciduous(101, 9.5, 5, 0.6, 1, 0.55), t2 = deciduous(202, 8.5, 5, 0.56, 1, 0.55);
-  for (const [t, x, z] of [[t1, 4.2, 8.25], [t2, 42.4, 8.35]]) {
+  for (const [t, x, z] of [[t1, 13.4, 8.25], [t2, 42.4, 8.35]]) {   // the first between the parking bay and the bus stop
     const b = new THREE.Mesh(t.bark, M.bark); b.name = 'streetTreeBark'; b.position.set(x, SW_Y + 0.2, z); b.castShadow = b.receiveShadow = true; group.add(b);
     const l = new THREE.Mesh(t.leaf, M.leaf); l.name = 'streetTreeLeaf'; l.position.copy(b.position); l.castShadow = true; l.receiveShadow = true; group.add(l); FOLIAGE.push(l);
   }
