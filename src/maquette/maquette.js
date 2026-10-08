@@ -327,6 +327,23 @@ function makeTextures() {
     TEX.signArrow = disc('#1f5fae', (g) => { g.fillRect(55, 26, 18, 52); g.beginPath(); g.moveTo(34, 72); g.lineTo(94, 72); g.lineTo(64, 104); g.closePath(); g.fill(); });
     TEX.signNoEntry = disc('#c8202a', (g) => g.fillRect(26, 54, 76, 20));
   }
+  // keep-right signs on the central island: a square plate and a tall beacon, white arrow pointing down-right
+  {
+    const plate = (w, h, x0, y0, x1, y1, sw, hl, hw) => {
+      const c = canvas(w, h), g = c.getContext('2d');
+      g.fillStyle = '#f4f5f2'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#1f5fae'; g.fillRect(5, 5, w - 10, h - 10);
+      g.fillStyle = '#f4f5f2';
+      const L = Math.hypot(x1 - x0, y1 - y0), ux = (x1 - x0) / L, uy = (y1 - y0) / L, px = -uy, py = ux, bx = x1 - ux * hl, by = y1 - uy * hl;
+      g.beginPath();
+      g.moveTo(x0 + px * sw / 2, y0 + py * sw / 2); g.lineTo(bx + px * sw / 2, by + py * sw / 2); g.lineTo(bx + px * hw, by + py * hw);
+      g.lineTo(x1, y1); g.lineTo(bx - px * hw, by - py * hw); g.lineTo(bx - px * sw / 2, by - py * sw / 2); g.lineTo(x0 - px * sw / 2, y0 - py * sw / 2);
+      g.closePath(); g.fill();
+      const t = finish(c, { tile: 1 }); t.repeat.set(1, 1); return t;
+    };
+    TEX.signKeepRight = plate(128, 128, 34, 34, 98, 98, 18, 36, 26);
+    TEX.signBalise = plate(64, 224, 22, 40, 44, 190, 14, 36, 20);
+  }
   // light stone panels of the office building next door (No. 2): 1.2 x 0.6 m, stacked joints
   {
     const c = canvas(256, 128), g = c.getContext('2d'), r = rng(2222);
@@ -446,6 +463,9 @@ function makeMaterials() {
   M.signBlue = std({ color: 0x1f5fae, roughness: 0.5 });
   M.signArrow = std({ color: 0xffffff, map: TEX.signArrow, transparent: true, alphaTest: 0.4, roughness: 0.5 });
   M.signNoEntry = std({ color: 0xffffff, map: TEX.signNoEntry, transparent: true, alphaTest: 0.4, roughness: 0.5 });
+  M.signKeepRight = std({ color: 0xffffff, map: TEX.signKeepRight, roughness: 0.45 });
+  M.signBalise = std({ color: 0xffffff, map: TEX.signBalise, roughness: 0.45 });
+  M.islandTop = std({ color: 0x7a7e6f, map: TEX.concrete, roughness: 1 });   // mossy concrete of the central island
   M.sigHead = std({ color: 0x1b1d1e, roughness: 0.6 });
   M.sigRed = std({ color: 0x4a0b08, roughness: 0.3, emissive: 0xff2b16, emissiveIntensity: 1.8 });
   M.sigOff = std({ color: 0x23292b, roughness: 0.25 });
@@ -490,7 +510,9 @@ makeMaterials();
 // bags per material
 const BG = {};
 const bag = (k) => (BG[k] ||= new Bag());
-const SHADOWLESS = new Set(['sigRed', 'sigOff', 'signBlue', 'fenceGreen', 'glass', 'glassLit', 'curtain', 'curtainLit', 'frame', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
+// window panes and frames do cast shadows: the buildings throw solid shadows, the sun never shows through
+// a window onto the street (residents)
+const SHADOWLESS = new Set(['sigRed', 'sigOff', 'signBlue', 'fenceGreen', 'yellow', 'white', 'redway', 'poster', 'stopName', 'fence']);
 function flushBags(group, receiveOnly = []) {
   for (const [k, b] of Object.entries(BG)) {
     if (!b.p.length) continue;
@@ -865,6 +887,10 @@ const NW_WALL = [[52.95, -12.3], [56.1, BACK_Z]];   // boundary wall with the pr
 // (centre z = 15) up to BEND_X, then a smooth curve (Catmull-Rom through the control points).
 const BEND_X = -16;
 const CROSS_X = 56.5;   // the signalled pedestrian crossing in front of No. 2 (OpenStreetMap)
+// the central island just SE of the crossing (Street View): one lane heading SE on our side of it, two
+// heading NW on the far side (OpenStreetMap), so it sits nearer our kerb than the middle of the road
+const ISL = { x0: 44.0, x1: 54.3, z0: 13.2, z1: 14.3 };
+const ISL_Z = (ISL.z0 + ISL.z1) / 2;
 const ROAD_CP = [[-6, 15], [-16, 15], [-26, 14.4], [-36, 10.6], [-48, 5.4], [-62, 0.8], [-80, -4.6], [-100, -10.2], [-130, -18.3], [-170, -29], [-215, -41]];
 function roadZ(x) {
   if (x >= BEND_X) return 15;
@@ -1035,14 +1061,64 @@ function buildSite(group) {
   bag('asphalt').quad([BEND_X, 0, 10.05], [260, 0, 10.05], [260, 0, 19.95], [BEND_X, 0, 19.95], [0, 1, 0]);
   // far pavement
   bag('pavement').boxAB(BEND_X, 0, 20.15, 220, SW_Y, 24.2, true);
-  // markings: centre dashes, parking line, bus-stop zigzag
+  // markings (Street View, Feb 2026; OpenStreetMap: one lane heading SE, two heading NW, the right-hand one
+  // for the turn into Rue Albert Sarraut). The centre line moves over to the axis of the island after the bus
+  // stop and runs into its nose as a wide continuous line; the lane line between the two lanes heading NW turns
+  // continuous near the lights; a dashed edge line along our kerb; stop lines, lane arrows, the zebra crossing.
   const wm = bag('white');
-  for (let x = BEND_X + 0.5; x < 256; x += 6.5) if (x + 3 < CROSS_X - 3.6 || x > CROSS_X + 3.6) wm.quad([x, 0.006, 14.94], [x + 3, 0.006, 14.94], [x + 3, 0.006, 15.08], [x, 0.006, 15.08], [0, 1, 0]);
-  for (const [x0, x1] of [[BEND_X, CROSS_X - 3.4], [CROSS_X + 3.4, 260]]) wm.quad([x0, 0.006, 17.62], [x1, 0.006, 17.62], [x1, 0.006, 17.74], [x0, 0.006, 17.74], [0, 1, 0]);
+  const stripe = (x0, z0, x1, z1, w, y = 0.006) => {
+    const L = Math.hypot(x1 - x0, z1 - z0), nx = (-(z1 - z0) / L) * w / 2, nz = ((x1 - x0) / L) * w / 2;
+    wm.quad([x0 + nx, y, z0 + nz], [x1 + nx, y, z1 + nz], [x1 - nx, y, z1 - nz], [x0 - nx, y, z0 - nz], [0, 1, 0]);
+  };
+  // a line along a polyline [[x, z], ...]: continuous, or dashed with the pattern running on across the corners
+  const paint = (pts, w, dash = 0, gap = 0, y = 0.006) => {
+    const cum = [0];
+    for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+    const L = cum[cum.length - 1];
+    const piece = (d0, d1) => {
+      for (let i = 0; i + 1 < pts.length; i++) {
+        const a = Math.max(d0, cum[i]), b = Math.min(d1, cum[i + 1]);
+        if (b - a < 1e-3) continue;
+        const t0 = (a - cum[i]) / (cum[i + 1] - cum[i]), t1 = (b - cum[i]) / (cum[i + 1] - cum[i]);
+        stripe(lerp(pts[i][0], pts[i + 1][0], t0), lerp(pts[i][1], pts[i + 1][1], t0), lerp(pts[i][0], pts[i + 1][0], t1), lerp(pts[i][1], pts[i + 1][1], t1), w, y);
+      }
+    };
+    if (!dash) piece(0, L);
+    else for (let d = 0; d < L - 0.2; d += dash + gap) piece(d, Math.min(L, d + dash));
+  };
+  const STOP_NW = CROSS_X - 4.8, STOP_SE = CROSS_X + 3.1;   // stop lines of the lights
+  paint([[BEND_X + 0.5, 15.01], [20, 15.01], [31, ISL_Z]], 0.14, 3, 3.5);   // centre line, moving over after the bus stop
+  paint([[31, ISL_Z], [ISL.x0 + 0.3, ISL_Z]], 0.25);                          // into the island's nose
+  paint([[CROSS_X + 2.4, ISL_Z], [66, ISL_Z]], 0.14);                         // beyond the crossing
+  paint([[66, ISL_Z], [256, ISL_Z]], 0.14, 3, 3.5);
+  paint([[BEND_X, 17.68], [36, 17.68]], 0.12, 3, 3.5);                        // lane line, traffic heading NW
+  paint([[36, 17.68], [STOP_NW, 17.68]], 0.12);
+  paint([[CROSS_X + 2.4, 17.68], [69, 17.68]], 0.12);                         // up to the turn into Rue Albert Sarraut
+  paint([[27.2, 10.68], [CROSS_X - 2.4, 10.68]], 0.12, 3, 3.5);               // edge line along our kerb
   // pedestrian crossing with traffic lights in front of No. 2 (OpenStreetMap + Street View)
   for (let k = 0; k < 9; k++) wm.quad([CROSS_X - 2, 0.007, 10.6 + k], [CROSS_X + 2, 0.007, 10.6 + k], [CROSS_X + 2, 0.007, 11.1 + k], [CROSS_X - 2, 0.007, 11.1 + k], [0, 1, 0]);
-  wm.quad([CROSS_X + 2.8, 0.007, 10.4], [CROSS_X + 3.1, 0.007, 10.4], [CROSS_X + 3.1, 0.007, 14.94], [CROSS_X + 2.8, 0.007, 14.94], [0, 1, 0]);   // stop lines
-  wm.quad([CROSS_X - 3.1, 0.007, 15.08], [CROSS_X - 2.8, 0.007, 15.08], [CROSS_X - 2.8, 0.007, 17.62], [CROSS_X - 3.1, 0.007, 17.62], [0, 1, 0]);
+  stripe(STOP_NW, ISL.z1 + 0.05, STOP_NW, 19.9, 0.25, 0.007);   // stop lines
+  stripe(STOP_SE, 10.4, STOP_SE, ISL_Z - 0.07, 0.25, 0.007);
+  // lane arrows (traffic heading NW, +x): straight on beside the island; further back, straight on and a
+  // right turn in the kerb lane (Street View)
+  const arrow = (x0, z, len, turn = false) => {
+    const y = 0.007, sw = 0.18;
+    if (!turn) {
+      const hl = 1.3, hw = 0.33, xb = x0 + len - hl;
+      stripe(x0, z, xb + 0.02, z, sw, y);
+      wm.tri([xb, y, z - hw], [x0 + len, y, z], [xb, y, z + hw], [0, 1, 0]);
+      return;
+    }
+    const R = 0.55, hl = 0.85, hw = 0.3, xs = x0 + len - R - 0.2, arc = [[x0, z]];
+    for (let i = 0; i <= 6; i++) { const a = (i / 6) * Math.PI / 2; arc.push([xs + Math.sin(a) * R, z + R - Math.cos(a) * R]); }
+    paint(arc, sw, 0, 0, y);
+    const hx = xs + R, hz = z + R;
+    wm.tri([hx - hw, y, hz - 0.02], [hx, y, hz + hl], [hx + hw, y, hz - 0.02], [0, 1, 0]);
+  };
+  const LANE1 = (ISL.z1 + 17.62) / 2;
+  arrow(42.0, LANE1, 4.5);
+  arrow(28.6, LANE1, 4.5);
+  arrow(28.6, 18.2, 4.0, true);
   const yz = bag('yellow');
   const zig = [10.35, 11.9];
   for (let x = 11.5, i = 0; x < 26.5; x += 2.5, i++) {
@@ -1088,32 +1164,70 @@ function buildSite(group) {
   for (const [x, z] of [[27.2, 9.6], [29.8, 9.6], [32.4, 9.6], [37, 9.6], [39.2, 9.6], [45.8, 9.6], [48.4, 9.6]]) {
     bag('brown').cyl([x, SW_Y, z], [x, SW_Y + 0.82, z], 0.065, 0.06, 8, true);
   }
-  // traffic lights: on the far side for traffic heading NW, on our side for traffic heading SE, each with
-  // a pedestrian light facing the other end of the crossing
-  const signal = (x, z, top, heads) => {
-    bag('brown').cyl([x, SW_Y, z], [x, top, z], 0.07, 0.06, 8, true);
-    const head = (y0, h, w, faceX, faceZ, lights) => {   // box centred on the pole, lenses on the face
-      const px = -faceZ, pz = faceX, cx = x + faceX * 0.12, cz = z + faceZ * 0.12;
-      bag('sigHead').segBox(cx - px * w / 2, cz - pz * w / 2, cx + px * w / 2, cz + pz * w / 2, y0, y0 + h, 0.24);
-      lights.forEach((mk, i) => {
-        const y = y0 + h - (h / lights.length) * (i + 0.5), lx = cx + faceX * 0.125, lz = cz + faceZ * 0.125;
-        bag(mk).cyl([lx, y, lz], [lx + faceX * 0.02, y, lz + faceZ * 0.02], w * 0.32, w * 0.32, 12, true);
-      });
+  // the central island (Street View): low kerb of grey stones, a mossy top, rounded noses
+  {
+    const R = (ISL.z1 - ISL.z0) / 2, xa = ISL.x0 + R, xb = ISL.x1 - R, H = 0.13;
+    const stadium = (r) => {
+      const pts = [];
+      for (let i = 0; i <= 8; i++) { const a = -Math.PI / 2 + (i / 8) * Math.PI; pts.push([xb + Math.cos(a) * r, ISL_Z + Math.sin(a) * r]); }
+      for (let i = 0; i <= 8; i++) { const a = Math.PI / 2 + (i / 8) * Math.PI; pts.push([xa + Math.cos(a) * r, ISL_Z + Math.sin(a) * r]); }
+      return pts;
     };
-    for (const [y0, h, w, dir, lights] of heads) head(y0, h, w, dir[0], dir[1], lights);
-  };
-  const CAR = ['sigRed', 'sigOff', 'sigOff'], PED = ['sigRed', 'sigOff'];
-  // far side, for traffic heading NW: main light on a tall pole, a repeater at eye height, the pedestrian light
-  signal(CROSS_X - 5.5, 20.7, 4.6, [[3.65, 0.95, 0.32, [-1, 0], CAR], [1.6, 0.5, 0.18, [-1, 0], CAR], [2.3, 0.55, 0.26, [0, -1], PED]]);
-  // our side, for traffic heading SE: a short pole with the light at eye height and the pedestrian light on top
-  signal(CROSS_X + 3.2, 9.55, 3.3, [[1.85, 0.8, 0.26, [1, 0], CAR], [2.75, 0.55, 0.26, [0, 1], PED]]);
-  // brown kerb fence with St Andrew's crosses, from the crossing to the end of the modelled stretch
-  for (let x = CROSS_X + 4.5; x < 71.0; x += 2.0) {
-    const x1 = Math.min(71.0, x + 2.0), fz = 9.5, y0 = SW_Y + 0.2, y1 = SW_Y + 1.0, F = bag('brown');
-    F.boxAB(x - 0.03, SW_Y, fz - 0.03, x + 0.03, y1 + 0.05, fz + 0.03); F.boxAB(x1 - 0.03, SW_Y, fz - 0.03, x1 + 0.03, y1 + 0.05, fz + 0.03);
-    F.boxAB(x, y1 - 0.04, fz - 0.02, x1, y1, fz + 0.02); F.boxAB(x, y0, fz - 0.02, x1, y0 + 0.04, fz + 0.02);
-    F.cyl([x + 0.05, y0 + 0.04, fz], [x1 - 0.05, y1 - 0.04, fz], 0.016, 0.016, 5); F.cyl([x + 0.05, y1 - 0.04, fz], [x1 - 0.05, y0 + 0.04, fz], 0.016, 0.016, 5);
+    bag('graniteDark').prism(stadium(R), 0, H, true, false);
+    bag('islandTop').prism(stadium(R - 0.16), H, H + 0.006, false, false);
   }
+  // keep-right signs at the two noses: a tall blue beacon at the NW end, facing the traffic heading SE, a
+  // square blue plate on a brown post at the SE end, facing the traffic heading NW (Street View)
+  {
+    const H = 0.13, bx = ISL.x1 - 0.32, sx = ISL.x0 + 0.32;
+    bag('metal').boxAB(bx - 0.09, H, ISL_Z - 0.12, bx + 0.09, H + 0.28, ISL_Z + 0.12);
+    bag('metal').boxAB(bx - 0.02, H + 0.28, ISL_Z - 0.13, bx, H + 1.16, ISL_Z + 0.13);
+    planeMesh(group, M.signBalise, 0.24, 0.84, bx + 0.004, H + 0.73, ISL_Z, Math.PI / 2);
+    bag('brown').cyl([sx, H, ISL_Z], [sx, H + 1.5, ISL_Z], 0.035, 0.035, 8, true);
+    bag('metal').boxAB(sx - 0.05, H + 0.95, ISL_Z - 0.26, sx - 0.035, H + 1.47, ISL_Z + 0.26);
+    planeMesh(group, M.signKeepRight, 0.5, 0.5, sx - 0.054, H + 1.21, ISL_Z, -Math.PI / 2);
+  }
+  // traffic lights at the crossing (Street View): on the island a pole with a light on top facing the traffic
+  // heading NW and one at eye height facing the traffic heading SE; on the far side a mast arm whose light hangs
+  // over the lanes heading NW, with a second light on its pole. No light on our side of the street.
+  const sigBox = (x, z, y0, h, w, fx, fz, lights) => {   // box just in front of (x, z) facing (fx, fz), lenses under visors
+    const px = -fz, pz = fx, cx = x + fx * 0.12, cz = z + fz * 0.12, n = lights.length, rl = Math.min(w * 0.32, (h / n) * 0.36);
+    bag('sigHead').segBox(cx - px * w / 2, cz - pz * w / 2, cx + px * w / 2, cz + pz * w / 2, y0, y0 + h, 0.24);
+    lights.forEach((mk, i) => {
+      const y = y0 + h - (h / n) * (i + 0.5), lx = cx + fx * 0.125, lz = cz + fz * 0.125, e = rl + 0.025;
+      bag(mk).cyl([lx, y, lz], [lx + fx * 0.02, y, lz + fz * 0.02], rl, rl, 12, true);
+      const vx = lx + fx * 0.07, vz = lz + fz * 0.07;
+      bag('sigHead').segBox(vx - px * e, vz - pz * e, vx + px * e, vz + pz * e, y + rl + 0.01, y + rl + 0.025, 0.14);
+    });
+  };
+  const CAR = ['sigRed', 'sigOff', 'sigOff'];
+  {
+    const px = ISL.x1 - 1.3, top = 3.75;
+    bag('brown').cyl([px, 0.1, ISL_Z], [px, top, ISL_Z], 0.07, 0.06, 8, true);
+    sigBox(px, ISL_Z, top - 0.95, 0.92, 0.3, -1, 0, CAR);
+    sigBox(px, ISL_Z, 1.45, 0.72, 0.24, 1, 0, CAR);
+  }
+  {
+    const mx = STOP_NW + 0.9, mz = 20.65, ay = 5.85, tipZ = LANE1 - 0.05;
+    bag('brown').cyl([mx, SW_Y, mz], [mx, ay + 0.12, mz], 0.1, 0.075, 10, true);             // pole
+    bag('brown').cyl([mx, ay + 0.12, mz], [mx, ay + 0.2, mz], 0.085, 0.03, 10, true);         // cap
+    bag('brown').cyl([mx, ay, mz + 0.05], [mx, ay + 0.1, tipZ + 0.1], 0.06, 0.045, 8, true);  // arm, rising slightly
+    bag('brown').cyl([mx, ay - 0.75, mz], [mx, ay - 0.02, mz - 0.9], 0.028, 0.028, 6);       // small brace in the angle
+    sigBox(mx, tipZ, ay - 0.5, 0.95, 0.32, -1, 0, CAR);                                       // at the tip of the arm
+    sigBox(mx, mz, 2.0, 0.8, 0.26, -1, 0, CAR);                                               // on the pole
+  }
+  // brown kerb fences with St Andrew's crosses: our side from the crossing to the end of the modelled stretch,
+  // and the far side up to the mast arm (Street View)
+  const xFence = (xa, xb, fz) => {
+    for (let x = xa; x < xb - 0.2; x += 2.0) {
+      const x1 = Math.min(xb, x + 2.0), y0 = SW_Y + 0.2, y1 = SW_Y + 1.0, F = bag('brown');
+      F.boxAB(x - 0.03, SW_Y, fz - 0.03, x + 0.03, y1 + 0.05, fz + 0.03); F.boxAB(x1 - 0.03, SW_Y, fz - 0.03, x1 + 0.03, y1 + 0.05, fz + 0.03);
+      F.boxAB(x, y1 - 0.04, fz - 0.02, x1, y1, fz + 0.02); F.boxAB(x, y0, fz - 0.02, x1, y0 + 0.04, fz + 0.02);
+      F.cyl([x + 0.05, y0 + 0.04, fz], [x1 - 0.05, y1 - 0.04, fz], 0.016, 0.016, 5); F.cyl([x + 0.05, y1 - 0.04, fz], [x1 - 0.05, y0 + 0.04, fz], 0.016, 0.016, 5);
+    }
+  };
+  xFence(CROSS_X + 4.5, 71.0, 9.5);
+  xFence(STOP_NW - 3.4, STOP_NW + 0.6, 20.45);
   // white utility cabinet against our planter wall, at the NW end
   bag('cabinet').boxAB(50.4, SW_Y, 4.86, 51.05, SW_Y + 1.3, 5.2, true);
   // tree beds: low raised beds of granite blocks (two courses), elongated hexagons, wood-chip mulch and
@@ -1199,7 +1313,7 @@ function buildSite(group) {
         bag('ground').quad(a0, b0, b1, a1, [0, 1, 0], groundCol((a0[0] + b1[0]) / 2, (a0[2] + b1[2]) / 2, _gc).toArray());
       }
       if (len % 6.5 < 3) band('white', -0.07, 0.07, 0.006);
-      band('white', 2.62, 2.74, 0.006);
+      if ((len + 3.25) % 6.5 < 3) band('white', 2.62, 2.74, 0.006);   // lane line, dashed as on the straight
       len += Math.hypot(S[i + 1][0] - S[i][0], S[i + 1][1] - S[i][1]);
     }
   }

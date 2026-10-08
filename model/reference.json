@@ -1,6 +1,6 @@
 {
   "name": "Villa Colbert — maquette 3D procedurale (Three.js)",
-  "revision": "2026-10-07",
+  "revision": "2026-10-08",
   "source": "src/maquette/maquette.js",
   "coordinateSystem": "Origine a l'angle est de la barre (facade sur rue x pignon sud-est), au niveau du trottoir; X le long de la facade sur rue vers le nord-ouest, Z vers la rue (nord-est), Y hauteur",
   "unit": "metre, echelle provisoire non mesuree",
@@ -22,7 +22,9 @@
     "De l'autre cote de la rue: pelouse, sans parking ni batiment represente (demande de residents).",
     "Voisins: au sud-est, le n. 6, immeuble en meuliere de cinq niveaux dont la facade sur rue s'incurve avec le virage de la rue (emprise OpenStreetMap, decalee d'environ 3,5 m); au nord-ouest, le n. 2, immeuble de bureaux accole a notre pignon (emprise OpenStreetMap): cage d'escalier vitree au-dessus de l'entree de son parking (porte en retrait derriere la facade au bas d'une courte rampe, porte de service a droite avec une marche, chemin d'acces pave borde de petits potelets marron de chaque cote), puis partie en avancee en pierre claire avec grande baie vitree, mansarde en zinc; modelise jusqu'a l'entree MONTCALM, exclue (demande de residents).",
     "Rue du Pont Colbert: courbe vers la foret apres le n. 6 (OpenStreetMap); devant le n. 6, mur de soutenement en meuliere surmonte d'une haie et d'une cloture verte, trottoir rouge, stationnement en paves le long de la bordure, petit arbre dans un bac en granit, lampadaire (Street View).",
-    "Devant le n. 2: passage pieton avec feux (OpenStreetMap), feu sur un mat haut cote oppose et sur un mat court de notre cote avec feux pietons, barrieres marron a croix de Saint-Andre le long de la bordure, potelets (Street View).",
+    "Devant le n. 2: passage pieton avec feux (OpenStreetMap). Juste avant, un ilot central etroit borde de paves, plus proche de notre trottoir que du milieu de la chaussee, avec un feu au milieu de la rue (un feu vers chaque sens) et une balise bleue de contournement par la droite a chaque extremite; de l'autre cote, une potence au-dessus des deux voies vers le nord-ouest portant deux feux (au bout du bras et sur le mat); aucun feu de notre cote. Barrieres marron a croix de Saint-Andre le long des bordures, potelets (Street View, precisions de residents).",
+    "Marquage au sol: une voie vers le sud-est, deux vers le nord-ouest dont celle de droite pour tourner vers la rue Albert Sarraut (OpenStreetMap); ligne axiale qui se decale vers l'ilot apres l'arret de bus et y aboutit en ligne continue large; ligne de voie continue pres des feux, en tirets plus loin; ligne de rive en tirets le long de notre bordure; lignes d'effet des feux, fleches de direction, passage zebre (Street View). Le nom de rue visible sur Street View est une incrustation de l'application, il n'est pas peint.",
+    "Ombres: les batiments portent une ombre pleine, le soleil ne passe pas a travers les fenetres jusqu'a la rue (precision de residents).",
     "Pente: douce dans le jardin, beaucoup plus forte dans le bois au-dela du chemin de l'arriere (precision de residents).",
     "Bois des Chantiers (foret domaniale de Versailles): entree depuis la rue a cote du n. 6, chemin jusqu'a un carrefour ou partent la route de Sable, la route du Petit Montreuil et un chemin vers le nord-ouest (OpenStreetMap); un quatrieme chemin longe l'arriere de la propriete (precision de residents). Foret dense.",
     "Haies dans des jardinieres basses, abri de bus, arbres de rue, lampadaires et potelets."

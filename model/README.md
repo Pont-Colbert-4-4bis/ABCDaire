@@ -1,6 +1,6 @@
 # Villa Colbert — maquette 3D
 
-Révision du 7 octobre 2026. Sources : photographies Street View (février 2026) et vue aérienne fournies par Philippe, complétées par les précisions de résidents : deux accès distincts aux parkings, allée et porte du 4 bis, escalier de l’entrée 4, terrain qui monte derrière l’immeuble. Les photographies ne sont pas redistribuées et ne servent pas de textures.
+Révision du 8 octobre 2026. Sources : photographies Street View (février 2026) et vue aérienne fournies par Philippe, complétées par les précisions de résidents : deux accès distincts aux parkings, allée et porte du 4 bis, escalier de l’entrée 4, terrain qui monte derrière l’immeuble. Les photographies ne sont pas redistribuées et ne servent pas de textures.
 
 ## Fichiers
 
@@ -36,6 +36,7 @@ Chaque façade est décrite niveau par niveau par un motif d’ouvertures (fenê
 - l’allée du 4 bis, entre la rampe montante et le pignon, avec une jardinière le long du mur ; la porte s’ouvre sur la droite, au bout de l’allée, sous la terrasse ;
 - l’entrée du 4 : escalier de huit marches, porte vitrée, renfoncement orange planté sous les balcons, jardinières surélevées ;
 - haies, arbres de rue, abri de bus et mobilier ; les bâtiments voisins (immeuble en meulière au sud-est, bâtiment blanc avec cage vitrée au nord-ouest) ;
+- devant le n° 2, le passage piéton à feux : îlot central avec son feu et ses balises, potence à deux feux de l’autre côté, marquage au sol (voies, flèches, lignes d’effet des feux, ligne de rive) ;
 - le terrain qui monte régulièrement derrière l’immeuble jusqu’aux bois ; de l’autre côté de la rue, une pelouse.
 
 ## Dimensions estimées
@@ -52,7 +53,7 @@ Ces valeurs servent à garder les proportions. Elles ne doivent pas être utilis
 
 La façade sur rue, le pignon sud-est et les abords des entrées sont relevés sur les photographies. Côté rue et pignon sud-est, 30 balcons triangulaires sont représentés ; côté jardin et sur l’aile, leur nombre, leur position et les ouvertures sont extrapolés de la vue aérienne. Les ouvertures sont des éléments de modélisation, pas un inventaire. La toiture, la profondeur des balcons, les pentes des rampes et du terrain sont estimées. Arbres, haies et voisins sont simplifiés ; aucune personne, plaque ou affiche n’est représentée.
 
-La course du soleil est calculée pour Versailles (48,791° N, 2,146° E), avec une façade sur rue orientée au nord-est (41°, d’après l’emprise OpenStreetMap), aux dates du 21 décembre, du 20 mars / 22 septembre et du 21 juin. Les ombres sont indicatives.
+La course du soleil est calculée pour Versailles (48,791° N, 2,146° E), avec une façade sur rue orientée au nord-est (41°, d’après l’emprise OpenStreetMap), aux dates du 21 décembre, du 20 mars / 22 septembre et du 21 juin. Les ombres sont indicatives ; les fenêtres ne laissent pas passer le soleil, chaque bâtiment porte une ombre pleine.
 
 Prochaine amélioration de fidélité : dimensions de référence, plan de masse et vues du côté jardin.
 
