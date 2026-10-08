@@ -315,6 +315,18 @@ function makeTextures() {
     g.fillText('6', 64, 51);
     TEX.plate6 = finish(c, { tile: 1 }); TEX.plate6.repeat.set(1, 1);
   }
+  // road signs at No. 2's car-park entrance: blue disc with a white arrow, red "no entry"
+  {
+    const disc = (fill, draw) => {
+      const c = canvas(128, 128), g = c.getContext('2d');
+      g.fillStyle = '#ffffff'; g.beginPath(); g.arc(64, 64, 62, 0, Math.PI * 2); g.fill();
+      g.fillStyle = fill; g.beginPath(); g.arc(64, 64, 57, 0, Math.PI * 2); g.fill();
+      g.fillStyle = '#ffffff'; draw(g);
+      const t = finish(c, { tile: 1 }); t.repeat.set(1, 1); return t;
+    };
+    TEX.signArrow = disc('#1f5fae', (g) => { g.fillRect(55, 26, 18, 52); g.beginPath(); g.moveTo(34, 72); g.lineTo(94, 72); g.lineTo(64, 104); g.closePath(); g.fill(); });
+    TEX.signNoEntry = disc('#c8202a', (g) => g.fillRect(26, 54, 76, 20));
+  }
   // light stone panels of the office building next door (No. 2): 1.2 x 0.6 m, stacked joints
   {
     const c = canvas(256, 128), g = c.getContext('2d'), r = rng(2222);
@@ -432,6 +444,8 @@ function makeMaterials() {
   M.ashlar = std({ color: 0xffffff, map: TEX.ashlar, roughness: 0.75 });
   M.officeGlass = std({ color: 0xffffff, map: TEX.officeGlass, roughness: 0.12, metalness: 0.55, envMapIntensity: 1.1 });
   M.signBlue = std({ color: 0x1f5fae, roughness: 0.5 });
+  M.signArrow = std({ color: 0xffffff, map: TEX.signArrow, transparent: true, alphaTest: 0.4, roughness: 0.5 });
+  M.signNoEntry = std({ color: 0xffffff, map: TEX.signNoEntry, transparent: true, alphaTest: 0.4, roughness: 0.5 });
   M.sigHead = std({ color: 0x1b1d1e, roughness: 0.6 });
   M.sigRed = std({ color: 0x4a0b08, roughness: 0.3, emissive: 0xff2b16, emissiveIntensity: 1.8 });
   M.sigOff = std({ color: 0x23292b, roughness: 0.25 });
@@ -1071,7 +1085,7 @@ function buildSite(group) {
     bag('lampHead').cyl([x, 8.12, z + 1.45], [x, 8.32, z + 1.45], 0.32, 0.12, 12, true);
   }
   // bollards along the kerb, and two in front of No. 2's doors
-  for (const [x, z] of [[27.2, 9.6], [29.8, 9.6], [32.4, 9.6], [37, 9.6], [39.2, 9.6], [45.8, 9.6], [48.4, 9.6], [51, 9.6], [55.7, 2.7]]) {
+  for (const [x, z] of [[27.2, 9.6], [29.8, 9.6], [32.4, 9.6], [37, 9.6], [39.2, 9.6], [45.8, 9.6], [48.4, 9.6]]) {
     bag('brown').cyl([x, SW_Y, z], [x, SW_Y + 0.82, z], 0.065, 0.06, 8, true);
   }
   // traffic lights: on the far side for traffic heading NW, on our side for traffic heading SE, each with
@@ -1615,16 +1629,27 @@ function buildNeighbours(group) {
     const wallX = (x, z0, z1, y0, y1, nx) => A.quad([x, y0, z0], [x, y0, z1], [x, y1, z1], [x, y1, z0], [nx, 0, 0]);
     // -- stair tower, x X0..XT: stone ground floor with the car-park door, curtain wall above, dark attic band
     wallZ(X0, 53.1, ZF, -0.3, GF_H, 1); wallZ(55.7, 56.2, ZF, -0.3, GF_H, 1); wallZ(57.1, XT, ZF, -0.3, GF_H, 1);
-    wallZ(53.1, 55.7, ZF, 2.75, GF_H, 1); wallZ(56.2, 57.1, ZF, 2.2, GF_H, 1);
-    for (const [x0, x1, top] of [[53.1, 55.7, 2.75], [56.2, 57.1, 2.2]]) {   // reveals of the two openings
-      A.quad([x0, -0.3, ZF], [x0, -0.3, ZF - 0.25], [x0, top, ZF - 0.25], [x0, top, ZF], [1, 0, 0]);
-      A.quad([x1, -0.3, ZF], [x1, -0.3, ZF - 0.25], [x1, top, ZF - 0.25], [x1, top, ZF], [-1, 0, 0]);
-      A.quad([x0, top, ZF], [x1, top, ZF], [x1, top, ZF - 0.25], [x0, top, ZF - 0.25], [0, -1, 0]);
-    }
-    bag('garageDoor').quad([53.1, 0, ZF - 0.25], [55.7, 0, ZF - 0.25], [55.7, 2.75, ZF - 0.25], [53.1, 2.75, ZF - 0.25], [0, 0, 1]);   // white grille door
-    bag('white').quad([56.2, 0, ZF - 0.2], [57.1, 0, ZF - 0.2], [57.1, 2.2, ZF - 0.2], [56.2, 2.2, ZF - 0.2], [0, 0, 1]);              // service door
-    bag('metal').boxAB(53.1, 0.0, ZF - 0.25, 55.7, 0.03, ZF + 0.9);                                                                // drain grate in front of the car-park door
-    bag('signBlue').cyl([54.4, 3.3, ZF + 0.01], [54.4, 3.3, ZF + 0.04], 0.19, 0.19, 16, true);                                     // the blue "i" disc
+    wallZ(53.1, 55.7, ZF, 2.75, GF_H, 1); wallZ(56.2, 57.1, ZF, 2.35, GF_H, 1);
+    // car-park entrance: the door stands well behind the façade, at the bottom of a short ramp (Street View)
+    const GD = ZF - 1.6, GFL = -0.3;   // door plane, floor level at the door
+    const rampY = (z) => lerp(SW_Y, GFL, clamp((ZF - z) / (ZF - GD), 0, 1));
+    const C = bag('concrete');
+    C.quad([53.1, rampY(ZF), ZF], [53.1, GFL, GD], [53.1, 2.75, GD], [53.1, 2.75, ZF], [1, 0, 0]);       // side walls of the recess
+    C.quad([55.7, rampY(ZF), ZF], [55.7, GFL, GD], [55.7, 2.75, GD], [55.7, 2.75, ZF], [-1, 0, 0]);
+    C.quad([53.1, 2.75, ZF], [55.7, 2.75, ZF], [55.7, 2.75, GD], [53.1, 2.75, GD], [0, -1, 0]);           // its ceiling
+    bag('asphalt').quad([53.1, rampY(ZF), ZF], [55.7, rampY(ZF), ZF], [55.7, GFL, GD], [53.1, GFL, GD], [0, 1, 0]);   // ramp floor
+    bag('metal').quad([53.1, rampY(ZF - 0.35) + 0.01, ZF - 0.35], [55.7, rampY(ZF - 0.35) + 0.01, ZF - 0.35],
+      [55.7, rampY(ZF - 0.6) + 0.01, ZF - 0.6], [53.1, rampY(ZF - 0.6) + 0.01, ZF - 0.6], [0, 1, 0]);                  // drain channel across it
+    bag('garageDoor').quad([53.1, GFL, GD], [55.7, GFL, GD], [55.7, 2.75, GD], [53.1, 2.75, GD], [0, 0, 1]);           // white grille door
+    planeMesh(group, M.signNoEntry, 0.34, 0.34, 54.4, 1.75, GD + 0.02);                                                // "no entry" on the door
+    planeMesh(group, M.signArrow, 0.42, 0.42, 54.4, 3.3, ZF + 0.012);                                                  // blue arrow sign above
+    // side door on the right, in a shallow niche, one step up, with a concrete block beside the step
+    for (const [x, nx] of [[56.2, 1], [57.1, -1]]) A.quad([x, -0.3, ZF], [x, -0.3, ZF - 0.35], [x, 2.35, ZF - 0.35], [x, 2.35, ZF], [nx, 0, 0]);
+    A.quad([56.2, 2.35, ZF], [57.1, 2.35, ZF], [57.1, 2.35, ZF - 0.35], [56.2, 2.35, ZF - 0.35], [0, -1, 0]);
+    bag('white').quad([56.25, SW_Y + 0.16, ZF - 0.35], [57.05, SW_Y + 0.16, ZF - 0.35], [57.05, 2.3, ZF - 0.35], [56.25, 2.3, ZF - 0.35], [0, 0, 1]);
+    bag('metal').boxAB(56.33, 1.05, ZF - 0.35, 56.36, 1.1, ZF - 0.27);                                               // handle
+    C.boxAB(56.2, 0, ZF - 0.35, 57.1, SW_Y + 0.16, ZF + 0.4, true);                                                     // step
+    C.boxAB(55.75, 0, ZF, 56.2, SW_Y + 0.48, ZF + 0.55, true);                                                          // block beside it
     bag('officeGlass').quad([X0 + 0.12, GF_H, ZF + 0.02], [XT - 0.12, GF_H, ZF + 0.02], [XT - 0.12, TOWER_TOP, ZF + 0.02], [X0 + 0.12, TOWER_TOP, ZF + 0.02], [0, 0, 1]);
     bag('frame').boxAB(X0, GF_H, ZF, X0 + 0.14, TOWER_TOP, ZF + 0.06); bag('frame').boxAB(XT - 0.14, GF_H, ZF, XT, TOWER_TOP, ZF + 0.06);
     bag('frame').boxAB(X0, GF_H - 0.1, ZF, XT, GF_H + 0.04, ZF + 0.08);
@@ -1676,6 +1701,15 @@ function buildNeighbours(group) {
     bag('roof').boxAB(XT, GF_H, -12.7, X1, GF_H + 0.12, ZB);
     // forecourt in front: pavement up to the façade
     bag('pavement').boxAB(X0, 0, 0.0, 72.0, SW_Y, 4.84, true);
+    // the car path from the kerb to the car-park door, paved with setts and edged on each side by a row of
+    // little brown posts that narrows towards the door (Street View)
+    const PL = [[53.1, ZF], [51.0, 9.85]], PR = [[55.7, ZF], [58.8, 9.85]], py = SW_Y + 0.006;
+    bag('cobble').quad([PL[0][0], py, PL[0][1]], [PR[0][0], py, PR[0][1]], [PR[1][0], py, PR[1][1]], [PL[1][0], py, PL[1][1]], [0, 1, 0]);
+    for (const [a, b] of [PL, PR]) for (const t of [0.17, 0.5, 0.83]) {
+      const x = lerp(a[0], b[0], t) + (a === PL ? -0.25 : 0.25), z = lerp(a[1], b[1], t);
+      bag('brown').cyl([x, SW_Y, z], [x, SW_Y + 0.85, z], 0.065, 0.06, 8, true);
+    }
+    for (const [x, z] of [[54.6, 2.6], [55.2, 7.4]]) bag('metal').boxAB(x - 0.35, SW_Y, z - 0.35, x + 0.35, SW_Y + 0.012, z + 0.35);   // manhole covers
   }
 
   // across the street: kept as plain lawn beyond the far pavement (terrain), no buildings or parking
@@ -1764,6 +1798,7 @@ function buildTerrain(group) {
     let cx = 0, cz = 0;
     for (let j = 0; j < 3; j++) { cx += pos.getX(idx[i + j]) / 3; cz += pos.getZ(idx[i + j]) / 3; }
     if (cx > -12 && cx < 0 && cz > -23 && cz < 5) continue;
+    if (cx > 52 && cx < 70 && cz > -11 && cz < 5 && !(cx < 58 && cz < -9)) continue;   // under No. 2 and its forecourt
     // under the road, its pavements and the verge in the bend (all drawn explicitly)
     const inBend = (j) => { const vx = pos.getX(idx[i + j]), vz = pos.getZ(idx[i + j]), o = vx < BEND_X ? roadOff(vx, vz) : 0; return vx < BEND_X && o > paveD(vx) - 3.0 && o < 9.1; };
     if (inBend(0) && inBend(1) && inBend(2)) continue;
