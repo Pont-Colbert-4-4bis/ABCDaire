@@ -672,12 +672,12 @@ function buildBuilding(group) {
 
   L(WSW, R06, (k) => pat(k === 0 ? 'w1.5-2.9 w5.2-6.4 w8.4-9.6 w11.9-13.3'
     : k === 6 ? 'w1.5-2.9 o3-4.8 w5.2-6.4 w8.4-9.6 o9.8-11.6 w11.9-13.3'
-      : k % 2 ? 'f1.5-2.9 w5.2-6.4 o6.5-8.3 w8.4-9.6 f11.9-13.3' : 'f1.5-2.9 o3-4.6 w5.2-6.4 w8.4-9.6 o9.7-11.6 f11.9-13.3'));
-  for (const k of R15) { wedge(WSW, k, 4.4, 1.0, 1.5, 'rail'); wedge(WSW, k, 10.4, 13.8, 1.5, 'rail'); }
+      : k % 2 ? 'w1.5-2.9 w5.2-6.4 o6.5-8.3 w8.4-9.6 w11.9-13.3' : 'w1.5-2.9 o3-4.6 w5.2-6.4 w8.4-9.6 o9.7-11.6 w11.9-13.3'));
+  // the end of the wing, the face furthest out into the woods, has no balconies (residents' correction)
   coping(WSW, TOP_WING);
 
-  // the side of the wing that runs out into the woods has no balconies (residents' correction)
-  L(WNW, R05, (k) => pat(k === 0 ? 'w1.2-2.4 w6.4-7.8 w9.8-11' : k % 2 ? 'w1.2-2.4 o2.5-4.2 w6.4-7.8 w9.8-11' : 'w1.2-2.4 w6.4-7.8 o8.9-9.7 w9.8-11'));
+  L(WNW, R05, (k) => pat(k === 0 ? 'w1.2-2.4 w6.4-7.8 w9.8-11' : k % 2 ? 'w1.2-2.4 o2.5-4.2 f6.4-7.8 w9.8-11' : 'w1.2-2.4 f6.4-7.8 o8.9-9.7 w9.8-11'));
+  for (const k of R15) wedge(WNW, k, 5.0, 8.6, 1.5, 'solid');
   buildLevel(WNW6, 6, pat('w3-4.2 o4.4-6 w8.2-9.6 o9.8-11.4 w11.6-12.8'));
   coping(WNW6, TOP_WING);
 
