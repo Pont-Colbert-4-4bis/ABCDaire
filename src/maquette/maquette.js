@@ -473,6 +473,12 @@ const RAMP0 = 4.84;               // ramps start at the back of the pavement
 const PORCH_Y = 0.3;              // 4 bis landing floor (end of the walkway)
 const WK0 = -1.45, WK1 = -0.4;    // 4 bis walkway, between the hedge planter and the plant box on the gable
 const LAND = -9.3;                // the walkway widens into the covered landing here
+// left side of the walkway: a tall planter at the street (the "4"), then a narrow low planter like a big
+// step along the wall of the up ramp, up to the landing (residents' photo)
+const TALL_Z = 3.6;               // back of the tall street-end planter
+const STEP_X = -2.1;              // walkway-side face of the low step planter
+const STEP_H = 0.42;              // its height above the walkway
+const WALL_H = 1.65;              // top of the wall between the walkway and the up ramp, behind the step
 const walkY = (z) => lerp(SW_Y, PORCH_Y, clamp((RAMP0 - z) / (RAMP0 - LAND), 0, 1));
 
 function makeFace(o, n, L) {
@@ -743,7 +749,7 @@ function buildBuilding(group) {
     bag('flashing').boxAB(x0 - 0.1, TOP_WING + 2.5, z0 - 0.1, x1 + 0.1, TOP_WING + 2.6, z1 + 0.1, true);
     bag('metal').boxAB(x0 + 0.6, TOP_WING + 2.6, z0 + 0.6, x0 + 1.4, TOP_WING + 2.95, z0 + 1.2, true);   // vent on its roof
   };
-  lift(39.1, -5.5, 42.5, -2.1);   // No. 4, near the NW end, against the street side of the attic roof
+  lift(39.1, -8.1, 42.5, -4.5);   // No. 4, near the NW end, in the middle of the roof's depth
   lift(7.3, -9.4, 11.1, -5.6);    // No. 4 bis, near the wing, in the middle of the roof
   const DY = TOP_WING + 0.15;
   const duct = (pts, w = 0.36) => {
@@ -754,9 +760,9 @@ function buildBuilding(group) {
       for (let k = 0; k <= n; k++) { const u = k / n, x = lerp(ax, bx, u), z = lerp(az, bz, u); bag('darkConcrete').boxAB(x - 0.12, TOP_WING, z - 0.12, x + 0.12, DY, z + 0.12, true); }
     }
   };
-  duct([[51.4, -3.4], [48.6, -5.9], [42.5, -5.4]]);                          // NW end into the first lift room
-  duct([[39.1, -2.6], [37.9, -2.4], [30.6, -3.0], [30.6, -4.0]]);             // along the street side towards the joint
-  duct([[39.1, -5.0], [34.4, -5.0]]);
+  duct([[51.4, -3.4], [48.6, -5.9], [42.5, -5.9]]);                          // NW end into the first lift room
+  duct([[39.7, -4.5], [39.7, -2.9], [30.6, -2.9], [30.6, -4.0]]);             // along the street side towards the joint
+  duct([[39.1, -6.8], [34.4, -6.8]]);
   duct([[25.2, -6.0], [24.8, -5.0], [17.4, -5.2], [15.3, -6.0], [11.1, -6.6]]); // middle run into the second lift room
   duct([[8.5, -9.4], [8.5, -11.4], [8.2, -19.1]]);                            // down the wing
   duct([[8.3, -16.0], [5.7, -16.0]]);
@@ -765,7 +771,7 @@ function buildBuilding(group) {
     bag('duct').cyl([x, TOP_WING + 0.7, z], [x, TOP_WING + 0.95, z], 0.3, 0.3, 12, true);
     bag('metal').cyl([x, TOP_WING + 0.95, z], [x, TOP_WING + 0.98, z], 0.32, 0.32, 12, true);
   };
-  for (const [x, z] of [[34.4, -5.8], [30.6, -4.8], [20.5, -6.0], [15.3, -6.9], [48.6, -6.8], [8.2, -19.8], [5.0, -16.0]]) fan(x, z);
+  for (const [x, z] of [[34.4, -7.6], [30.6, -4.8], [20.5, -6.0], [15.3, -6.9], [48.6, -6.8], [8.2, -19.8], [5.0, -16.0]]) fan(x, z);
 
   // --- plinths (the SE garage block, ramps and the 4 bis porch are in buildDrive)
   const pl = bag('concrete');
@@ -1033,7 +1039,9 @@ function buildDrive(group) {
   // ---- walls along the ramps
   bag(C).boxAB(DW.sep[0], LOW - 0.1, GF, DW.sep[1], 1.25, 2.4);          // separating wall
   bag(C).boxAB(DW.sep[0], LOW - 0.1, 2.4, DW.sep[1], 0.78, RAMP0);       // its lower pier at the street end
-  bag(C).boxAB(DW.nw[0], -0.3, -9.2, DW.nw[1], 1.25, RAMP0);             // up ramp / planter wall
+  bag(C).boxAB(DW.nw[0], -0.3, TALL_Z, DW.nw[1], 1.25, RAMP0);           // up ramp / planter wall beside the tall planter
+  bag(C).boxAB(DW.nw[0], -0.3, -9.2, DW.nw[1], WALL_H, TALL_Z);           // ... higher behind the step planter
+  bag('flashing').boxAB(DW.nw[0] - 0.02, WALL_H, -9.2, DW.nw[1] + 0.02, WALL_H + 0.04, TALL_Z);
   bag(C).extrudeX(DW.rw[0], DW.rw[1], [[RAMP0, LOW - 0.1], [RAMP0, 0.9], [GF, T_TOP], [GF, LOW - 0.1]]); // retaining wall
 
   // ---- garage front (orange render) with the two doors
@@ -1074,6 +1082,7 @@ function buildDrive(group) {
   //      landing under the terrace; the 4 bis door is in the gable wall on the right, not facing the walkway.
   const [px0, px1] = DW.porch;
   bag('cobble').extrudeX(WK0, WK1, [[RAMP0, -0.3], [RAMP0, walkY(RAMP0)], [LAND, PORCH_Y], [LAND, -0.3]]);   // cobbled, like the drive
+  bag('cobble').extrudeX(STEP_X, WK0, [[TALL_Z, -0.3], [TALL_Z, walkY(TALL_Z)], [LAND, PORCH_Y], [LAND, -0.3]]);   // wider beside the step
   bag('paving').boxAB(px0, -0.3, -12.4, px1, PORCH_Y, LAND);                  // covered landing
   // small plant box against the gable, all along the walkway
   const BAC = 0.5;
@@ -1120,9 +1129,15 @@ function buildDrive(group) {
   bag('soffit').quad([GX0, T_BOT - 0.004, -12.4], [0, T_BOT - 0.004, -12.4], [0, T_BOT - 0.004, GF + 0.06], [GX0, T_BOT - 0.004, GF + 0.06], [0, -1, 0]);
 
   // ---- planter strip along the gable + the corner post with the house number
-  bag('soil').boxAB(-2.6, 0, -9.2, WK0 - 0.12, 0.95, 4.6, true);
-  bag(C).boxAB(WK0 - 0.12, -0.3, -9.4, WK0, 1.05, 4.6);                   // planter wall along the walkway
-  bag(C).boxAB(-2.6, -0.3, -9.4, WK0, 1.05, -9.2);                         // planter end wall at the landing
+  // left side of the 4 bis walkway: the tall planter at the street, with the "4" ...
+  bag('soil').boxAB(-2.6, 0, TALL_Z + 0.12, WK0 - 0.12, 0.95, 4.6, true);
+  bag(C).boxAB(WK0 - 0.12, -0.3, TALL_Z, WK0, 1.05, 4.6);                 // its side along the walkway
+  bag(C).boxAB(STEP_X, -0.3, TALL_Z, WK0 - 0.12, 1.05, TALL_Z + 0.12);    // its back, above the step
+  // ... then, as you enter, a narrow low planter like a big step against the wall, still planted, up to the landing
+  const stepTop = (z) => walkY(z) + STEP_H;
+  bag(C).extrudeX(STEP_X - 0.1, STEP_X, [[TALL_Z, -0.3], [TALL_Z, stepTop(TALL_Z)], [-9.4, stepTop(-9.4)], [-9.4, -0.3]]);
+  bag('soil').extrudeX(-2.6, STEP_X - 0.1, [[TALL_Z + 0.12, -0.3], [TALL_Z + 0.12, stepTop(TALL_Z) - 0.05], [-9.2, stepTop(-9.2) - 0.05], [-9.2, -0.3]]);
+  bag(C).boxAB(-2.6, -0.3, -9.4, STEP_X - 0.1, stepTop(-9.4), -9.2);     // its end at the landing
   // beige electrical cabinet in front of the planter end, beside the "4"
   bag('cabinet').boxAB(-2.62, SW_Y - 0.1, 4.84, -2.05, SW_Y + 1.25, 5.22, true);
   bag('cabinet').boxAB(-2.65, SW_Y + 1.25, 4.82, -2.02, SW_Y + 1.29, 5.25, true);
@@ -1218,8 +1233,14 @@ function buildHedges(group) {
   }
   // planter strip along the SE gable, between the up ramp and the building (photinia + box, big corner shrub)
   // kept low near the porch so the 4 bis entrance and the barred window stay visible from the street
-  [[-8.9, -6.3, 1.75, BOX], [-6.1, -2.5, 2.2, PHOTINIA], [-2.3, 1.3, 2.3, BOX], [1.5, 4.4, 2.5, PHOTINIA]]
-    .forEach(([z0, z1, top, pal], i) => geos.push(hedgeGeo(-2.55, WK0 - 0.1, z0, z1, 0.95, top, pal, 90 + i, 0.35)));
+  geos.push(hedgeGeo(-2.55, WK0 - 0.1, TALL_Z + 0.2, 4.45, 0.95, 2.45, BOX, 90, 0.35));   // big shrub on the tall planter
+  {   // the low step planter: a narrow line of low green, with a few small box balls
+    const sy = (z) => walkY(z) + STEP_H - 0.05, r = rng(424);
+    for (let z = TALL_Z - 0.15; z > -9.0; z -= 1.3 + r() * 0.7) {
+      const z0 = Math.max(-9.1, z - 1.0 - r() * 0.7), big = r() < 0.3;
+      geos.push(hedgeGeo(-2.55, STEP_X - 0.14, z0, z, sy(z), sy(z) + (big ? 0.42 : 0.18 + r() * 0.12), BOX, 600 + Math.round(z * 10), 0.5));
+    }
+  }
   // low plants in the small box against the gable, along the 4 bis walkway
   [[-1.7, -0.3], [-3.8, -2.4], [-5.9, -4.5], [-8.0, -6.6], [-9.15, -8.4]]
     .forEach(([z0, z1], i) => geos.push(hedgeGeo(WK1 + 0.1, -0.04, z0, z1, walkY(z1) + 0.44, walkY(z1) + 0.95 + (i % 2) * 0.2, i % 2 ? PHOTINIA : BOX, 110 + i, 0.5)));
