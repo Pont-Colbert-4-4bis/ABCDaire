@@ -1425,8 +1425,8 @@ function buildVegetation(group) {
 /* =====================================================================
    SKY, SUN, LIGHTS
    ===================================================================== */
-const SITE = { lat: 48.797, lon: 2.143 };
-const FACADE_N = 42.5;                       // bearing of the street façade normal (+z)
+const SITE = { lat: 48.7913, lon: 2.1464 };   // 4 rue du Pont Colbert (OpenStreetMap)
+const FACADE_N = 41;     // bearing of the street façade normal (+z): long sides at 131° in the OpenStreetMap footprint
 const bearingDir = (b) => { const a = (b - (FACADE_N + 180)) * D2R; return [Math.sin(a), 0, -Math.cos(a)]; };
 function sunPosition(doy, hour, tz) {
   const B = (2 * Math.PI * (doy - 81)) / 365;

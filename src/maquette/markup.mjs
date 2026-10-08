@@ -24,7 +24,7 @@ export function maquetteMarkup(lang = 'fr', mode = 'page') {
   <div class="facts">
     <span>${esc(T.factLevels)}</span>
     <span>${esc(T.factFacade)} <b>≈ 53 m</b></span>
-    <span class="opt">${esc(T.factFaces)} <b>NE 42°</b></span>
+    <span class="opt">${esc(T.factFaces)} <b>NE 41°</b></span>
   </div>
 </header>`;
   const note = `<p class="card note"><strong>${esc(T.noteStrong)}</strong> ${esc(T.note)}</p>`;

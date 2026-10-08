@@ -4,7 +4,7 @@
   "source": "src/maquette/maquette.js",
   "coordinateSystem": "Origine a l'angle est de la barre (facade sur rue x pignon sud-est), au niveau du trottoir; X le long de la facade sur rue vers le nord-ouest, Z vers la rue (nord-est), Y hauteur",
   "unit": "metre, echelle provisoire non mesuree",
-  "orientation": "facade sur rue orientee au nord-est (42,5 degres); soleil calcule pour Versailles, 48,797 N, 2,143 E",
+  "orientation": "facade sur rue orientee au nord-est (41 degres, emprise OpenStreetMap); soleil calcule pour 48,791 N, 2,146 E",
   "observations": [
     "Entree 4 bis a gauche, pres des parkings; entree 4 a droite (confirmation de Philippe).",
     "Deux acces separes aux parkings sur la rue: une rampe descendante vers le niveau bas et une rampe montante vers le niveau haut, sous une terrasse.",

@@ -52,7 +52,7 @@ Ces valeurs servent à garder les proportions. Elles ne doivent pas être utilis
 
 La façade sur rue, le pignon sud-est et les abords des entrées sont relevés sur les photographies. Côté rue et pignon sud-est, 30 balcons triangulaires sont représentés ; côté jardin et sur l’aile, leur nombre, leur position et les ouvertures sont extrapolés de la vue aérienne. Les ouvertures sont des éléments de modélisation, pas un inventaire. La toiture, la profondeur des balcons, les pentes des rampes et du terrain sont estimées. Arbres, haies et voisins sont simplifiés ; les véhicules sont génériques ; aucune personne, plaque ou affiche n’est représentée.
 
-La course du soleil est calculée pour Versailles (48,797° N, 2,143° E), avec une façade sur rue orientée au nord-est (42,5°), aux dates du 21 décembre, du 20 mars / 22 septembre et du 21 juin. Les ombres sont indicatives.
+La course du soleil est calculée pour Versailles (48,791° N, 2,146° E), avec une façade sur rue orientée au nord-est (41°, d’après l’emprise OpenStreetMap), aux dates du 21 décembre, du 20 mars / 22 septembre et du 21 juin. Les ombres sont indicatives.
 
 Prochaine amélioration de fidélité : dimensions de référence, plan de masse et vues du côté jardin.
 
