@@ -377,6 +377,7 @@ function makeMaterials() {
   M.graniteDark = std({ color: 0xaeaba4, map: TEX.concrete, roughness: 0.85 });
   M.grass = std({ color: 0x4f6b3a, roughness: 0.9 });
   M.lawn = std({ color: 0x6c8a4a, map: TEX.grass, roughness: 1 });
+  M.soilPath = std({ color: 0xb79e7c, map: TEX.concrete, roughness: 1 });   // sandy earth path in the woods
   M.ground = std({ vertexColors: true, map: TEX.grass, roughness: 1 });
   M.hedge = std({ vertexColors: true, roughness: 0.95, flatShading: true });
   M.bark = std({ color: 0x5a5047, roughness: 1 });
@@ -811,6 +812,66 @@ function insetPoly(pts, d) {
   const c = pts.reduce((s, p) => [s[0] + p[0] / pts.length, s[1] + p[1] / pts.length], [0, 0]);
   return pts.map(([x, z]) => { const l = Math.hypot(x - c[0], z - c[1]) || 1, k = Math.max(0, 1 - d / l); return [c[0] + (x - c[0]) * k, c[1] + (z - c[1]) * k]; });
 }
+// property fence along a polyline of [x, z]: posts at most 2.5 m apart, top rail, wire mesh; base(x, z) = ground
+const BACK_Z = -34.5;               // the back fence of the property, on the forest side: ~10 m behind the end of the wing
+const NW_WALL = [[52.95, -12.3], [56.1, BACK_Z]];   // boundary wall with the property to the west
+// Bois des Chantiers (forêt domaniale de Versailles). The forest entrance is beside No. 6: a path from the
+// street climbs to a junction where three forest roads start (OpenStreetMap); a fourth path runs right
+// behind our property along the back fence (residents).
+const FOREST_J = [-42.5, -37.5];
+const FOREST_PATHS = [
+  { w: 2.6, pts: [[-49.5, 4.9], [-46.0, -18.4], [-43.0, -33.4], FOREST_J] },                                          // entrance from the street
+  { w: 3.2, pts: [FOREST_J, [-28.9, -73.2], [-11.1, -125.5], [15.6, -247.7], [23.6, -287.8]] },                       // Route de Sable
+  { w: 3.2, pts: [FOREST_J, [-51.4, -67.2], [-55.2, -96.4], [-62.3, -137.0], [-67.9, -185.7], [-79.1, -284.4]] },      // Route du Petit Montreuil
+  { w: 2.6, pts: [FOREST_J, [10.6, -42.3], [74.1, -70.1], [103.2, -75.7], [173.0, -103.6], [244.4, -116.3]] },        // track towards the north-west
+  { w: 2.2, pts: [[74.1, -70.1], [54.6, -83.0], [-28.9, -73.2]] },                                                    // cross link
+  { w: 1.7, pts: [FOREST_J, [-34.0, -36.3], [-14.0, -35.9], [105.0, -35.8]] },                                        // right behind our property
+];
+function segDist(px, pz, a, b) {
+  const dx = b[0] - a[0], dz = b[1] - a[1], l2 = dx * dx + dz * dz;
+  const t = l2 ? clamp(((px - a[0]) * dx + (pz - a[1]) * dz) / l2, 0, 1) : 0;
+  return Math.hypot(px - (a[0] + dx * t), pz - (a[1] + dz * t));
+}
+// distance from (x, z) to the edge of the nearest forest path (negative on the path)
+function pathClear(x, z) {
+  let m = 1e9;
+  for (const P of FOREST_PATHS) for (let i = 0; i + 1 < P.pts.length; i++) m = Math.min(m, segDist(x, z, P.pts[i], P.pts[i + 1]) - P.w / 2);
+  return m;
+}
+// an earth path laid on the terrain along a polyline, gently wavering
+function pathRibbon(pts, w, lift) {
+  const S = [];
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const [ax, az] = pts[i], [bx, bz] = pts[i + 1], n = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az)));
+    for (let j = 0; j < n; j++) S.push([lerp(ax, bx, j / n), lerp(az, bz, j / n)]);
+  }
+  S.push(pts[pts.length - 1]);
+  const inside = ([x, z]) => x > -158 && x < 258 && z > -272 && z < 84;
+  let prev = null;
+  for (let i = 0; i < S.length; i++) {
+    const a = S[Math.max(0, i - 1)], b = S[Math.min(S.length - 1, i + 1)], tx = b[0] - a[0], tz = b[1] - a[1], tl = Math.hypot(tx, tz) || 1;
+    const nx = -tz / tl, nz = tx / tl, [x, z] = S[i];
+    const wob = 0.15 * Math.sin(i * 0.37 + w * 3) + 0.1 * Math.sin(i * 0.13), hw = (w / 2) * (1 + 0.08 * Math.sin(i * 0.21 + 1.7));
+    const L = [x + nx * (hw + wob), z + nz * (hw + wob)], R = [x - nx * (hw - wob), z - nz * (hw - wob)];
+    const cur = inside(S[i]) ? [[L[0], groundH(L[0], L[1]) + lift, L[1]], [R[0], groundH(R[0], R[1]) + lift, R[1]]] : null;
+    if (prev && cur) bag('soilPath').quad(prev[1], cur[1], cur[0], prev[0], [0, 1, 0]);
+    prev = cur;
+  }
+}
+function fenceRun(pts, base, H = 1.35) {
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [x0, z0] = pts[i], [x1, z1] = pts[i + 1], n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, z1 - z0) / 2.5));
+    for (let j = 0; j <= n; j++) {
+      const t = j / n, x = lerp(x0, x1, t), z = lerp(z0, z1, t), y = base(x, z);
+      if (j < n || i === pts.length - 2) bag('metal').cyl([x, y - 0.1, z], [x, y + H, z], 0.03, 0.03, 6, true);
+      if (j === n) continue;
+      const t1 = (j + 1) / n, xb = lerp(x0, x1, t1), zb = lerp(z0, z1, t1), yb = base(xb, zb);
+      const d = [xb - x, zb - z], l = Math.hypot(d[0], d[1]), nrm = [d[1] / l, 0, -d[0] / l];
+      bag('fence').quad([x, y + 0.04, z], [xb, yb + 0.04, zb], [xb, yb + H - 0.04, zb], [x, y + H - 0.04, z], nrm);
+      bag('metal').cyl([x, y + H - 0.03, z], [xb, yb + H - 0.03, zb], 0.014, 0.014, 4);
+    }
+  }
+}
 function railingRun(pts, y0, h = 1.0, mk = 'metal', spacing = 0.12) {
   for (let i = 0; i < pts.length - 1; i++) {
     const [x0, z0] = pts[i], [x1, z1] = pts[i + 1];
@@ -987,6 +1048,17 @@ function buildSite(group) {
 
   // no cars: the street is shown empty (residents' request)
 
+  // back of the property: a fence along the tree line on the forest side, from No. 6's fence to the
+  // boundary wall with the property to the west (residents + aerial view)
+  fenceRun([[GX0 + 0.08, BACK_Z], [NW_WALL[1][0] - 0.15, BACK_Z]], groundH);
+  {
+    const [[ax, az], [bx, bz]] = NW_WALL, g = groundH(ax, az);
+    bag('concrete').segBox(ax, az, bx, bz, g - 0.4, g + 2.0, 0.25);
+    bag('flashing').segBox(ax, az, bx, bz, g + 2.0, g + 2.06, 0.32);
+  }
+  // the forest paths, and three wooden posts closing the entrance to cars at the street
+  FOREST_PATHS.forEach((P, k) => pathRibbon(P.pts, P.w, 0.05 + k * 0.008));
+  for (const x of [-50.4, -49.5, -48.6]) bag('bark').cyl([x, -0.05, 4.35], [x, 0.85, 4.35], 0.09, 0.08, 8, true);
   flushBags(group, ['yellow', 'white', 'redway']);
 }
 
@@ -1007,7 +1079,7 @@ const RAMP_Y0 = SW_Y - 0.03;       // cobble level where both ramps start
 const upY = (z) => lerp(RAMP_Y0, UP, clamp((RAMP0 - z) / (RAMP0 - GF), 0, 1));
 const downY = (z) => lerp(RAMP_Y0, LOW, clamp((RAMP0 - z) / (RAMP0 - DOWN_END), 0, 1));
 const pathY = (z) => z >= 4.6 ? SW_Y : z >= 3.2 ? lerp(SW_Y, 1.0, (4.6 - z) / 1.4)
-  : z >= GF ? lerp(1.0, 3.0, (3.2 - z) / (3.2 - GF)) : 3.0 + Math.min(0.4, (GF - z) * 0.05);
+  : z >= GF ? lerp(1.0, 3.0, (3.2 - z) / (3.2 - GF)) : lerp(3.0, T_TOP - 0.03, clamp((GF - z) / 2.6, 0, 1));
 const wallTopY = (z) => lerp(0.9, T_TOP, clamp((RAMP0 - z) / (RAMP0 - GF), 0, 1));
 
 function planeMesh(group, mat, w, h, x, y, z, ry = 0) {
@@ -1066,16 +1138,17 @@ function buildDrive(group) {
   // ---- roof terrace over the parking, in front of the wing
   bag('wall').boxAB(GX0, T_BOT, -12.4, 0, T_TOP, GF + 0.06);             // front slab (edge band, porch ceiling)
   const B = bag(C);
-  B.quad([GX0, T_TOP, -24.4], [-1.5, T_TOP, -24.4], [-1.5, T_TOP, -12.4], [GX0, T_TOP, -12.4], [0, 1, 0]);
+  // plain green lawn, level with No. 6's garden next door (residents)
+  bag('lawn').quad([GX0, T_TOP, -24.4], [-1.5, T_TOP, -24.4], [-1.5, T_TOP, -12.4], [GX0, T_TOP, -12.4], [0, 1, 0]);
+  bag('lawn').quad([GX0, T_TOP + 0.004, -12.4], [-0.05, T_TOP + 0.004, -12.4], [-0.05, T_TOP + 0.004, GF + 0.12], [GX0, T_TOP + 0.004, GF + 0.12], [0, 1, 0]);
   B.quad([GX0, LOW - 0.1, -24.4], [GX0, LOW - 0.1, -12.4], [GX0, T_TOP, -12.4], [GX0, T_TOP, -24.4], [-1, 0, 0]);
   B.quad([GX0, LOW - 0.1, -24.4], [-1.5, LOW - 0.1, -24.4], [-1.5, T_TOP, -24.4], [GX0, T_TOP, -24.4], [0, 0, -1]);
-  bag('wall').boxAB(GX0 - 0.05, T_TOP - 0.7, -24.45, GX0, T_TOP + 0.02, GF);
   bag('wall').boxAB(GX0, T_TOP - 0.7, -24.45, -1.5, T_TOP + 0.02, -24.4);
   railingRun([[GX0 + 0.12, GF - 0.1], [-0.45, GF - 0.1]], T_TOP, 1.05, 'railLight', 0.13);
-  railingRun([[GX0 + 0.12, -24.3], [GX0 + 0.12, GF - 0.1]], T_TOP, 1.05, 'railLight', 0.13);
+  // fence between the properties, along the SE edge of the terrace, down to the back fence
+  fenceRun([[GX0 + 0.08, GF - 0.1], [GX0 + 0.08, BACK_Z]], (x, z) => (z >= -24.4 ? T_TOP : groundH(x, z)));
+
   railingRun([[GX0 + 0.12, -24.3], [-1.6, -24.3]], T_TOP, 1.05, 'railLight', 0.13);
-  bag('wall').boxAB(-10.6, T_TOP, -15.2, -7.8, T_TOP + 0.85, -13.5, true); // vent / stair housing on the terrace
-  bag('flashing').boxAB(-10.65, T_TOP + 0.85, -15.25, -7.75, T_TOP + 0.9, -13.45);
 
   // ---- 4 bis: a narrow walkway runs from the street along the SE gable, between the hedge planter
   //      (behind the up ramp's wall) and a small plant box against the building. It ends in a covered
@@ -1245,16 +1318,9 @@ function buildHedges(group) {
   [[-1.7, -0.3], [-3.8, -2.4], [-5.9, -4.5], [-8.0, -6.6], [-9.15, -8.4]]
     .forEach(([z0, z1], i) => geos.push(hedgeGeo(WK1 + 0.1, -0.04, z0, z1, walkY(z1) + 0.44, walkY(z1) + 0.95 + (i % 2) * 0.2, i % 2 ? PHOTINIA : BOX, 110 + i, 0.5)));
   geos.push(hedgeGeo(-2.42, -1.1, -12.28, -11.9, PORCH_Y + 0.5, PORCH_Y + 1.3, BOX, 97, 0.5));      // planter at the end of the walkway
-  geos.push(hedgeGeo(-12.0, -10.6, -11.9, -11.0, T_TOP, T_TOP + 1.05, BOX, 98, 0.5));               // terrace shrubs
-  geos.push(hedgeGeo(-9.8, -8.6, -12.0, -11.1, T_TOP, T_TOP + 0.8, PHOTINIA, 99, 0.5));
-  // garden-side shrub beds
-  for (let i = 0; i < 10; i++) {
-    const x = 15 + r() * 36, s = 0.9 + r() * 1.1;
-    geos.push(hedgeGeo(x, x + s * 1.4, -14.6 - s, -13.4, 1.0, 1.0 + s, BOX, 120 + i, 0.5));
-  }
   // neighbours' front hedges
   geos.push(hedgeGeo(53.4, 82, 2.8, 4.2, 0.0, 2.4, THUJA, 140, 0.15));
-  geos.push(hedgeGeo(-37, -16.2, 1.2, 2.4, 0.0, 1.9, BOX, 141, 0.3));
+  geos.push(hedgeGeo(-47.5, -16.2, 1.2, 2.4, 0.0, 1.9, BOX, 141, 0.3));
   const merged = mergeGeos(geos);
   const mesh = new THREE.Mesh(merged, M.hedge);
   mesh.castShadow = mesh.receiveShadow = true;
@@ -1281,56 +1347,68 @@ function mergeGeos(geos) {
    NEIGHBOURS
    ===================================================================== */
 function buildNeighbours(group) {
-  // --- SE: meulière apartment building (millstone, brick trims, iron balconies, hipped slate roof)
+  // --- SE: No. 6, five-storey meulière apartment building (millstone, brick trims, iron balconies,
+  //     slate roof). Its curved street front follows the bend of the road; footprint from OpenStreetMap,
+  //     moved ~3.5 m south-east so that No. 6's side path along our retaining wall stays clear.
   {
-    const x0 = -36.4, x1 = -15.2, z0 = -14.2, z1 = -2.6, top = 15.6;
-    const b = bag('meuliere');
-    b.quad([x0, 0, z1], [x1, 0, z1], [x1, top, z1], [x0, top, z1], [0, 0, 1]);
-    b.quad([x1, 0, z0], [x1, 0, z1], [x1, top, z1], [x1, top, z0], [1, 0, 0]);
-    b.quad([x0, 0, z0], [x0, 0, z1], [x0, top, z1], [x0, top, z0], [-1, 0, 0]);
-    b.quad([x0, 0, z0], [x1, 0, z0], [x1, top, z0], [x0, top, z0], [0, 0, -1]);
-    // floor bands in stone
-    for (let f = 1; f <= 5; f++) {
-      const y = 0.6 + f * 3.0;
-      bag('concrete').boxAB(x0 - 0.06, y - 0.18, z1 - 0.02, x1 + 0.06, y, z1 + 0.08);
-      bag('concrete').boxAB(x1 - 0.02, y - 0.18, z0 - 0.06, x1 + 0.08, y, z1 + 0.06);
-    }
-    bag('concrete').boxAB(x0 - 0.25, top - 0.1, z0 - 0.25, x1 + 0.25, top + 0.25, z1 + 0.25);
-    // windows with brick surrounds, balconies with black railings
-    for (let f = 0; f < 5; f++) {
-      const y = 0.6 + f * 3.0 + 0.55;
-      for (let i = 0; i < 6; i++) {
-        const cx = x0 + 1.9 + i * 3.45;
-        bag('brick').boxAB(cx - 0.78, y - 0.12, z1 - 0.02, cx + 0.78, y + 2.18, z1 + 0.05);
-        bag('glass').quad([cx - 0.58, y, z1 + 0.055], [cx + 0.58, y, z1 + 0.055], [cx + 0.58, y + 2.0, z1 + 0.055], [cx - 0.58, y + 2.0, z1 + 0.055], [0, 0, 1]);
-        bag('frame').boxAB(cx - 0.03, y, z1 + 0.05, cx + 0.03, y + 2.0, z1 + 0.07);
-        if (f >= 1 && (i % 2 === 0 || f === 2)) {
-          bag('concrete').boxAB(cx - 1.05, y - 0.2, z1, cx + 1.05, y - 0.05, z1 + 0.75);
-          railingRun([[cx - 1.0, z1 + 0.72], [cx + 1.0, z1 + 0.72]], y - 0.05, 0.95, 'metal', 0.14);
-          railingRun([[cx - 1.0, z1], [cx - 1.0, z1 + 0.72]], y - 0.05, 0.95, 'metal', 0.14);
-          railingRun([[cx + 1.0, z1], [cx + 1.0, z1 + 0.72]], y - 0.05, 0.95, 'metal', 0.14);
-        }
-      }
-      for (let i = 0; i < 3; i++) {
-        const cz = z0 + 2.2 + i * 3.6;
-        bag('brick').boxAB(x1 - 0.05, y - 0.12, cz - 0.7, x1 + 0.02, y + 2.18, cz + 0.7);
-        bag('glass').quad([x1 + 0.025, y, cz - 0.52], [x1 + 0.025, y, cz + 0.52], [x1 + 0.025, y + 2.0, cz + 0.52], [x1 + 0.025, y + 2.0, cz - 0.52], [1, 0, 0]);
-        // iron balconies on the side facing our drive
-        if (f >= 1 && i !== 1) {
-          bag('concrete').boxAB(x1, y - 0.2, cz - 1.0, x1 + 0.72, y - 0.05, cz + 1.0);
-          railingRun([[x1 + 0.7, cz - 0.98], [x1 + 0.7, cz + 0.98]], y - 0.05, 0.95, 'metal', 0.14);
-          railingRun([[x1, cz - 0.98], [x1 + 0.7, cz - 0.98]], y - 0.05, 0.95, 'metal', 0.14);
-          railingRun([[x1, cz + 0.98], [x1 + 0.7, cz + 0.98]], y - 0.05, 0.95, 'metal', 0.14);
+    const P = [[-41.0, -17.8], [-35.5, -10.2], [-33.2, -8.1], [-28.8, -5.5], [-25.5, -4.3], [-15.7, -2.0],
+      [-13.9, -12.6], [-23.4, -15.4], [-26.8, -17.4], [-28.1, -19.0], [-38.1, -20.2]];
+    const top = 15.6, n = P.length;
+    let area = 0;
+    for (let i = 0; i < n; i++) { const a = P[i], b = P[(i + 1) % n]; area += a[0] * b[1] - b[0] * a[1]; }
+    const sg = area > 0 ? 1 : -1;
+    const edges = P.map((a, i) => {
+      const b = P[(i + 1) % n], dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
+      return { a, b, L, u: [dx / L, dz / L], o: [(sg * dz) / L, (-sg * dx) / L] };   // o: outward normal
+    });
+    const at = (e, t, d = 0) => [e.a[0] + e.u[0] * t + e.o[0] * d, e.a[1] + e.u[1] * t + e.o[1] * d];
+    const FRONT = new Set([0, 1, 2, 3, 4, 5]);   // street front and the side facing our drive (balconies)
+    for (const [i, e] of edges.entries()) {
+      bag('meuliere').quad([e.a[0], -0.5, e.a[1]], [e.b[0], -0.5, e.b[1]], [e.b[0], top, e.b[1]], [e.a[0], top, e.a[1]], [e.o[0], 0, e.o[1]]);
+      // stone floor bands
+      for (let f = 1; f <= 5; f++) { const p0 = at(e, 0, 0.03), p1 = at(e, e.L, 0.03); bag('concrete').segBox(p0[0], p0[1], p1[0], p1[1], 0.6 + f * 3.0 - 0.18, 0.6 + f * 3.0, 0.1, 0.04); }
+      // windows with brick surrounds, iron balconies on the front
+      const nw = e.L >= 2.4 ? Math.max(1, Math.floor((e.L - 0.6) / 2.6)) : 0;
+      for (let k = 0; k < nw; k++) {
+        const t = (e.L * (k + 0.5)) / nw;
+        for (let f = 0; f < 5; f++) {
+          const y = 0.6 + f * 3.0 + 0.55, s0 = at(e, t - 0.78, 0.02), s1 = at(e, t + 0.78, 0.02);
+          bag('brick').segBox(s0[0], s0[1], s1[0], s1[1], y - 0.12, y + 2.18, 0.07);
+          const g0 = at(e, t - 0.58, 0.06), g1 = at(e, t + 0.58, 0.06);
+          bag('glass').quad([g0[0], y, g0[1]], [g1[0], y, g1[1]], [g1[0], y + 2.0, g1[1]], [g0[0], y + 2.0, g0[1]], [e.o[0], 0, e.o[1]]);
+          const m0 = at(e, t - 0.03, 0.06), m1 = at(e, t + 0.03, 0.06);
+          bag('frame').segBox(m0[0], m0[1], m1[0], m1[1], y, y + 2.0, 0.03);
+          if (FRONT.has(i) && e.L > 4 && f >= 1 && (k % 2 === 0 || f === 2)) {
+            const q0 = at(e, t - 1.0, 0), q1 = at(e, t + 1.0, 0), r0 = at(e, t - 1.0, 0.72), r1 = at(e, t + 1.0, 0.72);
+            bag('concrete').segBox(at(e, t - 1.05, 0.375)[0], at(e, t - 1.05, 0.375)[1], at(e, t + 1.05, 0.375)[0], at(e, t + 1.05, 0.375)[1], y - 0.2, y - 0.05, 0.75);
+            railingRun([r0, r1], y - 0.05, 0.95, 'metal', 0.14);
+            railingRun([q0, r0], y - 0.05, 0.95, 'metal', 0.14);
+            railingRun([q1, r1], y - 0.05, 0.95, 'metal', 0.14);
+          }
         }
       }
     }
-    hipRoof('slate', x0 - 0.25, z0 - 0.25, x1 + 0.25, z1 + 0.25, top + 0.25, 4.2);
+    // cornice and slate roof: hipped all round to a flat top
+    const off = (d) => P.map((p, i) => {
+      const e1 = edges[(i - 1 + n) % n], e2 = edges[i], nx = e1.o[0] + e2.o[0], nz = e1.o[1] + e2.o[1];
+      const k = d / Math.max(0.35, 1 + e1.o[0] * e2.o[0] + e1.o[1] * e2.o[1]);
+      return [p[0] + nx * k, p[1] + nz * k];
+    });
+    const out = off(0.3), inn = off(-2.6), cor = off(0.12), yE = top + 0.25, yR = top + 2.9;
+    for (let i = 0; i < n; i++) {
+      const j = (i + 1) % n, o = edges[i].o;
+      bag('concrete').segBox(cor[i][0], cor[i][1], cor[j][0], cor[j][1], top - 0.1, top + 0.25, 0.5);
+      bag('slate').quad([out[i][0], yE, out[i][1]], [out[j][0], yE, out[j][1]], [inn[j][0], yR, inn[j][1]], [inn[i][0], yR, inn[i][1]], [o[0], 1, o[1]]);
+    }
+    const tris = THREE.ShapeUtils.triangulateShape(inn.map(([x, z]) => new THREE.Vector2(x, z)), []);
+    for (const [a, b, c] of tris) bag('bgRoof').tri([inn[a][0], yR, inn[a][1]], [inn[b][0], yR, inn[b][1]], [inn[c][0], yR, inn[c][1]], [0, 1, 0]);
     // chimneys
-    bag('brick').boxAB(-31, top + 2, -9.5, -30.2, top + 5.2, -8.6);
-    bag('brick').boxAB(-20, top + 2, -9.5, -19.2, top + 5.0, -8.6);
-    // low front wall (the corner pier with the "6" and the gate are built with the drive)
-    bag('concrete').boxAB(-37, 0, 4.6, -15.85, 0.9, 4.84);
+    bag('brick').boxAB(-31.4, top + 1.5, -13.7, -30.6, top + 4.6, -12.9);
+    bag('brick').boxAB(-20.4, top + 1.5, -9.1, -19.6, top + 4.4, -8.3);
+    // low front wall, from the forest entrance to No. 6's gate (the corner pier with the "6" is built with the drive)
+    bag('concrete').boxAB(-47.9, 0, 4.6, -15.85, 0.9, 4.84);
   }
+
   // --- NW: modern white clinic building with glazed stair tower and slate mansard
   {
     const x0 = 57.6, x1 = 84, z0 = -14, z1 = -0.9, top = 15.2;
@@ -1399,6 +1477,11 @@ function groundH(x, z) {
   let h = lerp(lerp(0.15, 1.05, ours), hill(z), Math.max(ours, smooth(-12, -40, z)));
   h += (fbm2(x * 0.03, z * 0.03, 3, 5) - 0.5) * 1.4 * smooth(0, 30, Math.max(0, -z - 29));   // gentle undulation
   if (onPath) h = lerp(pathY(z) - 0.08, h, smooth(-24, -34, z));   // just under the paved path, then into the slope
+  // No. 6's garden, behind their house and alongside our garage block, is level with our green roof
+  // terrace (residents); it fades into the general slope further back
+  const zb = -12.6 + (x + 13.9) * 0.314;   // back line of No. 6
+  const p6 = smooth(-41.5, -38.5, x) * (1 - smooth(-12.0, -11.6, x)) * smooth(zb + 0.3, zb - 0.6, z) * (1 - smooth(-25, -30, z));
+  if (p6 > 0) h = Math.max(h, lerp(h, T_TOP - 0.03, p6));
   return h;
 }
 function buildTerrain(group) {
@@ -1412,9 +1495,10 @@ function buildTerrain(group) {
     const h = groundH(x, z);
     pos.setXYZ(i, x, h, z);
     uv.setXY(i, x, z);
-    const f = smooth(-22, -40, z) * (x > -20 && x < 90 ? 1 : 0.7);
+    const inside = z > BACK_Z && x > -12.5 && x < 55.5;
+    const f = smooth(BACK_Z, -38, z) * (x > -20 && x < 90 ? 1 : 0.7);
     const n = fbm2(x * 0.08, z * 0.08, 3, 9);
-    c.copy(lawn).lerp(forest, clamp(f + (n - 0.5) * 0.6, 0, 1)).lerp(dry, clamp((n - 0.6) * 1.2, 0, 0.35));
+    c.copy(lawn).lerp(forest, inside ? 0 : clamp(f + (n - 0.5) * 0.6, 0, 1)).lerp(dry, clamp((n - 0.6) * 1.2, 0, inside ? 0.1 : 0.35));
     cols[i * 3] = c.r; cols[i * 3 + 1] = c.g; cols[i * 3 + 2] = c.b;
   }
   g.setAttribute('color', new THREE.BufferAttribute(cols, 3));
@@ -1505,14 +1589,14 @@ function buildVegetation(group) {
   const spots = { d: [[], [], []], c: [[], []] };
   const r = rng(2024);
   const blocked = (x, z) =>
-    inRect(x, z, -17, -34, 24, 6) || inRect(x, z, 10, -24, 56, 2) || inRect(x, z, -40, -18, -14, 26) ||
+    inRect(x, z, -17, BACK_Z + 0.5, 68, 6) || inRect(x, z, -45, -23, -12, 26) || pathClear(x, z) < 1.6 ||
     inRect(x, z, 51, -18, 88, 26) || z > -1;
-  const STEP = SMALL ? 12.5 : 10.2;
-  for (let gx = -90; gx < 175; gx += STEP) for (let gz = -200; gz < 0; gz += STEP) {
+  const STEP = SMALL ? 10.5 : 7.2;   // a dense forest (lighter on phones)
+  for (let gx = -150; gx < 175; gx += STEP) for (let gz = -200; gz < 0; gz += STEP) {
     const x = gx + (r() - 0.5) * STEP * 0.8, z = gz + (r() - 0.5) * STEP * 0.8;
-    if (blocked(x, z) || r() < (gz < -120 || gx < -60 || gx > 140 ? 0.45 : 0.1)) continue;
+    if (blocked(x, z) || r() < (gz < -150 || gx < -110 || gx > 150 ? 0.25 : 0.04)) continue;
     const y = groundH(x, z);
-    const s = 0.8 + r() * 0.5, rot = r() * Math.PI * 2;
+    const s = 0.75 + r() * 0.6, rot = r() * Math.PI * 2;
     if (r() < 0.27) spots.c[(r() * 2) | 0].push([x, y, z, s, rot]);
     else spots.d[(r() * 3) | 0].push([x, y, z, s, rot]);
   }
@@ -1531,6 +1615,12 @@ function buildVegetation(group) {
   };
   variants.forEach((v, i) => { inst(v.bark, M.bark, spots.d[i]); inst(v.leaf, M.leaf, spots.d[i], true, FOLIAGE); });
   conifers.forEach((v, i) => { inst(v.bark, M.bark, spots.c[i]); inst(v.leaf, M.leafDark, spots.c[i]); });
+  // two little trees in the garden, near the inner corner of the L (residents + aerial view)
+  for (const [seed, h, x, z] of [[303, 4.6, 17.4, -16.0], [404, 4.0, 16.4, -20.2]]) {
+    const t = deciduous(seed, h, 4, 0.7, 1, 0.8), y = groundH(x, z) - 0.05;
+    const b = new THREE.Mesh(t.bark, M.bark); b.position.set(x, y, z); b.castShadow = b.receiveShadow = true; group.add(b);
+    const l = new THREE.Mesh(t.leaf, M.leaf); l.position.copy(b.position); l.castShadow = l.receiveShadow = true; group.add(l); FOLIAGE.push(l);
+  }
   // the two pavement trees from the photos (finer twigs)
   const t1 = deciduous(101, 9.5, 5, 0.6, 1, 0.55), t2 = deciduous(202, 8.5, 5, 0.56, 1, 0.55);
   for (const [t, x, z] of [[t1, 14.1, 8.35], [t2, 42.4, 8.35]]) {   // in the granite beds
