@@ -195,13 +195,26 @@ function makeTextures() {
     const val = 241 + (n - 0.5) * 22 + (f - 0.5) * 9 - Math.max(0, streak - 0.62) * 22;
     return [val, val, val];
   }, { srgb: false, tile: 4 });
-  // gravel: the roof and the 6th-floor terrace are covered with small stones
-  TEX.gravel = pixelTex(256, (u, v) => {
-    const a = tnoise(u * 96, v * 96, 96, 31), b = tnoise(u * 170, v * 170, 170, 37), c = tfbm(u * 6, v * 6, 6, 3, 41);
-    let val = 214 + (a - 0.5) * 62 + (b - 0.5) * 46 + (c - 0.5) * 14;
-    if (b < 0.3) val -= 38;
-    return [val, val * 0.985, val * 0.95];
-  }, { srgb: false, tile: 2.5 });
+  // gravel: the roof and the 6th-floor terrace are covered with rounded river pebbles, beige to brown
+  // with a few white and grey stones (photo from the terrace, Oct 2026). Worley cells = pebbles.
+  {
+    const N = 512, CELL = 8, G = N / CELL, gr = rng(4242), pts = [];
+    const PEB = ['#cdb89d', '#b9a185', '#a58c72', '#ddd0bd', '#93806d', '#e9e1d4', '#ae9a85', '#857464', '#c4ad8e', '#9d9184']
+      .map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
+    for (let j = 0; j < G; j++) for (let i = 0; i < G; i++) pts.push([(i + 0.15 + gr() * 0.7) * CELL, (j + 0.15 + gr() * 0.7) * CELL, (gr() * PEB.length) | 0, 0.85 + gr() * 0.3]);
+    TEX.gravel = pixelTex(N, (u, v, x, y) => {
+      const ci = Math.floor(x / CELL), cj = Math.floor(y / CELL);
+      let d1 = 1e9, d2 = 1e9, best = null;
+      for (let dj = -1; dj <= 1; dj++) for (let di = -1; di <= 1; di++) {
+        const ii = (ci + di + G) % G, jj = (cj + dj + G) % G, q = pts[jj * G + ii];
+        const dx = x - (q[0] + (ci + di - ii) * CELL), dy = y - (q[1] + (cj + dj - jj) * CELL), d = dx * dx + dy * dy;
+        if (d < d1) { d2 = d1; d1 = d; best = q; } else if (d < d2) d2 = d;
+      }
+      const edge = clamp((Math.sqrt(d2) - Math.sqrt(d1)) / 2.2, 0, 1);   // dark gaps between pebbles
+      const c = PEB[best[2]], k = best[3] * (0.45 + 0.55 * edge) * (1 - 0.18 * Math.sqrt(d1) / CELL);
+      return [c[0] * k, c[1] * k, c[2] * k].map((n) => Math.min(255, n));
+    }, { tile: 1.8 });
+  }
   // concrete
   TEX.concrete = pixelTex(256, (u, v) => {
     const n = tfbm(u * 8, v * 8, 8, 4, 21), f = tnoise(u * 90, v * 90, 90, 3);
@@ -333,20 +346,20 @@ function makeTextures() {
 const M = {};
 function makeMaterials() {
   const std = (o) => new THREE.MeshStandardMaterial(o);
-  M.wall = std({ color: 0xdbd4c7, map: TEX.render, roughness: 0.94 });
-  M.orange = std({ color: 0xdc8656, map: TEX.render, roughness: 0.9 });
+  M.wall = std({ color: 0xe3ddd0, map: TEX.render, roughness: 0.94 });
+  M.orange = std({ color: 0xe0936a, map: TEX.render, roughness: 0.9 });   // soft salmon-orange (photo)
   M.reveal = std({ color: 0xbdb7ac, map: TEX.render, roughness: 0.95 });
   M.sill = std({ color: 0xd2cdc3, roughness: 0.8 });
   M.slab = std({ color: 0xd8d2c6, map: TEX.render, roughness: 0.95 });
   M.soffit = std({ color: 0x8e887d, map: TEX.render, roughness: 0.98 });
   M.frame = std({ color: 0xf3f2ee, roughness: 0.55 });
-  M.flashing = std({ color: 0x55595d, roughness: 0.5, metalness: 0.4 });
+  M.flashing = std({ color: 0xe1d9c8, map: TEX.concrete, roughness: 0.8 });   // cream stone copings (photo)
   M.glass = std({ color: 0x6f7f8e, roughness: 0.1, metalness: 0.92, envMapIntensity: 1.0 });
   M.glassLit = std({ color: 0x6f7f8e, roughness: 0.1, metalness: 0.92, envMapIntensity: 1.0, emissive: 0xffb76b, emissiveIntensity: 0 });
   M.curtain = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6 });
   M.curtainLit = std({ color: 0xb4b8b9, map: TEX.curtain, roughness: 0.42, metalness: 0.25, envMapIntensity: 0.6, emissive: 0xffc98f, emissiveMap: TEX.curtain, emissiveIntensity: 0 });
   M.metal = std({ color: 0x34383c, roughness: 0.45, metalness: 0.55 });
-  M.roof = std({ color: 0xbab4aa, map: TEX.gravel, roughness: 1 });
+  M.roof = std({ color: 0xffffff, map: TEX.gravel, roughness: 1 });
   M.concrete = std({ color: 0xd3cec4, map: TEX.concrete, roughness: 0.95 });
   M.darkConcrete = std({ color: 0x9d988f, map: TEX.concrete, roughness: 1 });
   M.asphalt = std({ color: 0x4a4c4f, map: TEX.asphalt, roughness: 0.97 });
@@ -365,7 +378,7 @@ function makeMaterials() {
   M.leafDark = std({ color: 0x3a5530, roughness: 0.95, flatShading: true });
   M.garageDoor = std({ color: 0xffffff, map: TEX.garageV, roughness: 0.5, metalness: 0.15 });
   M.garageDoorLow = std({ color: 0xc4c8cb, map: TEX.garageV, roughness: 0.5, metalness: 0.15 });
-  M.railLight = std({ color: 0xd8dad8, roughness: 0.45, metalness: 0.35 });
+  M.railLight = std({ color: 0xf0eee8, roughness: 0.5, metalness: 0.1 });   // white-painted railings (photos)
   M.fence = std({ color: 0x8d9296, map: TEX.fence, alphaTest: 0.35, side: THREE.DoubleSide, roughness: 0.6, metalness: 0.4 });
   M.ramp = std({ color: 0x7a7670, map: TEX.asphalt, roughness: 0.95 });
   M.paving = std({ color: 0x9c9890, map: TEX.concrete, roughness: 0.92 });
@@ -550,15 +563,15 @@ function buildLevel(F, k, els, wk = 'wall') {
 
 function coping(F, yTop, s0 = 0, s1 = F.L) {
   const a = F.P(s0, 0, -0.14), b = F.P(s1, 0, -0.14);
-  bag('wall').segBox(a[0], a[2], b[0], b[2], yTop - 0.02, yTop + 0.3, 0.33, 0.0);
+  bag('wall').segBox(a[0], a[2], b[0], b[2], yTop - 0.28, yTop + 0.3, 0.33, 0.0);   // also hides the edge of the roof slab
   bag('flashing').segBox(a[0], a[2], b[0], b[2], yTop + 0.3, yTop + 0.35, 0.38, 0.02);
 }
 
 // Wedge ("fin") balcony: triangular in plan — root R on the wall, deep end E on the wall,
-// tip T at depth D in front of E. Solid parapet along the angled edge R–T; the underside
-// slopes down towards the tip, which gives the sawtooth silhouette seen in the photos.
-function wedge(F, k, sRoot, sDeep, D, side, drop = 0.55) {
-  const y0 = LV(k), yT = y0 + 0.03, yP = y0 + 1.06, yB = y0 - 0.2, yBT = yB - drop * (D / 1.5), th = 0.12;
+// tip T at depth D in front of E. Solid parapet along the angled edge R–T; the slab is flat
+// (residents' photos), its underside level with the floor.
+function wedge(F, k, sRoot, sDeep, D, side) {
+  const y0 = LV(k), yT = y0 + 0.03, yP = y0 + 1.06, yB = y0 - 0.2, yBT = yB, th = 0.12;
   const R3 = F.P(sRoot, 0, 0), E3 = F.P(sDeep, 0, 0), T3 = F.P(sDeep, 0, D);
   const r = [R3[0], R3[2]], e = [E3[0], E3[2]], t = [T3[0], T3[2]];
   const outN = (a, b, ref) => {
@@ -571,13 +584,13 @@ function wedge(F, k, sRoot, sDeep, D, side, drop = 0.55) {
   const nh = outN(r, t, e), ns = outN(e, t, r);
   const r2 = off(r, nh, th), t2 = off(t, nh, th);
   const W = bag('wall'), S = bag('slab');
-  // angled parapet (outer face runs down to the sloped soffit)
+  // angled parapet (outer face runs down to the soffit)
   W.quad(P3(r, yP), P3(t, yP), P3(t, yBT), P3(r, yB), [nh[0], 0, nh[1]]);
   W.quad(P3(r2, yP), P3(t2, yP), P3(t2, yT), P3(r2, yT), [-nh[0], 0, -nh[1]]);
   W.quad(P3(r, yP), P3(t, yP), P3(t2, yP), P3(r2, yP), [0, 1, 0]);
   const m0 = [(r[0] + r2[0]) / 2, (r[1] + r2[1]) / 2], m1 = [(t[0] + t2[0]) / 2, (t[1] + t2[1]) / 2];
   bag('flashing').segBox(m0[0], m0[1], m1[0], m1[1], yP, yP + 0.03, th + 0.03, 0.02);
-  // slab top and sloped soffit
+  // slab top and flat soffit
   S.tri(P3(r, yT), P3(e, yT), P3(t, yT), [0, 1, 0]);
   bag('soffit').tri(P3(r, yB), P3(e, yB), P3(t, yBT), [0, -1, 0]);
   if (side === 'solid') {
@@ -586,15 +599,15 @@ function wedge(F, k, sRoot, sDeep, D, side, drop = 0.55) {
     W.quad(P3(e2, yP), P3(t3, yP), P3(t3, yT), P3(e2, yT), [-ns[0], 0, -ns[1]]);
     W.quad(P3(e, yP), P3(t, yP), P3(t3, yP), P3(e2, yP), [0, 1, 0]);
   } else {
-    // slab edge, then a metal railing on the short side
+    // slab edge, then a white-painted railing on the short side
     W.quad(P3(e, yT), P3(t, yT), P3(t, yBT), P3(e, yB), [ns[0], 0, ns[1]]);
     const a = off(e, ns, 0.04), b = off(t, ns, 0.04);
-    bag('metal').segBox(a[0], a[1], b[0], b[1], yP - 0.06, yP - 0.01, 0.05);
-    bag('metal').segBox(a[0], a[1], b[0], b[1], yT + 0.08, yT + 0.11, 0.03);
+    bag('railLight').segBox(a[0], a[1], b[0], b[1], yP - 0.06, yP - 0.01, 0.05);
+    bag('railLight').segBox(a[0], a[1], b[0], b[1], yT + 0.08, yT + 0.11, 0.03);
     const n = Math.max(2, Math.round(D / 0.11));
     for (let i = 1; i <= n; i++) {
       const u = i / n;
-      bag('metal').box(lerp(a[0], b[0], u), (yT + yP) / 2 - 0.02, lerp(a[1], b[1], u), 0.018, yP - yT - 0.06, 0.018);
+      bag('railLight').box(lerp(a[0], b[0], u), (yT + yP) / 2 - 0.02, lerp(a[1], b[1], u), 0.018, yP - yT - 0.06, 0.018);
     }
   }
 }
@@ -640,7 +653,7 @@ function buildBuilding(group) {
     wedge(STREET, k, 8.35, 10.9, 1.5, 'rail');   // S2 — points NW
     wedge(STREET, k, 24.2, 21.7, 1.5, 'rail');   // S3 — points SE
     wedge(STREET, k, 41.4, 38.75, 1.5, 'rail');  // S4 — points SE
-    wedge(STREET, k, 45.3, 50.3, 1.8, 'solid', 0.65); // S5 — long solid fin near the NW end
+    wedge(STREET, k, 45.3, 50.3, 1.8, 'solid'); // S5 — long solid fin near the NW end
   }
   coping(STREET, TOP_SLAB);
 
@@ -672,7 +685,7 @@ function buildBuilding(group) {
   L(AFACE, R06, (k) => pat(k === 0 ? ''
     : k === 6 ? 'w1.1-2.5 o2.7-4.4 w4.6-5.4 w7.4-8.6 o8.7-10.3 w10.4-11.3'
       : k % 2 ? 'f1.1-2.5 w4.6-5.4 o5.5-7.3 w7.4-8.6 w10.4-11.3' : 'f1.1-2.5 o2.7-4.4 w4.6-5.4 w7.4-8.6 o8.7-10.3 w10.4-11.3'));
-  for (const k of R15) wedge(AFACE, k, 3.8, 0.5, 1.5, 'solid', k === 1 ? 0.12 : 0.55);
+  for (const k of R15) wedge(AFACE, k, 3.8, 0.5, 1.5, 'solid');
   coping(AFACE, TOP_WING);
   L(RET, R15, (k) => pat(k % 2 === 0 ? 'o0.15-1.35' : ''));
   rect('wall', RET, 0, RET.L, T_TOP - 0.05, LV(1));   // strip above the terrace; below is the 4 bis porch
