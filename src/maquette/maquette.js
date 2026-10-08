@@ -364,12 +364,16 @@ function makeMaterials() {
   M.darkConcrete = std({ color: 0x9d988f, map: TEX.concrete, roughness: 1 });
   M.asphalt = std({ color: 0x4a4c4f, map: TEX.asphalt, roughness: 0.97 });
   M.pavement = std({ color: 0x7f7f7d, map: TEX.asphalt, roughness: 0.96 });
-  M.redway = std({ color: 0x8c5d4c, map: TEX.asphalt, roughness: 0.96 });
+  M.redway = std({ color: 0x8f6355, map: TEX.asphalt, roughness: 0.96 });
   M.curb = std({ color: 0xb5b2ab, map: TEX.concrete, roughness: 0.85 });
   M.cobble = std({ color: 0xffffff, map: TEX.cobble, roughness: 0.92 });
   M.white = std({ color: 0xf1f1ee, roughness: 0.6 });
   M.yellow = std({ color: 0xe5b52c, roughness: 0.6 });
   M.soil = std({ color: 0x5b4d3c, map: TEX.grass, roughness: 1 });
+  M.mulch = std({ color: 0xa88a66, map: TEX.gravel, roughness: 1 });
+  M.granite = std({ color: 0xc9c6bf, map: TEX.concrete, roughness: 0.85 });
+  M.graniteDark = std({ color: 0xaeaba4, map: TEX.concrete, roughness: 0.85 });
+  M.grass = std({ color: 0x4f6b3a, roughness: 0.9 });
   M.lawn = std({ color: 0x6c8a4a, map: TEX.grass, roughness: 1 });
   M.ground = std({ vertexColors: true, map: TEX.grass, roughness: 1 });
   M.hedge = std({ vertexColors: true, roughness: 0.95, flatShading: true });
@@ -656,6 +660,17 @@ function buildBuilding(group) {
     wedge(STREET, k, 45.3, 50.3, 1.8, 'solid'); // S5 — long solid fin near the NW end
   }
   coping(STREET, TOP_SLAB);
+  // the joint between No. 4 bis and No. 4: a thin white vertical line up the whole façade, just NW of the
+  // third balcony stack (Street View, Feb 2026); the same on the garden side and the attic
+  const JOINT = 26.6;
+  const joint = (F, s0, y0, y1) => {
+    bag('white').quad(F.P(s0 - 0.05, y0, 0.014), F.P(s0 + 0.05, y0, 0.014), F.P(s0 + 0.05, y1, 0.014), F.P(s0 - 0.05, y1, 0.014), F.N3);
+    bag('soffit').quad(F.P(s0 + 0.05, y0, 0.012), F.P(s0 + 0.08, y0, 0.012), F.P(s0 + 0.08, y1, 0.012), F.P(s0 + 0.05, y1, 0.012), F.N3);   // its shadow
+  };
+  joint(STREET, JOINT, RDC - 0.9, TOP_SLAB + 0.3);
+  joint(GARDEN, 52.7 - JOINT, RDC - 0.9, TOP_SLAB + 0.3);
+  joint(AT_ST, JOINT - 2.4, TOP_SLAB, TOP_WING + 0.3);
+  joint(AT_GD, 51.9 - JOINT, TOP_SLAB, TOP_WING + 0.3);
 
   // --- SE gable of the slab (face "B"). Its ground floor faces the drive: built in buildDrive()
   L(BFACE, R15, (k) => pat(k % 2 ? 'w1.3-2.5 o2.6-3.6 f5.4-6.8' : 'o0.3-1.2 w1.3-2.5 f5.4-6.8 o8.9-12.4'));
@@ -834,7 +849,16 @@ function buildSite(group) {
   const pv = bag('pavement');
   pv.boxAB(-3.0, 0, 4.84, 220, SW_Y, 9.85, true);
   pv.boxAB(-160, 0, 4.84, -15.8, SW_Y, 9.85, true);
-  bag('redway').quad([-3.0, SW_Y + 0.004, 5.0], [56, SW_Y + 0.004, 5.0], [56, SW_Y + 0.004, 6.9], [-3.0, SW_Y + 0.004, 6.9], [0, 1, 0]);
+  // red-brown paving around each street tree, from the kerb to the garden wall, narrowing towards the wall,
+  // edged by a strip of cobbles; the rest of the pavement is grey (Street View, Feb 2026)
+  const ry = SW_Y + 0.004;
+  for (const [k0, w0, w1, k1] of [[11.2, 12.3, 15.5, 16.6], [39.6, 40.5, 44.3, 45.2]]) {
+    bag('redway').quad([k0, ry, 9.85], [k1, ry, 9.85], [w1, ry, 4.84], [w0, ry, 4.84], [0, 1, 0]);
+    bag('cobble').segBox(k0, 9.85, w0, 4.84, ry, ry + 0.004, 0.32);
+    bag('cobble').segBox(k1, 9.85, w1, 4.84, ry, ry + 0.004, 0.32);
+  }
+  // cobbled gutter along the kerb
+  bag('cobble').boxAB(-160, 0, 10.05, 220, 0.012, 10.35, true);
   // cobbled vehicle crossing in front of the two ramps (between No. 6's gate and our corner planter)
   bag('cobble').boxAB(-15.8, 0, RAMP0, -3.0, SW_Y - 0.03, 9.85, true);
   // kerbs
@@ -882,7 +906,7 @@ function buildSite(group) {
   bag('metal').boxAB(sx + 2.9, SW_Y, sz0 + 0.3, sx + 3.25, SW_Y + 0.75, sz0 + 0.62); // litter bin
 
   // lamp posts (brown, curved arm towards the road)
-  const lamps = [[6.3, 6.75], [34.5, 9.25], [-14.5, 9.25], [63, 9.25]];   // the first stands at the back of the parking bay
+  const lamps = [[12.6, 9.2], [34.5, 9.25], [-14.5, 9.25], [63, 9.25]];   // the first between the parking bay and the tree
   for (const [x, z] of lamps) {
     bag('brown').cyl([x, SW_Y, z], [x, 7.9, z], 0.09, 0.055, 8);
     bag('brown').cyl([x, 7.9, z], [x, 8.25, z + 0.35], 0.055, 0.05, 6);
@@ -893,17 +917,32 @@ function buildSite(group) {
   for (const x of [27.2, 29.8, 32.4, 37, 39.2, 45.8, 48.4, 51, 55]) {
     bag('brown').cyl([x, SW_Y, 9.6], [x, SW_Y + 0.82, 9.6], 0.065, 0.06, 8, true);
   }
-  // tree planters: elongated hexagon (SE) and square stone pit (entrance)
-  {
-    const hx = 13.4, hz = 8.25, pts = [];
-    for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2 + 0.3; pts.push([hx + Math.cos(a) * 1.55, hz + Math.sin(a) * 0.95]); }
-    for (let i = 0; i < 6; i++) { const a = pts[i], b = pts[(i + 1) % 6]; bag('curb').segBox(a[0], a[1], b[0], b[1], SW_Y - 0.02, SW_Y + 0.3, 0.22, 0.1); }
-    bag('soil').prism(pts, SW_Y, SW_Y + 0.22, false, false);
-    for (const [a0, a1, b0, b1] of [[41.3, 7.25, 43.5, 7.25], [43.5, 7.25, 43.5, 9.45], [43.5, 9.45, 41.3, 9.45], [41.3, 9.45, 41.3, 7.25]]) bag('curb').segBox(a0, a1, b0, b1, SW_Y - 0.02, SW_Y + 0.32, 0.25, 0.12);
-    bag('soil').boxAB(41.4, SW_Y, 7.35, 43.4, SW_Y + 0.25, 9.35, true);
-  }
+  // tree beds: low raised beds of granite blocks (two courses), elongated hexagons, wood-chip mulch and
+  // tufts of grass (Street View, Feb 2026)
+  const treeBed = (cx, cz, rx, rz, seed) => {
+    const pts = [];
+    for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2 + Math.PI / 6; pts.push([cx + Math.cos(a) * rx, cz + Math.sin(a) * rz]); }
+    const H = 0.36, T = 0.3, br = rng(seed);
+    for (let i = 0; i < 6; i++) {
+      const a = pts[i], b = pts[(i + 1) % 6], L = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(2, Math.round(L / 0.5));
+      for (let c = 0; c < 2; c++) for (let j = 0; j < n; j++) {
+        const u0 = (j + (c ? 0.5 : 0)) / n, u1 = Math.min(1, (j + 1 + (c ? 0.5 : 0)) / n); if (u0 >= 1) continue;
+        const x0 = lerp(a[0], b[0], u0), z0 = lerp(a[1], b[1], u0), x1 = lerp(a[0], b[0], u1 - 0.012), z1 = lerp(a[1], b[1], u1 - 0.012);
+        bag(br() < 0.5 ? 'granite' : 'graniteDark').segBox(x0, z0, x1, z1, SW_Y + c * H / 2, SW_Y + (c + 1) * H / 2 - 0.012, T, 0.1);
+      }
+    }
+    bag('mulch').prism(pts, SW_Y, SW_Y + H - 0.06, false, false);
+    for (let i = 0; i < 14; i++) {
+      const ang = br() * Math.PI * 2, rr = 0.25 + br() * 0.65, x = cx + Math.cos(ang) * rx * rr * 0.85, z = cz + Math.sin(ang) * rz * rr * 0.8;
+      for (let k = 0; k < 5; k++) { const t = br() * Math.PI * 2; bag('grass').cyl([x, SW_Y + H - 0.06, z], [x + Math.cos(t) * 0.12, SW_Y + H + 0.25 + br() * 0.15, z + Math.sin(t) * 0.12], 0.035, 0.004, 4); }
+    }
+  };
+  treeBed(14.1, 8.35, 1.45, 0.82, 71);
+  treeBed(42.4, 8.35, 1.3, 0.85, 73);
+  // cast-iron grate in the red paving, beside the lamp post
+  bag('metal').boxAB(11.75, SW_Y, 8.55, 12.45, SW_Y + 0.012, 9.2, true);
   // parking meter + red fire hydrant in front of the SE end of the front garden
-  bag('shelter').boxAB(8.95, SW_Y, 6.55, 9.3, SW_Y + 1.55, 6.87, true);   // at the back of the parking bay
+  bag('shelter').boxAB(-0.15, SW_Y, 6.75, 0.2, SW_Y + 1.55, 7.07, true);   // at the SE end of the parking bay
   bag('hydrant').cyl([3.4, SW_Y, 5.3], [3.4, SW_Y + 0.95, 5.3], 0.13, 0.13, 10, true);
   bag('hydrant').cyl([3.4, SW_Y + 0.95, 5.3], [3.4, SW_Y + 1.1, 5.3], 0.13, 0.05, 10, true);
   // bollard at the NW edge of the crossing
@@ -1439,8 +1478,8 @@ function buildVegetation(group) {
   conifers.forEach((v, i) => { inst(v.bark, M.bark, spots.c[i]); inst(v.leaf, M.leafDark, spots.c[i]); });
   // the two pavement trees from the photos (finer twigs)
   const t1 = deciduous(101, 9.5, 5, 0.6, 1, 0.55), t2 = deciduous(202, 8.5, 5, 0.56, 1, 0.55);
-  for (const [t, x, z] of [[t1, 13.4, 8.25], [t2, 42.4, 8.35]]) {   // the first between the parking bay and the bus stop
-    const b = new THREE.Mesh(t.bark, M.bark); b.name = 'streetTreeBark'; b.position.set(x, SW_Y + 0.2, z); b.castShadow = b.receiveShadow = true; group.add(b);
+  for (const [t, x, z] of [[t1, 14.1, 8.35], [t2, 42.4, 8.35]]) {   // in the granite beds
+    const b = new THREE.Mesh(t.bark, M.bark); b.name = 'streetTreeBark'; b.position.set(x, SW_Y + 0.3, z); b.castShadow = b.receiveShadow = true; group.add(b);
     const l = new THREE.Mesh(t.leaf, M.leaf); l.name = 'streetTreeLeaf'; l.position.copy(b.position); l.castShadow = true; l.receiveShadow = true; group.add(l); FOLIAGE.push(l);
   }
 }
