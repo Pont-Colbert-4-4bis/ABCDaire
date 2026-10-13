@@ -94,7 +94,7 @@ export const decisions = [
         "PV du 13 avril 2026, résolutions 16.5 et 16.6."
       ]
     ],
-    "limit": "Le texte emploie aussi le mot « travaux » pour la mission. Le contenu exact de la commande doit être rapproché du devis ; ne pas présenter le renouvellement de 2027 comme définitivement autorisé."
+    "limit": "Cette résolution porte sur une mission d’étude et emploie aussi le mot « travaux ». Elle n’établit pas à elle seule une autorisation définitive de renouvellement pour 2027."
   },
   {
     "id": "toiture",
@@ -642,7 +642,7 @@ export const decisions = [
     "id": "periode-chauffe",
     "title": "Période de chauffe et réglages historiques",
     "page": "chauffage-et-trames",
-    "current": "Une période historique est documentée ; l’annonce actuelle reste à vérifier",
+    "current": "Périodes de chauffe : décisions historiques",
     "status": "Repères historiques",
     "steps": [
       [
@@ -704,7 +704,7 @@ export const decisions = [
         "PV du 29 avril 2014, résolution 19, p. 17 du PDF."
       ]
     ],
-    "limit": "Ne pas promettre une indemnisation sur la seule base du vote de 2012. Le syndic doit confirmer les décisions applicables et la situation du logement par un échange privé."
+    "limit": "Le vote de 2012 ne suffit pas à établir un droit actuel à indemnisation. Pour votre logement, adressez votre demande au syndic par un échange privé."
   },
   {
     "id": "etudes-chauffage",
@@ -744,7 +744,7 @@ export const decisions = [
         "PV du 27 juin 2023, résolution 13, p. 10 du PDF."
       ]
     ],
-    "limit": "Aucune de ces études ne doit être présentée comme une décision de supprimer le chauffage collectif."
+    "limit": "Ces études n’ont pas décidé la suppression du chauffage collectif."
   },
   {
     "id": "electricite",
@@ -778,7 +778,7 @@ export const decisions = [
         "PV du 27 juin 2023, résolution 17, p. 11 du PDF."
       ]
     ],
-    "limit": "Le périmètre actuel d’entretien et l’état des installations doivent être confirmés séparément."
+    "limit": "Ces votes décrivent les missions autorisées à ces dates ; ils ne constituent pas un état actuel des installations."
   },
   {
     "id": "armoire-chauffage",
@@ -878,6 +878,6 @@ export const decisions = [
         "PV du 14 mai 2013, résolution 24, p. 23–25 du PDF."
       ]
     ],
-    "limit": "Le présent site est une synthèse pratique en cours de validation collective. Il ne remplace ni les règlements applicables ni les décisions de la copropriété."
+    "limit": "Le guide rassemble les informations pratiques de la résidence. Les documents de copropriété et les décisions d’AG font référence."
   }
 ];

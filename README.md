@@ -4,7 +4,7 @@ Guide public de la résidence à Versailles. Édition pilote actualisée le 7 oc
 
 ## Contenu éditorial
 
-Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs`, les contrats dans `content/maintenance.mjs` et le catalogue du Petit Colbert dans `content/newsletters.mjs` et ses pages publiques dans `content/facsimiles.json`. Chaque fiche identifie ses sources et les points restant à confirmer. La publication d’une fiche ne vaut pas approbation du conseil syndical ni autorisation de travaux. Les informations non revalidées sont explicitement signalées.
+Les fiches de base se trouvent dans `content/articles.mjs`, les apports des anciennes FAQ dans `content/enrichments.mjs`, les contacts professionnels dans `content/contacts.mjs` les historiques dans `content/decisions.mjs`, les contrats dans `content/maintenance.mjs` et le catalogue du Petit Colbert dans `content/newsletters.mjs` et ses pages publiques dans `content/facsimiles.json`. Les fiches publiques présentent les informations établies et leurs sources. Les notes de relecture, demandes de validation et points à résoudre restent dans le suivi éditorial privé, hors dépôt et hors index de recherche. Les éléments historiques restent datés ; le guide ne vaut pas autorisation de travaux.
 
 Aucun email, compte rendu brut, contrat privé, donnée personnelle, code d’accès ou plan technique ne doit être ajouté au dépôt, aux tickets publics ou à l’index de recherche. Les sources privées restent dans leur stockage d’origine. Une correction concernant un dossier individuel se transmet par un canal privé.
 
@@ -58,7 +58,7 @@ Seuls les standards professionnels et les coordonnées de dépannage sont public
 
 ## Contrats et groupes WhatsApp
 
-La page `/entretien/` détaille 18 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources et points à confirmer. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
+La page `/entretien/` détaille 18 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
 
 La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Un QR d’invitation historique a été retrouvé dans deux variantes d’octobre 2025. Ces anciens QR restent retirés des facsimilés. Un QR actuel a été fourni le 13 octobre 2026 : sa destination a été vérifiée, et l’administrateur a confirmé l’approbation des nouveaux membres. L’invitation du groupe résidents est publiée avec cet accord ; celle du groupe CS reste privée.
 
@@ -94,7 +94,7 @@ Validation de la maquette du 7 octobre (version Three.js) : compilation et contr
 
 ## Relecture des résidents — 13 octobre 2026
 
-Les corrections approuvées sont dans `content/resident-review.mjs`. Les sources publiques et références de documents privés sont indiquées sur les fiches. Ne pas modifier rétrospectivement les archives du Petit Colbert. Les caractéristiques de plaques de 2016, contestées en 2025, ne sont pas un modèle de fabrication actuel ; les emplacements d’extincteurs proviennent d’un relevé daté de juin 2023. Les règles de vie sont un projet à valider par le CS.
+Les corrections approuvées sont dans `content/resident-review.mjs`. Les sources publiques et références de documents privés sont indiquées sur les fiches. Ne pas modifier rétrospectivement les archives du Petit Colbert. Les caractéristiques de plaques de 2016, contestées en 2025, ne sont pas un modèle de fabrication actuel ; les emplacements d’extincteurs proviennent d’un relevé daté de juin 2023. La page Règles de vie rassemble les conseils et consignes documentés ; elle ne constitue pas l’adoption d’un nouveau règlement. Les demandes de validation éditoriale restent hors du site public.
 
 Chaque contact et chaque contrat dispose de sa propre page (`/contacts/:id/`, `/entretien/:id/`). Les liens des fiches restent contextuels. `/partager/` rassemble deux QR vectoriels et une seule affiche A4 commune avec les deux QR codes (`affiche-hall-abcdaire-et-whatsapp.pdf`). Elle remplace les affiches séparées et la fiche d’accueil ; les repères restent disponibles dans le guide. La recherche est disponible sur toutes ces pages.
 
