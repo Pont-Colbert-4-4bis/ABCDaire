@@ -1,3 +1,4 @@
+import {applyResidentReview} from './resident-review.mjs';
 export function enrich(articles){
 const get=s=>articles.find(a=>a.slug===s);
 const append=(s,h,p)=>get(s).sections.push([h,p]);
@@ -43,5 +44,5 @@ append('conseil-syndical-et-syndic','Pourquoi un Abécédaire ?',['L’AG de 201
 
 get('arriver-et-demenager').related.push('whatsapp');
 for(const s of ['arriver-et-demenager','bruit-et-voisinage','boites-aux-lettres','ascenseurs','chauffage-et-trames','eau-chaude-et-compteurs','ventilation-vmc','dechets-et-encombrants'])get(s).source+=' '+old;
-articles.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
+applyResidentReview(articles);
 }

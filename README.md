@@ -58,11 +58,11 @@ Seuls les standards professionnels et les coordonnées de dépannage sont public
 
 ## Contrats et groupes WhatsApp
 
-La page `/entretien/` détaille 17 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources et points à confirmer. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
+La page `/entretien/` détaille 18 équipements et services, avec rôle, fréquence prévue, couverture, limites, sources et points à confirmer. Les accords historiques sont distingués des confirmations récentes. Les fiches et contacts renvoient aux synthèses. Les contrats complets, prix, signatures et données privées ne sont pas publiés.
 
-La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Un QR d’invitation historique a été retrouvé dans deux variantes d’octobre 2025. Sa validité et le contrôle des admissions restent à vérifier ; il n’est pas publié. Aucun faux QR code ou lien d’invitation ouvert n’est publié.
+La fiche WhatsApp distingue le groupe des résidents et celui réservé aux membres du CS. Un QR d’invitation historique a été retrouvé dans deux variantes d’octobre 2025. Ces anciens QR restent retirés des facsimilés. Un QR actuel a été fourni le 13 octobre 2026 : sa destination a été vérifiée, et l’administrateur a confirmé l’approbation des nouveaux membres. L’invitation du groupe résidents est publiée avec cet accord ; celle du groupe CS reste privée.
 
-Validation de l’ajout contrats et WhatsApp : compilation, contrôle de 32 pages et 1 413 liens locaux, correspondances des 17 synthèses avec les fiches et contacts, recherche « ampoule », ouverture des détails du contrat et lecture mobile à 390 px sans débordement. Les QR codes restent en attente des liens vérifiés.
+Validation de l’ajout contrats et WhatsApp : compilation, contrôle de 32 pages et 1 413 liens locaux, correspondances des 17 synthèses avec les fiches et contacts, recherche « ampoule », ouverture des détails du contrat et lecture mobile à 390 px sans débordement. Ce contrôle décrit la première version. Les QR actuels et les corrections de relecture ont fait l’objet de la vérification complémentaire ci-dessous.
 
 ## Historique des AG et contacts contextuels
 
@@ -91,3 +91,11 @@ Vérification de cette évolution : compilation et contrôle des 58 pages et 2 5
 Contrôle de cette archive : 30 PDF, 36 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
 
 Validation de la maquette du 7 octobre (version Three.js) : compilation et contrôle de 60 pages HTML et 2 834 liens locaux ; rendu Chromium (WebGL logiciel) de l’accueil, de `/residence/`, des vues rapprochées des entrées 4 et 4 bis et de l’accueil à 390 px ; visite entre les vues 2, 1 et 3 avec la journée, arrêt après un geste et reprise une minute plus tard, boutons Visite et Journée. Les cotes restent estimées d’après les photographies et les indications de résidents.
+
+## Relecture des résidents — 13 octobre 2026
+
+Les corrections approuvées sont dans `content/resident-review.mjs`. Les sources publiques et références de documents privés sont indiquées sur les fiches. Ne pas modifier rétrospectivement les archives du Petit Colbert. Les caractéristiques de plaques de 2016, contestées en 2025, ne sont pas un modèle de fabrication actuel ; les emplacements d’extincteurs proviennent d’un relevé daté de juin 2023. Les règles de vie sont un projet à valider par le CS.
+
+Chaque contact et chaque contrat dispose de sa propre page (`/contacts/:id/`, `/entretien/:id/`). Les liens des fiches restent contextuels. `/partager/` rassemble deux QR vectoriels et trois PDF A4 : affiche du guide, affiche WhatsApp et fiche d’accueil. La recherche est disponible sur toutes ces pages.
+
+La destination des QR est définie dans `content/sharing.mjs`. Pour les régénérer : `python3 scripts/create-posters.py` (ReportLab, Node et polices Arial/Georgia de macOS nécessaires), puis `npm run build && npm run check`. Les assets générés sont suivis dans Git pour que la publication Pages n’ait pas besoin de Python. Après toute modification du lien, relire les QR rendus et remplacer les affiches imprimées. Aucun QR ne contourne l’approbation WhatsApp ; la configuration du groupe est contrôlée par ses administrateurs, pas par ce site.

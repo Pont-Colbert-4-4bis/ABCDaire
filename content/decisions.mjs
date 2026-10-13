@@ -344,8 +344,8 @@ export const decisions = [
     "id": "recharge",
     "title": "Recharge des véhicules électriques",
     "page": "recharge-vehicules-electriques",
-    "current": "Infrastructure votée en 2024 ; huit bornes installées en janvier 2025 selon Le Petit Colbert",
-    "status": "Réalisation rapportée",
+    "current": "Installation terminée et en service ; demandes individuelles auprès d’Electro-Mob",
+    "status": "Fonctionnement confirmé par un propriétaire équipé",
     "steps": [
       [
         "28 septembre 2020 · résolution 27",
@@ -388,15 +388,21 @@ export const decisions = [
         "Installation rapportée",
         "Le Petit Colbert de février 2025 (V5) annonce que l’installation de huit bornes par Electromob s’est terminée le 20 janvier 2025. Ce compte rendu complète le vote de 2024, sans se substituer à une réception technique.",
         "Le Petit Colbert de février 2025, V5, transmis le 18 février 2025."
+      ],
+      [
+        "13 octobre 2026 · confirmation d’usage",
+        "Situation rapportée",
+        "L’installation est achevée et des propriétaires utilisent leurs bornes. Pour une nouvelle installation, contactez Electro-Mob pour un devis et la pose.",
+        "Confirmation du porteur du projet, propriétaire équipé, le 13 octobre 2026."
       ]
     ],
-    "limit": "L’installation est rapportée dans le journal. La convention signée, la réception, le rôle actuel de l’opérateur, la maintenance et les modalités de raccordement individuel restent à confirmer auprès du syndic."
+    "limit": "Cette confirmation d’usage ne remplace pas la réception technique ni les conditions des contrats individuels. Aucun contrat de maintenance périodique collective n’a été identifié."
   },
   {
     "id": "vide-ordures",
     "title": "Projets de fermeture des vide-ordures",
     "page": "vide-ordures",
-    "current": "Les propositions de fermeture examinées ont été rejetées",
+    "current": "Fermeture rejetée ; équipement maintenu et entretenu, usage déconseillé par le CS",
     "status": "Projets rejetés",
     "steps": [
       [
@@ -416,9 +422,15 @@ export const decisions = [
         "Rejetées",
         "Le principe de fermeture, la proposition Sicre, le mandat et le financement ne sont pas adoptés.",
         "PV du 28 juin 2024, résolutions 13.1 à 13.4, p. 16–19 du PDF."
+      ],
+      [
+        "13 octobre 2026 · consigne pratique",
+        "Recommandation rapportée du CS",
+        "Les vide-ordures restent en service avec l’entretien Sicre Lemaire. Le CS déconseille leur utilisation et recommande les bacs des locaux poubelles. Cette recommandation n’est pas une fermeture votée en AG.",
+        "Précision du porteur du projet le 13 octobre 2026 ; suivi d’entretien Homeland 2025–2026."
       ]
     ],
-    "limit": "Ces refus ne renseignent pas sur l’état sanitaire ou technique actuel. Suivez les consignes affichées et le circuit de signalement du syndic."
+    "limit": "Le PV de 2024 établit le rejet de la fermeture. La recommandation de limiter l’usage est rapportée séparément et ne figure pas comme une interdiction dans ce vote."
   },
   {
     "id": "cameras",
