@@ -70,7 +70,7 @@ Les PV de 2012 à 2026 ont été rapprochés par sujet. Chaque étape distingue 
 
 Une fiche Recharge des véhicules électriques retrace les projets successifs. Le Petit Colbert de février 2025 (V5) rapporte l’installation de huit bornes par Electromob le 20 janvier 2025. Cette réalisation rapportée est distinguée de la réception technique et de la vérification de l’exploitation actuelle. L’ambiguïté du DTG 2025 et la divergence avec la formulation de 2023 restent visibles.
 
-Les interlocuteurs de chaque fiche sont affichés à droite sur grand écran et avant le contenu sur mobile. Leurs coordonnées proviennent du même annuaire, pour éviter les copies divergentes. Le logo vectoriel et le favicon partagent une silhouette architecturale simplifiée.
+Les interlocuteurs de chaque fiche sont affichés à droite sur grand écran et avant le contenu sur mobile. Leurs coordonnées proviennent du même annuaire, pour éviter les copies divergentes. Le symbole approuvé le 13 octobre 2026 représente trois balcons triangulaires pleins saumon, avec une sous-face bleu profond. `assets/brand/villa-colbert-symbol.svg` est la source vectorielle commune aux en-têtes, au favicon et aux PDF actuels (`scripts/brand.py`). Les sources des archives du Petit Colbert conservent leur présentation d’origine.
 
 Validation du 7 octobre : compilation et contrôle de 33 pages / 1 599 liens locaux, 28 historiques rattachés à une fiche et 97 références présentes, contacts visibles sur ordinateur et au début des fiches à 390 px sans débordement, recherche « indemnisation » retrouvant la fiche chauffage et l’historique général.
 

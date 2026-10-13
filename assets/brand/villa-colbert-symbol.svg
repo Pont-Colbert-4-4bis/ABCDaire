@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200" fill="none">
+  <title>Villa Colbert — trois balcons triangulaires</title>
+  <polygon fill="#19364C" points="10,46 38,36 110,66"/>
+  <polygon fill="#B67554" points="10,22 38,6 38,36 10,46"/>
+  <polygon fill="#CC8664" points="38,6 110,36 110,66 38,36"/>
+  <polygon fill="#19364C" points="10,110 38,100 110,130"/>
+  <polygon fill="#B67554" points="10,86 38,70 38,100 10,110"/>
+  <polygon fill="#CC8664" points="38,70 110,100 110,130 38,100"/>
+  <polygon fill="#19364C" points="10,174 38,164 110,194"/>
+  <polygon fill="#B67554" points="10,150 38,134 38,164 10,174"/>
+  <polygon fill="#CC8664" points="38,134 110,164 110,194 38,164"/>
+</svg>

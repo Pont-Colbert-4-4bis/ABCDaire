@@ -13,6 +13,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.graphics.barcode.qr import QrCodeWidget
 from reportlab.graphics.shapes import Drawing, Rect
 from reportlab.graphics import renderPDF, renderSVG
+from brand import draw_brand_symbol
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'assets'/'partage';OUT.mkdir(parents=True,exist_ok=True)
@@ -41,9 +42,8 @@ def frame(filename,subtitle):
     c=canvas.Canvas(str(OUT/filename),pagesize=A4,pageCompression=1)
     c.setTitle(subtitle+' — Villa Colbert');c.setAuthor('Villa Colbert · Conseil syndical')
     c.setFillColor(CREAM);c.rect(0,0,W,H,fill=1,stroke=0)
-    c.setFillColor(HexColor('#eee5d9'));c.roundRect(42,H-93,47,47,12,fill=1,stroke=0)
-    c.setStrokeColor(NAVY);c.setLineWidth(2.2);p=c.beginPath();p.moveTo(75,H-59);p.lineTo(64,H-59);p.lineTo(64,H-65);p.lineTo(53,H-65);p.lineTo(53,H-82);p.lineTo(75,H-82);c.drawPath(p);c.line(60,H-71,75,H-71);c.line(60,H-77,75,H-77)
-    paragraph(c,'VILLA COLBERT',104,H-52,430,17,font='ColbertBold')
+    draw_brand_symbol(c,42,H-93)
+    paragraph(c,'Villa Colbert',104,H-49,430,24,font='ColbertDisplay')
     paragraph(c,'4 &amp; 4 bis, rue du Pont Colbert · Versailles',104,H-76,430,10,color=MUTED)
     c.setStrokeColor(LINE);c.line(42,53,W-42,53)
     paragraph(c,'Édition pilote · 13 octobre 2026 · Conseil syndical',42,41,W-84,9,color=MUTED)
