@@ -2,14 +2,19 @@
 // Archival newsletter transcriptions remain unchanged.
 export function applyResidentReview(articles) {
   const get = slug => articles.find(a => a.slug === slug);
-  const add = (slug, title, items) => get(slug).sections.push([title, items]);
+  const add = (slug, title, items) => {
+    const article = get(slug);
+    const section = article.sections.find(([heading]) => heading === title);
+    if (section) section[1].push(...items);
+    else article.sections.push([title, items]);
+  };
   const reported = ' Relecture des résidents et précisions validées par le porteur du projet le 13 octobre 2026.';
   add('arriver-et-demenager', 'Avant votre arrivée', [
-    'L’ABCDaire est accessible sans compte. Le propriétaire ou l’agence peut transmettre le lien du guide et la fiche d’accueil imprimable avant la remise des clés.',
+    'L’ABCDaire est accessible sans compte. Le propriétaire ou l’agence peut transmettre le lien du guide et l’affiche avec les deux QR codes avant la remise des clés.',
     'Les informations d’accès et les coordonnées personnelles sont transmises séparément, par les canaux privés. Pour les repères essentiels, consultez aussi la page Règles de vie, proposée à la validation du conseil syndical.'
   ]);
   get('arriver-et-demenager').related.push('regles-de-vie');
-  get('arriver-et-demenager').links = [['Fiche d’accueil à imprimer', '/ABCDaire/assets/partage/bienvenue-villa-colbert.pdf'], ['Affiches et QR codes', '/ABCDaire/partager/']];
+  get('arriver-et-demenager').links = [['Affiche de la résidence — 2 QR codes', '/ABCDaire/assets/partage/affiche-hall-abcdaire-et-whatsapp.pdf'], ['Affiche et QR codes', '/ABCDaire/partager/']];
   get('balcons-et-fenetres').sections.find(([h])=>h==='Peintures, stores et protections')[1][0] = 'Avant de repeindre, faites confirmer par le syndic, avec l’appui du conseil syndical, la teinte et les références actuelles à respecter. Les anciennes références ne suffisent pas ; une couleur approchante ne vaut pas accord.';
   add('espaces-communs', 'Portes d’appartement et nettoyage des paliers', [
     'Préservez l’harmonie des portes d’appartement côté couloir. Avant de les repeindre ou de modifier leur aspect, faites préciser la teinte et les démarches applicables par le syndic, avec l’appui du CS.',
@@ -116,7 +121,7 @@ export function applyResidentReview(articles) {
     pending: 'Projet à valider collectivement ; préciser les règles locales encore ouvertes et identifier toute version applicable plus récente du règlement intérieur.',
     source: 'Synthèse des fiches de l’ABCDaire et des précisions approuvées le 13 octobre 2026 ; AG du 14 mai 2013, résolution 24. Aucune nouvelle règle votée n’est présumée.',
     related: ['arriver-et-demenager', 'espaces-communs', 'bruit-et-voisinage', 'dechets-et-encombrants', 'signaler-un-probleme'],
-    links: [['Fiche d’accueil à imprimer', '/ABCDaire/assets/partage/bienvenue-villa-colbert.pdf']]
+    links: [['Affiche de la résidence — 2 QR codes', '/ABCDaire/assets/partage/affiche-hall-abcdaire-et-whatsapp.pdf']]
   });
   for (const slug of ['arriver-et-demenager','balcons-et-fenetres','espaces-communs','signaler-un-probleme','parking-et-stationnement','fuites-et-degats-des-eaux','jardins-et-vie-de-residence']) get(slug).source += reported;
   articles.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
