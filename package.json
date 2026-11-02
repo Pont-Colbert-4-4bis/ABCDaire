@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs && pagefind --site dist --exclude-selectors '[data-search-ignore]'",
-    "check": "node scripts/check.mjs",
-    "preview": "node scripts/serve.mjs"
+    "check": "node scripts/check.mjs && node scripts/check-summary-pdfs.mjs",
+    "preview": "node scripts/serve.mjs",
+    "pdf:summaries": "python3 scripts/create-summary-pdfs.py"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.2.8",

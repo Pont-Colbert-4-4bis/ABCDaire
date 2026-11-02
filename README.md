@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition pilote actualisée le 7 octobre 2026 : 25 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
+Guide public de la résidence à Versailles. Édition actualisée le 2 novembre 2026 : 26 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 
@@ -99,3 +99,20 @@ Les corrections approuvées sont dans `content/resident-review.mjs`. Les sources
 Chaque contact et chaque contrat dispose de sa propre page (`/contacts/:id/`, `/entretien/:id/`). Les liens des fiches restent contextuels. `/partager/` rassemble deux QR vectoriels et une seule affiche A4 commune avec les deux QR codes (`affiche-hall-abcdaire-et-whatsapp.pdf`). Elle remplace les affiches séparées et la fiche d’accueil ; les repères restent disponibles dans le guide. La recherche est disponible sur toutes ces pages.
 
 La destination des QR est définie dans `content/sharing.mjs`. Pour les régénérer : `python3 scripts/create-posters.py` (ReportLab, Node et polices Arial/Georgia de macOS nécessaires), puis `npm run build && npm run check`. Les assets générés sont suivis dans Git pour que la publication Pages n’ait pas besoin de Python. Après toute modification du lien, relire les QR rendus et remplacer les affiches imprimées. Aucun QR ne contourne l’approbation WhatsApp ; la configuration du groupe est contrôlée par ses administrateurs, pas par ce site.
+
+## Fiches de synthèse A5
+
+Chaque rubrique propose son PDF de synthèse d’une page A5, avec le symbole de Villa Colbert, les repères pratiques, les contacts utiles et un QR code vers la page complète. Les 26 fiches sont aussi réunies dans `assets/fiches-a5/abcdaire-fiches-a5.pdf`, accessible depuis `/partager/`. Cette collection est distincte de l’affiche A4 à deux QR codes destinée au hall.
+
+Les résumés relus sont dans `content/print-summaries.mjs`. Après modification d’une source éditoriale ou du modèle, relire le résumé concerné puis régénérer les PDF :
+
+```sh
+# Python 3 avec reportlab et pypdf ; Node.js pour lire les sources du site
+npm run pdf:summaries
+npm run build
+npm run check
+```
+
+Le contrôle vérifie la correspondance rubrique/PDF, la fraîcheur des sources et l’intégrité des fichiers publiés. Le générateur refuse les débordements et impose une page A5 par rubrique ; contrôler aussi le rendu visuel avant publication. Les PDF générés et leur manifeste sont versionnés. Les aperçus de travail (`tmp/`) et copies de livraison (`output/`) restent locaux.
+
+Le menu latéral utilise des caractères plus grands et des lignes plus rapprochées. Les blocs « Dans Le Petit Colbert » sont retirés des fiches ; la rubrique d’archives et les références historiques de provenance restent conservées.

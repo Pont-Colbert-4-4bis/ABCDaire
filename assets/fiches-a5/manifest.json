@@ -1,0 +1,219 @@
+{
+  "edition": "2 novembre 2026",
+  "sourceHash": "da6d6c78a7ed1b2934a44359424ca1f0b4214965abcebc71eb1ac10a5a007782",
+  "sheets": [
+    {
+      "slug": "absences-et-securite",
+      "filename": "absences-et-securite-a5.pdf",
+      "sha256": "1801298d9a67c827ea9c1300391bfca5aebad89d285eef7ebef9d080e1288332",
+      "pages": 1,
+      "size": 97433,
+      "body_bottom": 216.6
+    },
+    {
+      "slug": "arriver-et-demenager",
+      "filename": "arriver-et-demenager-a5.pdf",
+      "sha256": "85dd29a3cf9a541b3312f99abca39999b3e2e560a2e1239a3d723159e0644b6a",
+      "pages": 1,
+      "size": 97867,
+      "body_bottom": 188.2
+    },
+    {
+      "slug": "ascenseurs",
+      "filename": "ascenseurs-a5.pdf",
+      "sha256": "5555f8b7ae27ba9e8e172df3ff5871db78e2e90bfc621a5368f4c82260012838",
+      "pages": 1,
+      "size": 97856,
+      "body_bottom": 216.6
+    },
+    {
+      "slug": "balcons-et-fenetres",
+      "filename": "balcons-et-fenetres-a5.pdf",
+      "sha256": "cc9b233e35ce12cf55dd92078e01cc36b7adafb7fa4e9b29d2b411b7aa797418",
+      "pages": 1,
+      "size": 97601,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "boites-aux-lettres",
+      "filename": "boites-aux-lettres-a5.pdf",
+      "sha256": "eff13f21cb1e7b97e20715b65a948e572dd833393910c4628a0552819768f073",
+      "pages": 1,
+      "size": 98041,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "bruit-et-voisinage",
+      "filename": "bruit-et-voisinage-a5.pdf",
+      "sha256": "42d95d7656bb90ebaab4c41536477920b09ceeb1f47fffe47a94dd78bf5ed399",
+      "pages": 1,
+      "size": 97552,
+      "body_bottom": 183.2
+    },
+    {
+      "slug": "chauffage-et-trames",
+      "filename": "chauffage-et-trames-a5.pdf",
+      "sha256": "a19b47904c6b238640bae2afc5e7138264e7013ce3f9533553dce0e2bb62c8a2",
+      "pages": 1,
+      "size": 97761,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "conseil-syndical-et-syndic",
+      "filename": "conseil-syndical-et-syndic-a5.pdf",
+      "sha256": "bd024026a064a2443924ee4fc45fea684a10adcdc8800895485d5d0ace7fe6d0",
+      "pages": 1,
+      "size": 97412,
+      "body_bottom": 188.2
+    },
+    {
+      "slug": "dechets-et-encombrants",
+      "filename": "dechets-et-encombrants-a5.pdf",
+      "sha256": "4623ddd4b3c6b49336bb73df63f0a25605bedc7e54078bd4500eb1bc7ce2da02",
+      "pages": 1,
+      "size": 97956,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "eau-chaude-et-compteurs",
+      "filename": "eau-chaude-et-compteurs-a5.pdf",
+      "sha256": "0561d8a3b1f172411c1777963e360c9b7be769fd535692e55c7ad47dea89bf97",
+      "pages": 1,
+      "size": 98480,
+      "body_bottom": 188.2
+    },
+    {
+      "slug": "eclairage",
+      "filename": "eclairage-a5.pdf",
+      "sha256": "7f320ff772374d9bc17920b83b92c365eec5131da2593b668da2ee3457cf8eca",
+      "pages": 1,
+      "size": 97775,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "espaces-communs",
+      "filename": "espaces-communs-a5.pdf",
+      "sha256": "83a4e9e78e974cfd95b87a50495111a3eb296ab3b4426ccc4616ecb081bf773d",
+      "pages": 1,
+      "size": 97818,
+      "body_bottom": 188.2
+    },
+    {
+      "slug": "fuites-et-degats-des-eaux",
+      "filename": "fuites-et-degats-des-eaux-a5.pdf",
+      "sha256": "935510c457fb3fdf039829899883dd667bdbda1873311522f4d6f404b1de8104",
+      "pages": 1,
+      "size": 98067,
+      "body_bottom": 169.0
+    },
+    {
+      "slug": "interphone",
+      "filename": "interphone-a5.pdf",
+      "sha256": "20ca0bf90e3133a9e9fcc630f1b4e5bdc29791d5487ea9a25d95d43bb89ec6e3",
+      "pages": 1,
+      "size": 97653,
+      "body_bottom": 230.8
+    },
+    {
+      "slug": "jardins-et-vie-de-residence",
+      "filename": "jardins-et-vie-de-residence-a5.pdf",
+      "sha256": "fd0978e34910aed6e47bb493ba0e4c7aa6237ea9ba30d8fe389735d9f5c1c7c4",
+      "pages": 1,
+      "size": 97606,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "parking-et-stationnement",
+      "filename": "parking-et-stationnement-a5.pdf",
+      "sha256": "4b1bb72a2624161585f668edb197e9a1dec6bbc3d97c341eabfb99d036ed9ca3",
+      "pages": 1,
+      "size": 97823,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "recharge-vehicules-electriques",
+      "filename": "recharge-vehicules-electriques-a5.pdf",
+      "sha256": "d96feeab51bdda9c83c63133ef411f87e16d7764433d019e94b9e5868948bda9",
+      "pages": 1,
+      "size": 98594,
+      "body_bottom": 183.2
+    },
+    {
+      "slug": "reemploi-et-compost",
+      "filename": "reemploi-et-compost-a5.pdf",
+      "sha256": "6c77180b577f50554eac69d6adf339fa11766a29691bfb00678032616b1bce9c",
+      "pages": 1,
+      "size": 97501,
+      "body_bottom": 202.4
+    },
+    {
+      "slug": "regles-de-vie",
+      "filename": "regles-de-vie-a5.pdf",
+      "sha256": "19febe1977a4c8b21e12afaba8023a49682033ee3bb62b943a35e202a0d362e5",
+      "pages": 1,
+      "size": 97731,
+      "body_bottom": 169.0
+    },
+    {
+      "slug": "signaler-un-probleme",
+      "filename": "signaler-un-probleme-a5.pdf",
+      "sha256": "ccb658ec4669892228d1e5accbcf8e3a677ab5166b769f241899ca32c3abcf63",
+      "pages": 1,
+      "size": 97772,
+      "body_bottom": 197.4
+    },
+    {
+      "slug": "toiture-et-projets",
+      "filename": "toiture-et-projets-a5.pdf",
+      "sha256": "01fc3781a7b2cdb84307c136d8eee2d2979d1ea7137652de996ee667117b6a22",
+      "pages": 1,
+      "size": 97676,
+      "body_bottom": 174.0
+    },
+    {
+      "slug": "travaux-privatifs",
+      "filename": "travaux-privatifs-a5.pdf",
+      "sha256": "686b1c024bedbbb09638ba07fa3c184e27c2e3fe2d64378529b8f5897decad0c",
+      "pages": 1,
+      "size": 97844,
+      "body_bottom": 183.2
+    },
+    {
+      "slug": "urgences",
+      "filename": "urgences-a5.pdf",
+      "sha256": "a6f406caf679e81d50e6706f6200be68ed00a5b08bb17257df200fa6dae8f5a2",
+      "pages": 1,
+      "size": 97677,
+      "body_bottom": 197.4
+    },
+    {
+      "slug": "ventilation-vmc",
+      "filename": "ventilation-vmc-a5.pdf",
+      "sha256": "07c992147df7b71887b452f019f8c26a92f0d697f12dfc2543272be2b6a7580e",
+      "pages": 1,
+      "size": 97697,
+      "body_bottom": 211.6
+    },
+    {
+      "slug": "vide-ordures",
+      "filename": "vide-ordures-a5.pdf",
+      "sha256": "b542c4b84b901429fb2ab7570abc5fc65ec89e3ab2e0305f7f962b941a623eea",
+      "pages": 1,
+      "size": 97752,
+      "body_bottom": 183.2
+    },
+    {
+      "slug": "whatsapp",
+      "filename": "whatsapp-a5.pdf",
+      "sha256": "b6093c2fe39d5da594404da77623dc0230af738513154143597513bbb9ba74b3",
+      "pages": 1,
+      "size": 97719,
+      "body_bottom": 171.4
+    }
+  ],
+  "collection": {
+    "filename": "abcdaire-fiches-a5.pdf",
+    "pages": 26,
+    "sha256": "c110872a4e17c38b19c0b3546e5087db49a6a989171a25187589a53cb8cfde07"
+  }
+}

@@ -26,6 +26,13 @@ export async function writeSharingPages({shell,base,esc,contacts,maintenance,url
     <section class="share-card"><div><p class="edition">Le guide de la résidence</p><h2>La vie à Villa Colbert, de A à Z.</h2><p>Conseils pratiques, contacts professionnels, entretien et historique des décisions. Consultation libre, sans compte.</p><a class="share-button" href="${sharing.guide}">Consulter l’ABCDaire →</a><a class="share-download" href="${assets}abcdaire-qr.svg">QR code seul (SVG)</a></div><a href="${sharing.guide}" aria-label="Consulter l’ABCDaire"><img class="share-qr" src="${assets}abcdaire-qr.svg" width="248" height="248" alt="QR code vers l’ABCDaire public de Villa Colbert"></a></section>
     ${whatsappCard()}
     <p class="sharing-note">L’adhésion au groupe des résidents ajoute également à la communauté « Pont Colbert 4&amp;4bis » et à son groupe d’annonces, selon WhatsApp. Le groupe du conseil syndical reste réservé à ses membres.</p>
+    <section class="welcome-download" aria-labelledby="fiches-a5">
+      <p class="edition">Les rubriques à garder sous la main</p>
+      <h2 id="fiches-a5">26 fiches pratiques au format A5.</h2>
+      <p>Une page par rubrique : l’essentiel, les contacts utiles et un QR code vers la page complète. Chaque fiche se télécharge aussi depuis sa rubrique.</p>
+      <a class="share-button" href="${base}assets/fiches-a5/abcdaire-fiches-a5.pdf" download>Télécharger les 26 fiches A5 (PDF) →</a>
+      <p>Imprimez au format A5, ou choisissez deux pages par feuille pour une impression sur papier A4.</p>
+    </section>
     <p><a href="${url('regles-de-vie')}">Consulter les règles de vie →</a></p>
   </div></main>`);
 }
