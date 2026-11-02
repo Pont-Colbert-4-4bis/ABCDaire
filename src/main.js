@@ -1,5 +1,13 @@
 import './style.css';
 import './maquette-host.css';
+// Open the scanned chapter when a contents link targets a page inside it.
+function revealRegulationTarget() {
+  const target=document.getElementById(location.hash.slice(1));
+  const chapter=target?.closest('.regulation-chapter');
+  if(chapter){chapter.open=true;requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));}
+}
+window.addEventListener('hashchange',revealRegulationTarget);
+revealRegulationTarget();
 const menu=document.querySelector('.menu-toggle');
 menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));document.querySelector('.nav').classList.toggle('is-open',open);});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu){menu.setAttribute('aria-expanded','false');document.querySelector('.nav').classList.remove('is-open');}});

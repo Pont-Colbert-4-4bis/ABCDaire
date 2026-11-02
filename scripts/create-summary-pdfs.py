@@ -95,7 +95,7 @@ def draw_sheet(record):
             tel=''.join(ch for ch in contact['phone'] if ch.isdigit() or ch=='+')
             label+=f' · <link href="tel:{tel}">{safe(contact["phone"])}</link>'
         elif contact.get('url'):
-            label+=f' · <link href="{escape(contact["url"],quote=True)}">Site et démarches</link>'
+            label+=f' · <link href="{escape(contact["url"],quote=True)}">{safe(contact.get("urlLabel") or "Site et démarches")}</link>'
         contact_lines.append(label)
     if not contact_lines:
         contact_lines=['Invitation au groupe résidents : lien et QR sur la page complète.',

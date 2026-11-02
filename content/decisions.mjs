@@ -1,4 +1,3 @@
-// Synthèses publiques non nominatives. Les PV complets restent privés.
 export const decisions = [
   {
     "id": "prix-eau",
@@ -10,35 +9,35 @@ export const decisions = [
       [
         "10 mai 2012 · résolution 17",
         "Adoptée",
-        "Le prix est fixé à 15 €/m³, en remplacement de la tarification précédente.",
+        "Le vote concerne le tarif du mètre cube d’eau chaude utilisé dans les charges de la résidence. L’AG le fixe à 15 €/m³, en remplacement de la tarification précédente.",
         "PV du 10 mai 2012, résolution 17, p. 19 du PDF."
       ],
       [
         "13 avril 2016 · résolution 14",
         "Rejetée",
-        "La formule de calcul proposée, fondée sur les coûts et consommations des trois dernières années, n’est pas adoptée.",
+        "Pour actualiser le prix de l’eau chaude, il était proposé de le calculer à partir des coûts et des consommations des trois dernières années. L’AG rejette cette méthode : cette résolution ne met donc pas en place une révision automatique du tarif.",
         "PV du 13 avril 2016, résolution 14, p. 17–19 du PDF."
       ],
       [
         "15 avril 2019 · résolution 16",
         "Adoptée",
-        "Le prix est porté à 25 €/m³ pour 2019 et les années suivantes, en remplacement de la tarification antérieure.",
+        "L’AG vote un nouveau tarif de 25 €/m³ pour l’eau chaude, applicable à 2019 et aux années suivantes. Ce montant remplace la tarification précédente pour le calcul des consommations individuelles.",
         "PV du 15 avril 2019, résolution 16, p. 6 du PDF."
       ],
       [
         "27 juin 2023 · résolution 22",
         "Adoptée",
-        "Passage de 25 à 37 €/m³ à compter de la date de cette résolution.",
+        "Le tarif de l’eau chaude augmente de 25 à 37 €/m³ à compter du 27 juin 2023. Ce vote porte sur le prix appliqué aux volumes consommés, et non sur un remplacement des compteurs.",
         "PV du 27 juin 2023, résolution 22, p. 16 du PDF."
       ],
       [
         "13 avril 2026 · résolution 6",
         "Adoptée",
-        "Le PV fixe 34 €/m³ au lieu de 37 €, rétroactivement au 1er janvier 2026. Le syndic doit régulariser et répartir selon les consommations réelles.",
+        "L’AG ramène le tarif de l’eau chaude de 37 à 34 €/m³, avec effet rétroactif au 1er janvier 2026. Le syndic est chargé de régulariser les montants et de les répartir selon les consommations réelles ; Homeland répond aux questions sur l’application à chaque décompte.",
         "PV du 13 avril 2026, résolution 6."
       ]
     ],
-    "limit": "Le vote est vérifié dans le PV. L’application effective aux comptes individuels n’a pas été contrôlée."
+    "limit": "Le tarif voté et son application à votre décompte de charges sont deux points distincts. Le syndic répond aux questions sur votre décompte."
   },
   {
     "id": "ballons",
@@ -50,19 +49,19 @@ export const decisions = [
       [
         "27 juin 2023 · résolutions 24.1 à 24.3",
         "Rejetées",
-        "La proposition Tournois de remplacement d’un ballon, à 12 929,40 € TTC, et les modalités associées ne sont pas adoptées. Le vote de 2026 porte sur un nouveau projet.",
+        "L’AG examine le remplacement d’un ballon de production d’eau chaude par Tournois, pour 12 929,40 € TTC. Elle rejette cette proposition et les résolutions qui en organisent la réalisation : ce projet de 2023 n’est pas celui adopté en 2026, qui porte sur deux ballons.",
         "PV du 27 juin 2023, résolutions 24.1 à 24.3, p. 17–19 du PDF."
       ],
       [
         "13 avril 2026 · résolutions 17.1 et 17.4",
         "Adoptées",
-        "Remplacement des ballons de 2 000 et 2 500 litres par Tournois, avec équipements Charot et option de démontage/remontage du mur, pour 24 431 € TTC. Les variantes à un seul ballon et l’offre concurrente ne sont pas retenues.",
+        "L’AG choisit Tournois pour remplacer les deux ballons de 2 000 et 2 500 litres par des équipements Charot. Le montant retenu est de 24 431 € TTC, avec l’option de démontage puis remontage du mur ; les variantes portant sur un seul ballon et l’offre concurrente sont écartées.",
         "PV du 13 avril 2026, résolutions 17.1 et 17.4."
       ],
       [
         "13 avril 2026 · résolutions 17.7 et 17.8",
         "Adoptées",
-        "Honoraires du syndic : 5 % HT du montant HT des travaux. Financement voté pour moitié au 1er juillet et pour solde au 1er octobre 2026.",
+        "Ces votes organisent le suivi et le paiement du remplacement des deux ballons. Les honoraires du syndic sont fixés à 5 % HT du montant HT des travaux, et les appels de fonds sont répartis en deux moitiés : le 1er juillet puis le 1er octobre 2026.",
         "PV du 13 avril 2026, résolutions 17.7 et 17.8."
       ]
     ],
@@ -78,19 +77,19 @@ export const decisions = [
       [
         "13 avril 2026 · résolution 16 et 16.1",
         "Principe adopté",
-        "Le sujet distingue une étude d’intérêt et d’optimisation, puis un renouvellement après validation des conclusions envisagée en 2027.",
+        "Le projet vise à moderniser la production collective d’eau chaude sanitaire, ou ECS. L’AG adopte un principe en deux phases : étudier l’intérêt et les possibilités d’optimisation de l’installation, puis envisager son renouvellement après validation des conclusions en 2027.",
         "PV du 13 avril 2026, résolution 16 et 16.1."
       ],
       [
         "13 avril 2026 · résolution 16.2",
         "Adoptée au second vote",
-        "L’offre KEVEMA de 5 280 € TTC échoue au premier vote puis est adoptée au second vote. Les propositions BATHEC et de mandat alternatif au CS sont rejetées.",
+        "Pour préparer cette modernisation, deux bureaux d’études ont été consultés. L’offre KEVEMA de 5 280 € TTC est rejetée au premier scrutin puis adoptée lors du second ; l’offre BATHEC et la solution consistant à confier un choix alternatif au conseil syndical sont rejetées.",
         "PV du 13 avril 2026, résolution 16.2."
       ],
       [
         "13 avril 2026 · résolutions 16.5 et 16.6",
         "Adoptées",
-        "Minimum d’honoraires de suivi : 360 € TTC. Financement voté en deux moitiés aux 1er juillet et 1er octobre 2026.",
+        "Ces résolutions financent la mission retenue et son suivi par le syndic. Elles prévoient un minimum d’honoraires de 360 € TTC et deux appels de fonds égaux, aux 1er juillet et 1er octobre 2026.",
         "PV du 13 avril 2026, résolutions 16.5 et 16.6."
       ]
     ],
@@ -106,19 +105,19 @@ export const decisions = [
       [
         "27 juin 2023 · résolution 23",
         "Adoptée sous condition",
-        "Mission d’étude TABIAI à 1 200 € TTC : diagnostic, descriptif, consultation et analyse des offres. Le démarrage est prévu après réception du DTG.",
+        "Pour préparer une réfection de la toiture, l’AG confie à TABIAI une mission de 1 200 € TTC comprenant diagnostic, descriptif des travaux, consultation des entreprises et analyse de leurs offres. Son démarrage est prévu après réception du diagnostic technique global (DTG) du bâtiment.",
         "PV du 27 juin 2023, résolution 23, p. 16 du PDF."
       ],
       [
         "8 avril 2025 · résolution 16",
         "Adoptée",
-        "Annulation de cette résolution 23 ; mandat au CS pour choisir un architecte dans une enveloppe maximale de 2 000 € TTC, en vue d’une étude et d’une consultation.",
+        "L’AG annule la mission TABIAI votée en 2023. Elle autorise le conseil syndical à choisir un architecte dans une enveloppe maximale de 2 000 € TTC pour réaliser l’étude de la toiture et consulter les entreprises.",
         "PV du 8 avril 2025, résolution 16."
       ],
       [
         "13 avril 2026 · résolution 15.2",
         "Adoptée",
-        "Cabinet Minne retenu pour 2 250 € TTC : diagnostic, descriptif, appel d’offres, analyse et présentation du projet à une prochaine AG. L’alternative Atelier du Bel Air est rejetée.",
+        "L’AG retient le cabinet Minne pour une mission de 2 250 € TTC : diagnostiquer la toiture, décrire les travaux, consulter les entreprises et analyser leurs propositions. Le projet doit ensuite être présenté à une prochaine AG ; l’offre concurrente de l’Atelier du Bel Air est rejetée.",
         "PV du 13 avril 2026, résolution 15.2."
       ]
     ],
@@ -129,52 +128,52 @@ export const decisions = [
     "title": "DTG, DPE collectif et projet de plan de travaux",
     "page": "toiture-et-projets",
     "current": "Les quatre propositions soumises en 2026 ont été rejetées",
-    "status": "Historique à clarifier",
+    "status": "Votes de 2015 à 2026",
     "steps": [
       [
         "16 avril 2015 · résolution 13",
         "Report adopté",
-        "L’AG décide de reporter la question de l’audit énergétique à l’assemblée suivante. Ce vote ne commande pas l’audit.",
+        "L’AG examine l’opportunité de faire réaliser un audit énergétique, destiné à étudier le fonctionnement énergétique du bâtiment. Elle reporte la décision à l’assemblée suivante : aucun audit n’est commandé par ce vote.",
         "PV du 16 avril 2015, résolution 13, p. 11 du PDF."
       ],
       [
         "13 avril 2016 · résolution 17.1",
         "Adoptée",
-        "Audit énergétique confié à CITAE pour 3 110 € TTC. Cet audit ancien et le projet ultérieur de DTG sont des missions distinctes.",
+        "L’AG confie l’audit énergétique à CITAE pour 3 110 € TTC. Cette mission porte sur l’énergie ; elle est distincte des projets de diagnostic technique global discutés les années suivantes, qui abordent plus largement l’état du bâtiment.",
         "PV du 13 avril 2016, résolution 17.1, p. 23 du PDF."
       ],
       [
         "17 mai 2022 · résolution 23",
         "Rejetée",
-        "La proposition de DPE par DE.P, à 3 966 € TTC, n’est pas adoptée.",
+        "L’AG examine une offre de DE.P à 3 966 € TTC pour un diagnostic de performance énergétique (DPE), qui évalue la performance énergétique du bâtiment. L’offre est rejetée et n’est donc pas commandée par cette résolution.",
         "PV du 17 mai 2022, résolution 23, p. 9 du PDF."
       ],
       [
         "27 juin 2023 · résolution 8",
         "Adoptée",
-        "DTG confié à MEV pour 9 120 € TTC. Le PV indique que le syndic tentera d’obtenir une aide pouvant atteindre 5 000 €. Il ne formule pas cette aide comme une condition explicite, contrairement au rappel fait en 2025.",
+        "L’AG confie à MEV un diagnostic technique global (DTG) pour 9 120 € TTC afin d’évaluer l’état du bâtiment et les travaux à envisager. Le texte prévoit que le syndic recherchera une aide pouvant atteindre 5 000 €, sans en faire expressément une condition du vote ; le rappel rédigé en 2025 présente ce point différemment.",
         "PV du 27 juin 2023, résolution 8, p. 6 du PDF."
       ],
       [
         "8 avril 2025 · résolution 14",
         "Adoptée mais ambiguë",
-        "Le titre annonce une annulation ; le corps du texte indique de mener la résolution sans subvention. Cette contradiction nécessite une clarification du syndic.",
+        "La résolution revient sur le diagnostic technique global confié à MEV en 2023 et sur l’absence de subvention. Bien qu’elle soit adoptée, son titre annonce l’annulation de la décision alors que son texte demande de la mettre en œuvre sans subvention : ce PV ne permet pas de choisir entre ces deux formulations contradictoires.",
         "PV du 8 avril 2025, résolution 14."
       ],
       [
         "8 avril 2025 · résolution 15",
         "Rejetée",
-        "La proposition d’audit technique complet avec plan pluriannuel de travaux n’est pas adoptée.",
+        "Une nouvelle proposition vise un audit technique complet accompagné d’un plan pluriannuel de travaux, pour identifier et programmer les interventions futures sur le bâtiment. L’AG la rejette ; cette offre n’est pas retenue.",
         "PV du 8 avril 2025, résolution 15."
       ],
       [
         "13 avril 2026 · résolutions 13, 13.1, 14 et 14.1",
         "Rejetées",
-        "Les offres MEV et Atelier du Bel Air, pour le DTG ou les variantes DPE et PPPT, sont rejetées.",
+        "L’AG examine les offres de MEV et de l’Atelier du Bel Air pour un diagnostic technique global (DTG), ou pour des prestations associant diagnostic de performance énergétique collectif (DPE) et projet de plan pluriannuel de travaux (PPPT). Les quatre propositions sont rejetées : aucune de ces offres de 2026 n’est retenue.",
         "PV du 13 avril 2026, résolutions 13, 13.1, 14 et 14.1."
       ]
     ],
-    "limit": "Le rejet de ces offres ne permet pas de conclure à une dispense d’obligations ni à l’absence de toute décision antérieure. Clarification documentaire nécessaire."
+    "limit": "Le rejet de ces offres ne permet pas de conclure à une dispense d’obligations ni à l’absence de toute décision antérieure."
   },
   {
     "id": "interphones",
@@ -186,7 +185,7 @@ export const decisions = [
       [
         "8 avril 2025 · résolutions 17.1 à 17.6 et 18.1 à 18.6",
         "Rejetées",
-        "Les votes concernant les bâtiments 4 et 4 bis rejettent les principes, les offres et leurs modalités de réalisation. Les rubriques générales 17 et 18 sont des présentations « sans vote » ; elles ne constituent pas une autorisation de travaux.",
+        "Deux projets distincts de remplacement des interphones sont présentés, pour le 4 et pour le 4 bis. L’AG rejette, pour chaque bâtiment, le principe du remplacement, les offres et les modalités de réalisation ; les rubriques d’introduction 17 et 18, marquées « sans vote », n’autorisent pas ces travaux.",
         "PV du 8 avril 2025, résolutions 17.1 à 17.6 et 18.1 à 18.6."
       ]
     ],
@@ -202,23 +201,23 @@ export const decisions = [
       [
         "13 avril 2016 · résolution 31",
         "Adoptée",
-        "L’AG retient une présentation harmonisée des plaques : texte noir sur fond blanc, en majuscules, avec Copperplate Gothic si possible. Un délai de mise en conformité et une commande par le syndic aux frais des propriétaires concernés sont prévus.",
+        "Pour harmoniser les plaques des boîtes aux lettres, l’AG retient un texte noir sur fond blanc, en majuscules et si possible en police Copperplate Gothic. Elle prévoit un délai de mise en conformité, puis une commande par le syndic aux frais des propriétaires concernés ; ces caractéristiques anciennes ont été contestées dans des échanges ultérieurs.",
         "PV du 13 avril 2016, résolution 31, p. 43 du PDF."
       ],
       [
         "25 avril 2017 · résolution 17.5",
         "Adoptée",
-        "Le modèle de plaques est rappelé et la mise en conformité demandée avant le 30 juin 2017, avec suivi du syndic.",
+        "L’AG reprend la demande d’harmonisation des plaques de boîtes aux lettres. Elle rappelle le modèle alors retenu, fixe le 30 juin 2017 comme échéance de mise en conformité et en confie le suivi au syndic.",
         "PV du 25 avril 2017, résolution 17.5, p. 10 du PDF."
       ],
       [
         "8 avril 2025 · résolution 19",
         "Adoptée",
-        "La demande porte sur l’entretien et la remise en état des parties communes, la mise à jour des affichages et une solution durable pour les étiquettes de boîtes aux lettres.",
+        "La résolution porte à la fois sur l’état des parties communes et sur les informations destinées aux résidents. L’AG demande leur entretien et leur remise en état, l’actualisation des affichages et une solution durable pour les étiquettes de boîtes aux lettres.",
         "PV du 8 avril 2025, résolution 19."
       ]
     ],
-    "limit": "La décision historique sur les plaques est vérifiée. Confirmez le modèle actuellement utilisé et le devis avant une commande. Les pages disponibles du PV 2017 ne permettent pas une lecture exhaustive de cette AG."
+    "limit": "Les dimensions et la police citées dans ce vote ancien ne constituent pas un modèle actuel de fabrication. Demandez au CS le modèle à reproduire avant une commande. Les pages disponibles du PV 2017 ne permettent pas une lecture exhaustive de cette AG."
   },
   {
     "id": "gouvernance",
@@ -230,37 +229,37 @@ export const decisions = [
       [
         "13 avril 2016 · résolutions 12 et 13",
         "Adoptées",
-        "Consultation du CS au-delà de 500 € TTC et mise en concurrence à partir de 2 000 € TTC. Ces anciens seuils ne remplacent pas les décisions plus récentes.",
+        "L’AG fixe deux seuils pour encadrer les dépenses collectives : le syndic doit consulter le conseil syndical au-delà de 500 € TTC et mettre les offres en concurrence à partir de 2 000 € TTC. Ces montants décrivent les règles votées en 2016 ; des décisions ultérieures les ont fait évoluer.",
         "PV du 13 avril 2016, résolutions 12 et 13, p. 17 du PDF."
       ],
       [
         "28 juin 2024 · résolutions 8 à 10",
         "Adoptées",
-        "Consultation du CS au-delà de 1 500 € TTC, mise en concurrence à partir de 2 000 € TTC et délégation au CS plafonnée à 1 000 € pour douze mois.",
+        "L’AG fixe à 1 500 € TTC le seuil au-delà duquel le conseil syndical est consulté et maintient la mise en concurrence à partir de 2 000 € TTC. Elle lui accorde aussi, pour douze mois, une délégation de décision plafonnée à 1 000 €, distincte de ces deux seuils.",
         "PV du 28 juin 2024, résolutions 8 à 10, p. 7–8 du PDF."
       ],
       [
         "13 avril 2026 · résolution 8",
         "Adoptée",
-        "Homeland est désigné syndic jusqu’au 30 septembre 2027.",
+        "L’AG désigne Homeland pour assurer la fonction de syndic de la copropriété. Le mandat voté court jusqu’au 30 septembre 2027 : Homeland reste l’interlocuteur pour la gestion et l’organisation des interventions collectives.",
         "PV du 13 avril 2026, résolution 8."
       ],
       [
         "13 avril 2026 · résolution 10",
         "Adoptée",
-        "Consultation du CS pour une dépense unitaire, un marché ou un contrat excédant 1 500 € TTC, sous les exceptions d’urgence et de contrats en cours indiquées au PV.",
+        "Avant d’engager une dépense unitaire, un marché ou un contrat dépassant 1 500 € TTC, le syndic doit consulter le conseil syndical. Le PV prévoit des exceptions pour les urgences et certains contrats en cours ; cette consultation ne donne pas au résident le pouvoir de commander lui-même.",
         "PV du 13 avril 2026, résolution 10."
       ],
       [
         "13 avril 2026 · résolution 11",
         "Adoptée",
-        "Mise en concurrence à partir de 2 000 € TTC.",
+        "L’AG fixe à 2 000 € TTC le seuil de mise en concurrence des marchés et contrats. Il s’agit de comparer des propositions avant le choix d’un prestataire ; ce seuil est distinct de celui qui déclenche la consultation du conseil syndical.",
         "PV du 13 avril 2026, résolution 11."
       ],
       [
         "13 avril 2026 · résolution 12",
         "Adoptée",
-        "Délégation au CS pour douze mois, avec une limite de 1 000 € et le périmètre décrit au PV.",
+        "L’AG délègue au conseil syndical, pendant douze mois, certaines décisions normalement prises à la majorité simple, avec une dépense maximale de 1 000 €. Le texte exclut notamment l’approbation des comptes, le vote du budget prévisionnel et certaines adaptations du règlement de copropriété : la délégation n’est pas une autorisation générale de dépense.",
         "PV du 13 avril 2026, résolution 12."
       ]
     ],
@@ -276,43 +275,43 @@ export const decisions = [
       [
         "17 mai 2022 · résolutions 12 à 15",
         "Adoptées",
-        "Budget 2022 fixé à 176 233 € ; budget prévisionnel 2023 fixé à 188 537 €. Cotisations au fonds travaux de 5 %.",
+        "L’AG fixe le budget des dépenses courantes de 2022 à 176 233 € et prévoit 188 537 € pour 2023. Elle vote également une cotisation au fonds de travaux de 5 %, qui constitue une réserve distincte du budget de fonctionnement.",
         "PV du 17 mai 2022, résolutions 12 à 15, p. 7 du PDF."
       ],
       [
         "27 juin 2023 · résolutions 5 à 7",
         "Adoptées",
-        "Budget 2023 révisé à 233 000 € ; budget 2024 fixé à 233 000 €. Fonds travaux de 5 % pour l’exercice suivant.",
+        "L’AG relève le budget 2023 à 233 000 € et retient le même montant pour le budget prévisionnel 2024. Elle fixe à 5 % la cotisation au fonds de travaux pour l’exercice suivant ; ces votes encadrent les appels de fonds correspondants.",
         "PV du 27 juin 2023, résolutions 5 à 7, p. 5 du PDF."
       ],
       [
         "28 juin 2024 · résolutions 5 et 6",
         "Adoptées",
-        "Budget prévisionnel 2025 fixé à 221 000 € et fonds travaux de 5 % pour l’exercice suivant.",
+        "Pour préparer les dépenses de l’année suivante, l’AG vote un budget prévisionnel 2025 de 221 000 €. Elle maintient une cotisation au fonds de travaux de 5 % pour l’exercice suivant.",
         "PV du 28 juin 2024, résolutions 5 et 6, p. 4 du PDF."
       ],
       [
         "8 avril 2025 · résolution 5",
         "Adoptée",
-        "Budget prévisionnel 2026 initialement fixé à 222 000 €.",
+        "L’AG prépare l’exercice 2026 en votant un budget prévisionnel de 222 000 €. Ce montant est une prévision adoptée en 2025 ; il sera révisé par l’AG de 2026.",
         "PV du 8 avril 2025, résolution 5."
       ],
       [
         "8 avril 2025 · résolution 7",
         "Adoptée",
-        "La cotisation au fonds travaux est portée à 7 % pour l’exercice suivant. Le taux voté en 2026 constitue une nouvelle étape de cet historique.",
+        "L’AG porte à 7 % la cotisation au fonds de travaux pour l’exercice suivant. Cette réserve sert à anticiper des dépenses de travaux ; elle se distingue des sommes appelées pour les dépenses courantes de la copropriété.",
         "PV du 8 avril 2025, résolution 7."
       ],
       [
         "13 avril 2026 · résolutions 4 et 5",
         "Adoptées",
-        "Budget 2026 ramené à 210 000 € ; budget 2027 fixé à 198 000 €.",
+        "L’AG révise le budget 2026 : il passe des 222 000 € initialement prévus à 210 000 €. Elle vote également un budget prévisionnel de 198 000 € pour 2027, afin de préparer les dépenses courantes de l’exercice suivant.",
         "PV du 13 avril 2026, résolutions 4 et 5."
       ],
       [
         "13 avril 2026 · résolution 7",
         "Adoptée",
-        "Cotisation au fonds travaux fixée à 5 % du budget prévisionnel pour l’exercice suivant.",
+        "L’AG fixe la cotisation au fonds de travaux à 5 % du budget prévisionnel pour l’exercice suivant. Ce vote intervient après celui de 2025, qui avait retenu 7 % ; les dates permettent de distinguer les taux successifs.",
         "PV du 13 avril 2026, résolution 7."
       ]
     ],
@@ -328,13 +327,13 @@ export const decisions = [
       [
         "27 juin 2023 · résolution 19",
         "Ratification adoptée",
-        "L’AG ratifie le remplacement urgent du moteur de porte de garage, pour 2 282,28 € TTC, avec appel du solde au 1er octobre 2023.",
+        "Le moteur d’une porte de garage ayant fait l’objet d’un remplacement urgent, l’AG approuve après coup cette intervention pour 2 282,28 € TTC : c’est le sens de la ratification. Elle prévoit l’appel du solde au 1er octobre 2023.",
         "PV du 27 juin 2023, résolution 19, p. 12 du PDF."
       ],
       [
         "8 avril 2025 · résolution 13",
         "Compte approuvé",
-        "Le compte de ces travaux est approuvé et son solde doit être réparti en charges parkings.",
+        "L’AG approuve le compte du remplacement du moteur de porte de garage ratifié en 2023. Le solde de cette opération est réparti dans les charges des parkings ; ce vote clôt le volet comptable, sans constituer un contrôle technique de la porte.",
         "PV du 8 avril 2025, résolution 13, p. 9 du PDF."
       ]
     ],
@@ -350,49 +349,43 @@ export const decisions = [
       [
         "28 septembre 2020 · résolution 27",
         "Étude adoptée sous réserve",
-        "Une étude de recharge est retenue, sous réserve de vérification par le CS de la gratuité de l’étude ENEDIS.",
+        "L’AG accepte le principe d’une étude pour préparer la recharge des véhicules électriques dans les parkings. L’accord est donné sous réserve de vérifier la gratuité de l’étude ENEDIS : il ne commande pas encore l’installation de bornes.",
         "PV du 28 septembre 2020, résolution 27, p. 9 du PDF."
       ],
       [
         "23 juin 2021 · résolution 34",
         "Rejetée",
-        "La proposition d’étude de marché et de mise en concurrence par le syndic n’est pas adoptée.",
+        "Pour comparer les solutions de recharge, il était proposé de confier au syndic une étude de marché et une mise en concurrence. L’AG rejette cette mission ; aucun prestataire d’installation n’est choisi par ce vote.",
         "PV du 23 juin 2021, résolution 34, p. 12 du PDF."
       ],
       [
         "17 mai 2022 · résolution 25",
         "Sans vote",
-        "La proposition WAAT n’est pas soumise au vote, faute de convention disponible.",
+        "Une offre WAAT pour la recharge des véhicules est présentée, mais la convention nécessaire à son examen n’est pas disponible. La proposition n’est pas mise au vote : cette AG ne l’adopte ni ne la rejette.",
         "PV du 17 mai 2022, résolution 25, p. 9–10 du PDF."
       ],
       [
         "27 juin 2023 · résolution 26",
         "Adoptée",
-        "Installation individuelle de recharge admise aux frais du propriétaire, avec comptage individuel des consommations.",
+        "L’AG admet l’installation d’une borne individuelle aux frais du propriétaire qui souhaite équiper sa place. Les consommations doivent être comptées individuellement, afin d’identifier l’électricité utilisée pour chaque installation.",
         "PV du 27 juin 2023, résolution 26, p. 20 du PDF."
       ],
       [
         "27 juin 2023 · résolutions 26.1 et 26.2",
         "Deux propositions adoptées",
-        "Les propositions WAAT et Zeplug sont toutes deux adoptées. Le commentaire du PV prévoit une réunion avec le CS et le syndic pour choisir l’opérateur ; le document ne permet donc pas d’annoncer un attributaire unique.",
+        "L’AG adopte à la fois les propositions de WAAT et de Zeplug. Le commentaire du PV prévoit une réunion entre le conseil syndical et le syndic pour choisir l’opérateur ; ces deux votes ne permettent donc pas, à eux seuls, de désigner un prestataire unique.",
         "PV du 27 juin 2023, résolutions 26.1 et 26.2, p. 21–22 du PDF."
       ],
       [
         "28 juin 2024 · résolution 16",
         "Adoptée",
-        "La proposition Electro-Mob d’infrastructure est votée pour un budget de 7 950,17 € TTC. Le PV prévoit un financement par le fonds travaux et un échéancier en juillet et octobre.",
+        "L’AG retient Electro-Mob pour l’infrastructure de recharge, dans un budget de 7 950,17 € TTC. Elle prévoit de la financer avec le fonds de travaux, selon un échéancier en juillet et en octobre ; l’équipement individuel des places fait ensuite l’objet de demandes de devis.",
         "PV du 28 juin 2024, résolution 16, p. 25 du PDF."
-      ],
-      [
-        "20 janvier 2025 · information du journal",
-        "Installation rapportée",
-        "Le Petit Colbert de février 2025 (V5) annonce que l’installation de huit bornes par Electromob s’est terminée le 20 janvier 2025. Ce compte rendu complète le vote de 2024, sans se substituer à une réception technique.",
-        "Le Petit Colbert de février 2025, V5, transmis le 18 février 2025."
       ],
       [
         "13 octobre 2026 · confirmation d’usage",
         "Situation rapportée",
-        "L’installation est achevée et des propriétaires utilisent leurs bornes. Pour une nouvelle installation, contactez Electro-Mob pour un devis et la pose.",
+        "Un propriétaire équipé confirme que l’installation est achevée et que des bornes sont déjà utilisées. Les propriétaires souhaitant équiper leur place peuvent demander directement un devis et une pose à Electro-Mob ; cette information d’usage est distincte des votes d’AG.",
         "Confirmation du porteur du projet, propriétaire équipé, le 13 octobre 2026."
       ]
     ],
@@ -408,25 +401,25 @@ export const decisions = [
       [
         "29 avril 2014 · résolution 12.1",
         "Rejetée",
-        "La proposition de fermeture définitive des vide-ordures n’est pas adoptée.",
+        "L’AG examine la fermeture définitive des vide-ordures de la résidence. La proposition est rejetée : cette résolution n’autorise pas la condamnation des colonnes.",
         "PV du 29 avril 2014, résolution 12.1, p. 13 du PDF."
       ],
       [
         "13 avril 2016 · résolutions 27.1 et 29.1",
         "Rejetées",
-        "Les propositions de fermeture des bâtiments 4 et 4 bis sont rejetées.",
+        "De nouvelles propositions de fermeture sont soumises séparément pour les bâtiments 4 et 4 bis. Elles sont toutes deux rejetées ; aucun de ces deux votes ne décide la suppression des vide-ordures.",
         "PV du 13 avril 2016, résolutions 27.1 et 29.1, p. 37 et 41 du PDF."
       ],
       [
         "28 juin 2024 · résolutions 13.1 à 13.4",
         "Rejetées",
-        "Le principe de fermeture, la proposition Sicre, le mandat et le financement ne sont pas adoptés.",
+        "L’AG examine à nouveau la suppression des vide-ordures, avec une proposition de Sicre et les dispositions nécessaires pour choisir, financer et réaliser l’opération. Le principe de fermeture et les trois résolutions associées sont rejetés : la suppression proposée n’est pas autorisée.",
         "PV du 28 juin 2024, résolutions 13.1 à 13.4, p. 16–19 du PDF."
       ],
       [
         "13 octobre 2026 · consigne pratique",
         "Recommandation rapportée du CS",
-        "Les vide-ordures restent en service avec l’entretien Sicre Lemaire. Le CS déconseille leur utilisation et recommande les bacs des locaux poubelles. Cette recommandation n’est pas une fermeture votée en AG.",
+        "Les vide-ordures restent en service et Sicre Lemaire en assure l’entretien. Le conseil syndical recommande néanmoins de privilégier les bacs des locaux poubelles ; cette consigne rapportée en octobre 2026 est une recommandation d’usage, distincte d’une fermeture ou d’une interdiction votée en AG.",
         "Précision du porteur du projet le 13 octobre 2026 ; suivi d’entretien Homeland 2025–2026."
       ]
     ],
@@ -442,13 +435,13 @@ export const decisions = [
       [
         "10 mai 2012 · résolution 16",
         "Rejetée",
-        "La proposition de lancer un appel d’offres pour une vidéosurveillance du parking est rejetée.",
+        "Le projet consiste à consulter des entreprises pour envisager une vidéosurveillance du parking. L’AG rejette le lancement de cet appel d’offres : cette première étape d’étude et de comparaison n’est pas autorisée.",
         "PV du 10 mai 2012, résolution 16, p. 19 du PDF."
       ],
       [
         "28 juin 2024 · résolutions 12.1 à 12.7",
         "Rejetées",
-        "Le principe, les offres, le financement et les modalités de consultation des images proposés à cette AG ne sont pas adoptés.",
+        "L’AG examine un projet de caméras avec ses offres, son financement et les règles proposées pour consulter les images. Les sept résolutions sont rejetées ; les conditions décrites dans ce projet ne deviennent donc pas des règles de vidéosurveillance applicables.",
         "PV du 28 juin 2024, résolutions 12.1 à 12.7, p. 10–15 du PDF."
       ]
     ],
@@ -464,7 +457,7 @@ export const decisions = [
       [
         "28 juin 2024 · résolution 11",
         "Rejetée",
-        "L’installation proposée d’une station Free en toiture et la convention de location associée ne sont pas adoptées.",
+        "Free propose d’installer une station de téléphonie sur la toiture, avec une convention de location pour son occupation. L’AG rejette l’installation et la convention associée : ce projet précis n’est pas autorisé.",
         "PV du 28 juin 2024, résolution 11, p. 9 du PDF."
       ]
     ],
@@ -480,13 +473,13 @@ export const decisions = [
       [
         "16 avril 2015 · résolution 17",
         "Piste d’étude",
-        "La clôture apparaît parmi les sujets de travaux à étudier. Cette liste ne constitue pas un marché de travaux.",
+        "La clôture côté forêt figure dans une liste de travaux à étudier. Cette mention ouvre un sujet de réflexion, mais ne désigne aucune entreprise et ne constitue pas une commande de réfection.",
         "PV du 16 avril 2015, résolution 17, p. 13 du PDF."
       ],
       [
         "28 juin 2024 · résolutions 14.1 à 14.5",
         "Rejetées",
-        "Le principe, les propositions SERFA et Concept de Paysage, le mandat et le financement sont rejetés.",
+        "L’AG examine la réfection de la clôture côté forêt, avec des propositions de SERFA et de Concept du Paysage. Elle rejette le principe des travaux, les offres, le mandat de choix et le financement ; aucun de ces projets n’est retenu.",
         "PV du 28 juin 2024, résolutions 14.1 à 14.5, p. 20–24 du PDF."
       ]
     ],
@@ -502,19 +495,19 @@ export const decisions = [
       [
         "16 avril 2015 · résolution 15",
         "Rejetée",
-        "La proposition de compost collectif n’est pas adoptée.",
+        "Il est proposé d’installer un compost collectif dans la résidence pour les déchets organiques. L’AG rejette le projet ; ce vote ne concerne pas les dispositifs de compostage proposés dans le quartier.",
         "PV du 16 avril 2015, résolution 15, p. 11–13 du PDF."
       ],
       [
         "13 avril 2016 · résolution 19.1",
         "Rejetée",
-        "L’expérimentation proposée pour un an n’est pas adoptée.",
+        "Le compost collectif revient sous la forme d’une expérimentation limitée à un an. L’AG refuse cet essai dans la résidence ; aucun dispositif expérimental n’est mis en place par ce vote.",
         "PV du 13 avril 2016, résolution 19.1, p. 25 du PDF."
       ],
       [
         "28 septembre 2020 · résolution 34",
         "Rejetée",
-        "Le nouvel essai proposé avec financement de Versailles Grand Parc est rejeté.",
+        "Un nouvel essai de compost collectif est proposé dans la résidence, avec un financement de Versailles Grand Parc. L’AG le rejette également, malgré ce financement annoncé ; la décision est distincte des possibilités de compostage en maison de quartier.",
         "PV du 28 septembre 2020, résolution 34, p. 11 du PDF."
       ]
     ],
@@ -530,13 +523,13 @@ export const decisions = [
       [
         "28 septembre 2020 · résolution 29",
         "Rejetée",
-        "Le projet de jardin partagé présenté à cette AG est rejeté.",
+        "Un projet de jardin partagé est soumis aux copropriétaires pour la résidence. L’AG le rejette : cette proposition n’autorise pas la création ni l’organisation d’un tel jardin.",
         "PV du 28 septembre 2020, résolution 29, p. 10 du PDF."
       ],
       [
         "17 mai 2022 · résolution 28",
         "Principe adopté",
-        "La végétalisation des abords extérieurs avec la Mairie est acceptée, sans coût supplémentaire pour la résidence. Il s’agit d’un projet distinct du jardin partagé de 2020.",
+        "L’AG accepte le principe d’une végétalisation des abords extérieurs en lien avec la Mairie, sans coût supplémentaire pour la résidence. Le projet porte sur ces abords et se distingue du jardin partagé rejeté en 2020 ; le vote ne constate pas la réalisation des plantations.",
         "PV du 17 mai 2022, résolution 28, p. 10 du PDF."
       ]
     ],
@@ -552,19 +545,19 @@ export const decisions = [
       [
         "23 juin 2021 · résolution 35",
         "Rappel sans vote",
-        "Le PV rappelle l’entretien à la charge des propriétaires concernés, la hauteur de 2 mètres et l’absence de débordement des haies.",
+        "Le PV rappelle les consignes concernant les haies dont certains copropriétaires ont la jouissance privative : leur entretien est à leur charge, leur hauteur est limitée à 2 mètres et elles ne doivent pas déborder. Il s’agit d’un rappel inscrit au PV, sans nouveau vote sur ce point.",
         "PV du 23 juin 2021, résolution 35, p. 13 du PDF."
       ],
       [
         "23 juin 2021 · résolutions 36 et 37",
         "Adoptées",
-        "L’intervention de l’entreprise de jardinage pour l’entretien, aux frais des propriétaires concernés, est approuvée. Le remplacement des thuyas morts ou non entretenus est demandé dans les six mois, avec intervention de l’entreprise et refacturation à défaut.",
+        "L’AG approuve l’entretien de ces haies par l’entreprise de jardinage, aux frais des propriétaires concernés. Elle demande aussi le remplacement des thuyas morts ou non entretenus dans les six mois ; à défaut, l’entreprise peut intervenir avec refacturation aux intéressés selon la décision.",
         "PV du 23 juin 2021, résolutions 36 et 37, p. 13 du PDF."
       ],
       [
         "17 mai 2022 · résolution 26",
         "Information",
-        "Le PV mentionne des devis en cours pour les haies et les entrées. Cette information ne constitue pas une nouvelle commande.",
+        "Le PV indique que des devis sont en cours pour les haies et les entrées. Ce point informe sur la préparation des interventions ; il ne constitue ni le choix d’une offre ni une nouvelle commande de travaux.",
         "PV du 17 mai 2022, résolution 26, p. 10 du PDF."
       ]
     ],
@@ -580,31 +573,31 @@ export const decisions = [
       [
         "15 avril 2019 · résolution 15.1",
         "Rejetée",
-        "Le projet de carrelage des deux entrées n’est pas adopté.",
+        "L’AG examine la pose de carrelage dans les deux entrées de la résidence. Le projet est rejeté ; cette décision concerne les sols et se distingue des campagnes de peinture votées ensuite.",
         "PV du 15 avril 2019, résolution 15.1, p. 6 du PDF."
       ],
       [
         "28 septembre 2020 · résolutions 15 et 19",
         "Adoptées",
-        "Les travaux de peinture des halls des bâtiments 4 et 4 bis sont votés.",
+        "L’AG vote les travaux de peinture des halls du 4 et du 4 bis. Les deux bâtiments font l’objet de résolutions distinctes ; ces votes autorisent la campagne de peinture présentée en 2020.",
         "PV du 28 septembre 2020, résolutions 15 et 19, p. 7 du PDF."
       ],
       [
         "23 juin 2021 · résolutions 16 et 20",
         "Adoptées",
-        "Des travaux complémentaires de peinture des cages d’escalier au rez-de-chaussée sont votés auprès de Prigent.",
+        "L’AG approuve des travaux complémentaires de peinture au rez-de-chaussée des cages d’escalier, confiés à Prigent. Ils prolongent les travaux des halls votés en 2020, avec un périmètre propre aux cages d’escalier.",
         "PV du 23 juin 2021, résolutions 16 et 20, p. 7–8 du PDF."
       ],
       [
         "17 mai 2022 · résolutions 17 à 20",
         "Comptes approuvés",
-        "Les comptes des peintures des halls de 2020 et des cages d’escalier de 2021 sont approuvés.",
+        "L’AG approuve les comptes des quatre opérations de peinture : les halls des deux bâtiments votés en 2020, puis les cages d’escalier votées en 2021. Il s’agit de valider les dépenses de ces campagnes, et non de commander une nouvelle peinture.",
         "PV du 17 mai 2022, résolutions 17 à 20, p. 8 du PDF."
       ],
       [
         "17 mai 2022 · résolution 27",
         "Information sans vote",
-        "De futurs devis de peinture des paliers sont évoqués. Cette mention ne vaut pas commande.",
+        "Le PV évoque la préparation de devis pour peindre les paliers. Aucune décision de réalisation n’est prise sur ce point : la mention informe sur un projet futur sans passer commande.",
         "PV du 17 mai 2022, résolution 27, p. 10 du PDF."
       ]
     ],
@@ -620,23 +613,23 @@ export const decisions = [
       [
         "23 juin 2021 · résolutions 24, 28, 29 et 33",
         "Adoptées",
-        "Travaux de réfection des sols extérieurs des entrées : budgets de 6 000 € pour le 4 et 9 000 € pour le 4 bis. Les délégations au CS sont adoptées au second vote.",
+        "L’AG vote la réfection des sols extérieurs des entrées, avec un budget de 6 000 € pour le 4 et de 9 000 € pour le 4 bis. Les délégations permettant au conseil syndical de poursuivre ces opérations sont adoptées au second vote.",
         "PV du 23 juin 2021, résolutions 24, 28, 29 et 33, p. 9–12 du PDF."
       ],
       [
         "27 juin 2023 · résolutions 15 et 16",
         "Comptes approuvés",
-        "Les comptes des travaux d’entrée votés en 2021 sont approuvés.",
+        "L’AG approuve les comptes des travaux des entrées votés en 2021. Ces résolutions concernent les dépenses des opérations précédentes ; elles ne correspondent pas au nouveau projet de réfection de l’allée du 4 bis présenté séparément à la même AG.",
         "PV du 27 juin 2023, résolutions 15 et 16, p. 10–11 du PDF."
       ],
       [
         "27 juin 2023 · résolutions 21.1 et 21.2",
         "Adoptées sous réserve",
-        "Mandat au CS dans une enveloppe de 15 000 € pour la réfection de l’allée du 4 bis, sous réserve de consultation des copropriétaires concernés en réunion informelle. Financement prévu au 1er janvier 2024.",
+        "Pour refaire l’allée du 4 bis, l’AG donne mandat au conseil syndical dans une enveloppe de 15 000 €. Le choix reste soumis à une consultation informelle des copropriétaires concernés, et le financement est prévu au 1er janvier 2024 ; le vote ne constate pas encore l’exécution des travaux.",
         "PV du 27 juin 2023, résolutions 21.1 et 21.2, p. 15 du PDF."
       ]
     ],
-    "limit": "Le mandat et l’appel de fonds ne prouvent pas la réalisation de l’allée. Vérifier la consultation, le marché retenu et la réception."
+    "limit": "Le mandat et l’appel de fonds autorisent la préparation des travaux ; le PV ne constate pas leur réalisation."
   },
   {
     "id": "periode-chauffe",
@@ -648,25 +641,25 @@ export const decisions = [
       [
         "10 mai 2012 · résolutions 19 et 20",
         "Adoptées",
-        "L’AG retient une période du 1er octobre au 15 mai, à coordonner avec les interventions de maintenance. Elle vote aussi des réglages pour la saison 2012–2013.",
+        "L’AG retient une période de fonctionnement du chauffage collectif du 1er octobre au 15 mai, à coordonner avec les interventions de maintenance. Elle vote également des réglages pour la saison 2012–2013 ; ces réglages sont datés et ne décrivent pas ceux utilisés aujourd’hui.",
         "PV du 10 mai 2012, résolutions 19 et 20, p. 21–23 du PDF."
       ],
       [
         "14 mai 2013 · résolution 18",
         "Rappel",
-        "Le PV rappelle la période de chauffe antérieure.",
+        "Le PV rappelle la période de chauffe déjà retenue, du 1er octobre au 15 mai. Il s’agit du rappel d’une décision antérieure, et non d’un constat des dates effectives de démarrage et d’arrêt du chauffage cette année-là.",
         "PV du 14 mai 2013, résolution 18, p. 19 du PDF."
       ],
       [
         "13 avril 2016 · résolution 37",
         "Rappel",
-        "La période du 1er octobre au 15 mai est de nouveau mentionnée.",
+        "La période du 1er octobre au 15 mai est à nouveau mentionnée au PV pour le chauffage collectif. Cette référence historique donne un repère de calendrier ; elle ne remplace pas les annonces de mise en route et d’arrêt faites pour chaque saison.",
         "PV du 13 avril 2016, résolution 37, p. 53–55 du PDF."
       ],
       [
         "28 septembre 2020 · résolution 33",
         "Rejetée",
-        "La proposition de chauffage toute l’année n’est pas adoptée.",
+        "Il est proposé de laisser le chauffage collectif fonctionner toute l’année. L’AG rejette cette modification ; le vote ne met donc pas en place une période de chauffe permanente.",
         "PV du 28 septembre 2020, résolution 33, p. 10 du PDF."
       ]
     ],
@@ -677,30 +670,30 @@ export const decisions = [
     "title": "Indemnisation des trames défaillantes",
     "page": "chauffage-et-trames",
     "current": "Le dispositif de 2012 a fait l’objet de décisions ultérieures",
-    "status": "À rapprocher des décisions suivantes",
+    "status": "Dispositif modifié en 2014",
     "steps": [
       [
         "10 mai 2012 · résolution 22",
         "Adoptée",
-        "Un mécanisme d’indemnisation des logements concernés par des trames défaillantes est adopté.",
+        "L’AG adopte un mécanisme d’indemnisation pour les logements touchés par des trames de chauffage collectif défaillantes. Cette décision ouvre un dispositif à cette date ; les décisions suivantes en ont modifié la portée.",
         "PV du 10 mai 2012, résolution 22, p. 25–27 du PDF."
       ],
       [
         "14 mai 2013 · résolution 25",
         "Annulation rejetée",
-        "La proposition visant à supprimer ce mécanisme pour les exercices suivants est rejetée.",
+        "Il est proposé de supprimer pour les exercices suivants l’indemnisation adoptée en 2012. L’AG rejette cette annulation : le dispositif n’est pas supprimé par le vote de 2013.",
         "PV du 14 mai 2013, résolution 25, p. 25 du PDF."
       ],
       [
         "29 avril 2014 · résolution 17",
         "Adoptée",
-        "L’AG décide d’annuler le dispositif pour les exercices à partir de 2014, dans l’attente d’une répartition validée de l’électricité entre eau chaude et trames.",
+        "L’AG décide cette fois d’annuler le dispositif d’indemnisation à partir de l’exercice 2014. Cette décision intervient dans l’attente d’une répartition validée de l’électricité consommée entre la production d’eau chaude et les trames de chauffage.",
         "PV du 29 avril 2014, résolution 17, p. 15 du PDF."
       ],
       [
         "29 avril 2014 · résolution 19",
         "Répartition adoptée",
-        "Une répartition des consommations électriques est votée séparément. Cette décision ne suffit pas, à elle seule, à établir la reprise du mécanisme d’indemnisation.",
+        "À la même AG, une autre résolution adopte une répartition des consommations électriques entre usages. Elle traite du calcul des consommations ; elle ne décide pas expressément, à elle seule, de rétablir l’indemnisation des trames défaillantes.",
         "PV du 29 avril 2014, résolution 19, p. 17 du PDF."
       ]
     ],
@@ -716,31 +709,31 @@ export const decisions = [
       [
         "10 mai 2012 · résolution 23",
         "Adoptée",
-        "Une étude comparant chauffage individuel et collectif est demandée.",
+        "L’AG demande une étude pour comparer le chauffage individuel et le chauffage collectif. Il s’agit d’examiner les solutions possibles ; la résolution ne décide pas de remplacer le système existant.",
         "PV du 10 mai 2012, résolution 23, p. 27 du PDF."
       ],
       [
         "14 mai 2013 · résolution 13",
         "Adoptée",
-        "Étude et mesures votées dans une enveloppe maximale de 5 000 €, plus 100 € d’honoraires.",
+        "L’AG vote une étude du chauffage assortie de mesures, dans une enveloppe maximale de 5 000 €, plus 100 € d’honoraires. Cette dépense finance l’analyse technique ; elle ne constitue pas un budget de changement du système de chauffage.",
         "PV du 14 mai 2013, résolution 13, p. 13 du PDF."
       ],
       [
         "26 mars 2018 · résolution 21",
         "Adoptée au second vote",
-        "Après l’audit énergétique, le CS est chargé de poursuivre les recherches sur la ventilation, les pompes à chaleur et l’éclairage LED.",
+        "À la suite de l’audit énergétique, l’AG charge le conseil syndical de poursuivre les recherches sur la ventilation, les pompes à chaleur et l’éclairage LED. La résolution, adoptée au second vote, prolonge les études sans commander ces équipements.",
         "PV du 26 mars 2018, résolution 21, p. 7 du PDF."
       ],
       [
         "28 septembre 2020 · résolution 31",
         "Adoptée au second vote",
-        "Constitution d’un groupe de travail du CS sur la comparaison avec un chauffage individuel.",
+        "L’AG décide, au second vote, de constituer un groupe de travail du conseil syndical pour comparer le chauffage collectif avec une solution individuelle. Ce mandat porte sur la réflexion et la comparaison, sans vote de suppression du chauffage collectif.",
         "PV du 28 septembre 2020, résolution 31, p. 10 du PDF."
       ],
       [
         "27 juin 2023 · résolution 13",
         "Compte approuvé",
-        "Le compte de l’étude de chauffage votée en 2013 est approuvé.",
+        "L’AG approuve le compte de l’étude de chauffage votée en 2013. Ce vote concerne les dépenses de cette étude ancienne ; il ne commande ni une nouvelle étude ni des travaux de transformation.",
         "PV du 27 juin 2023, résolution 13, p. 10 du PDF."
       ]
     ],
@@ -756,25 +749,25 @@ export const decisions = [
       [
         "14 mai 2013 · résolutions 14 à 16",
         "Décisions distinctes",
-        "L’AG décide de ne pas rénover le tableau d’eau chaude proposé, mais adopte des travaux sur le tableau des parties communes et l’éclairage extérieur.",
+        "Trois sujets sont examinés séparément : le tableau de production d’eau chaude, le tableau des parties communes et l’éclairage extérieur. L’AG décide de ne pas réaliser la rénovation proposée pour le premier, mais adopte les travaux concernant les deux autres.",
         "PV du 14 mai 2013, résolutions 14 à 16, p. 15–17 du PDF."
       ],
       [
         "26 mars 2018 · résolutions 13 et 16",
         "Adoptées",
-        "Réfection de l’éclairage des parkings et financement associés votés.",
+        "L’AG approuve la réfection de l’éclairage des parkings et les dispositions de financement associées. Ce vote porte sur les luminaires des parkings, et non sur l’ensemble des installations électriques de la résidence.",
         "PV du 26 mars 2018, résolutions 13 et 16, p. 5–6 du PDF."
       ],
       [
         "28 septembre 2020 · résolution 28",
         "Adoptée",
-        "Le syndic est chargé de notifier à ENEDIS le transfert des colonnes électriques. Le PV n’atteste pas que la notification a été effectuée.",
+        "L’AG charge le syndic de notifier à ENEDIS le transfert des colonnes électriques, qui assurent la distribution dans l’immeuble. Le PV autorise cette démarche, mais ne prouve pas que la notification a ensuite été effectuée.",
         "PV du 28 septembre 2020, résolution 28, p. 9 du PDF."
       ],
       [
         "27 juin 2023 · résolution 17",
         "Compte approuvé",
-        "Le compte des travaux de tableau électrique des parties communes votés en 2013 est approuvé.",
+        "L’AG approuve le compte des travaux sur le tableau électrique des parties communes votés en 2013. Elle valide ainsi les dépenses de cette opération ancienne, sans décider une nouvelle rénovation du tableau.",
         "PV du 27 juin 2023, résolution 17, p. 11 du PDF."
       ]
     ],
@@ -790,25 +783,25 @@ export const decisions = [
       [
         "28 septembre 2020 · résolution 23",
         "Adoptée",
-        "Remplacement du disjoncteur de chauffage du 4 bis confié à SETEMI pour 5 370,53 € TTC.",
+        "L’AG confie à SETEMI le remplacement du disjoncteur de chauffage du 4 bis, pour 5 370,53 € TTC. Ce vote concerne un équipement précis de l’alimentation du chauffage, distinct de la dépose de l’ancienne armoire décidée ultérieurement.",
         "PV du 28 septembre 2020, résolution 23, p. 8 du PDF."
       ],
       [
         "27 juin 2023 · résolution 18",
         "Compte approuvé",
-        "Approbation du compte de remplacement du disjoncteur voté en 2020.",
+        "L’AG approuve le compte du remplacement du disjoncteur voté en 2020. La résolution valide les dépenses de cette intervention ; elle ne commande pas un second remplacement.",
         "PV du 27 juin 2023, résolution 18, p. 11 du PDF."
       ],
       [
         "27 juin 2023 · résolutions 20.1 à 20.5",
         "Choix adopté",
-        "L’offre Tournois pour la dépose de l’ancienne armoire est rejetée ; celle de JEANDEPANNE à 7 843 € TTC est adoptée, avec honoraires et financement. Le mandat alternatif au CS est rejeté.",
+        "Pour retirer l’ancienne armoire de chauffage, l’AG rejette l’offre de Tournois et choisit celle de JEANDEPANNE à 7 843 € TTC. Elle vote aussi les honoraires et le financement ; la proposition alternative de confier le choix au conseil syndical est rejetée.",
         "PV du 27 juin 2023, résolutions 20.1 à 20.5, p. 12–14 du PDF."
       ],
       [
         "8 avril 2025 · résolution 12",
         "Compte approuvé",
-        "Le compte de la dépose de l’ancienne armoire est approuvé et son solde réparti en charges chauffage.",
+        "L’AG approuve le compte de la dépose de l’ancienne armoire de chauffage votée en 2023. Le solde est réparti dans les charges de chauffage ; il s’agit de la clôture comptable de cette opération ponctuelle.",
         "PV du 8 avril 2025, résolution 12, p. 9 du PDF."
       ]
     ],
@@ -824,13 +817,13 @@ export const decisions = [
       [
         "10 mai 2012 · résolutions 25.1 et 25.2",
         "Adoptées",
-        "Remplacement des treuils des deux ascenseurs par Thyssenkrupp et conditions d’entretien associées approuvés. Les tarifs de cette époque ne sont pas des tarifs actuels.",
+        "L’AG approuve le remplacement des treuils, les mécanismes qui entraînent les cabines, des deux ascenseurs par Thyssenkrupp. Elle adopte aussi les conditions d’entretien associées à ces travaux ; les tarifs de 2012 ne sont pas présentés comme ceux du contrat actuel.",
         "PV du 10 mai 2012, résolutions 25.1 et 25.2, p. 29–31 du PDF."
       ],
       [
         "13 avril 2016 · résolutions 15.1 et 16.1",
         "Rejetées",
-        "Les propositions de remplacement des oculi des deux ascenseurs ne sont pas adoptées.",
+        "Il est proposé de remplacer les oculi, c’est-à-dire les hublots des portes des ascenseurs, dans les deux bâtiments. Les deux propositions sont rejetées ; ces votes ne concernent pas le remplacement complet des ascenseurs.",
         "PV du 13 avril 2016, résolutions 15.1 et 16.1, p. 19 et 21 du PDF."
       ]
     ],
@@ -846,7 +839,7 @@ export const decisions = [
       [
         "27 juin 2023 · résolution 25",
         "Rejetée",
-        "Le remplacement global proposé pour 3 094,25 € TTC n’est pas adopté. Le commentaire du PV évoque un remplacement au cas par cas selon les besoins.",
+        "L’AG examine un remplacement global des extincteurs pour 3 094,25 € TTC et rejette cette proposition. Le commentaire du PV évoque plutôt des remplacements au cas par cas selon les besoins ; le refus de cette offre ne supprime pas l’entretien des appareils.",
         "PV du 27 juin 2023, résolution 25, p. 20 du PDF."
       ]
     ],
@@ -862,19 +855,19 @@ export const decisions = [
       [
         "10 mai 2012 · résolutions 26 et 27",
         "Adoptées",
-        "L’AG demande l’examen des projets de mise à jour du règlement de copropriété et du règlement intérieur issus de 2008.",
+        "L’AG demande l’examen des projets de mise à jour du règlement de copropriété et du règlement intérieur issus de 2008. Ces votes portent sur la reprise de ces projets, pas sur l’adoption immédiate d’un nouveau texte consolidé.",
         "PV du 10 mai 2012, résolutions 26 et 27, p. 31 du PDF."
       ],
       [
         "14 mai 2013 · résolution 23",
         "Adoptée au second vote",
-        "Le projet de mise à jour du règlement de copropriété voté en 2008 est annulé. Cela ne signifie pas l’annulation du règlement de copropriété existant.",
+        "L’AG annule, au second vote, le projet de mise à jour du règlement de copropriété voté en 2008. C’est ce projet qui est abandonné : le vote ne supprime pas le règlement de copropriété existant ni les modificatifs antérieurs.",
         "PV du 14 mai 2013, résolution 23, p. 23 du PDF."
       ],
       [
         "14 mai 2013 · résolution 24",
         "Adoptée au second vote",
-        "Le projet de règlement intérieur de 2008 est annulé ; l’AG demande d’enrichir l’Abécédaire avec les éléments utiles du règlement intérieur actuel.",
+        "L’AG annule également, au second vote, le projet de règlement intérieur de 2008. Elle demande à la place d’enrichir l’Abécédaire avec les dispositions utiles du règlement intérieur actuel, afin de mieux informer les résidents sur la vie de l’immeuble.",
         "PV du 14 mai 2013, résolution 24, p. 23–25 du PDF."
       ]
     ],

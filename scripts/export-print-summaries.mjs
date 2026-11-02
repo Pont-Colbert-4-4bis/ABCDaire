@@ -16,7 +16,7 @@ const records=articles.map((a,index)=>{
     contacts:summary.contacts.map(id=>{
       const c=contacts.find(c=>c.id===id);
       if (!c) throw Error(`Unknown print contact: ${id}`);
-      return {id,company:c.company,role:c.role,phone:c.phone,email:c.email,url:c.url};
+      return {id,company:c.company,role:c.role,phone:c.phone,email:c.email,url:c.url,urlLabel:c.urlLabel};
     }),
     url:`https://pont-colbert-4-4bis.github.io/ABCDaire/fiches/${a.slug}/`,
     filename:`${a.slug}-a5.pdf`

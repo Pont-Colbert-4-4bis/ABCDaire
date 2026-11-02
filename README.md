@@ -115,4 +115,25 @@ npm run check
 
 Le contrôle vérifie la correspondance rubrique/PDF, la fraîcheur des sources et l’intégrité des fichiers publiés. Le générateur refuse les débordements et impose une page A5 par rubrique ; contrôler aussi le rendu visuel avant publication. Les PDF générés et leur manifeste sont versionnés. Les aperçus de travail (`tmp/`) et copies de livraison (`output/`) restent locaux.
 
-Le menu latéral utilise des caractères plus grands et des lignes plus rapprochées. Les blocs « Dans Le Petit Colbert » sont retirés des fiches ; la rubrique d’archives et les références historiques de provenance restent conservées.
+Le menu latéral utilise des caractères plus grands et des lignes plus rapprochées. Les renvois au Petit Colbert sont retirés des fiches pratiques ; la rubrique d’archives reste accessible dans la navigation, sans réécriture de ses documents.
+
+## Règlement et relecture du 2 novembre 2026
+
+`/reglement/` présente les 116 pages numérotées du règlement initial de 1977, un PDF public de 117 pages avec notice et une description chronologique des modificatifs disponibles. Le catalogue Homeland a été consulté le 2 novembre 2026 : le dernier modificatif déposé est signé le 30 mars 2012 et publié le 25 avril 2012. Les deux fichiers correspondent au même acte. Le fichier classé au 7 avril 1995 comporte des blancs et des références postérieures : ne pas le présenter comme un acte final daté ou l'utiliser pour consolider le texte.
+
+Les sources nominatives restent hors du dépôt. La copie publique exclut le préambule notarial et les signatures ; seules les pages de clauses et de tableaux relues sont publiées. La source principale 690259 omet les pages internes 42, 81 et 82 : la seconde copie 739697 fournit ces pages (pages PDF 47, 86 et 87). La page 43 en double est écartée et les pages 44 et 45 sont remises dans l’ordre. Les pixels d'origine sont extraits sans couche OCR ni métadonnées des PDF, puis conservés sans perte dans les images WebP et dans le PDF. Les tableaux des pages 107–116 sont tournés pour leur lecture. La copie reste non consolidée et ne vaut pas mise à jour juridique du texte de 1977.
+
+Pour reproduire les fichiers après revue de toutes les pages sélectionnées :
+
+```sh
+# Premier script : Python avec PyMuPDF et Pillow ; dossier privé fourni explicitement.
+python3 scripts/prepare-regulation-scans.py /chemin/prive/vers/les/sources
+# Second script : Python avec Pillow, ReportLab et pypdf, polices macOS.
+python3 scripts/create-regulation-pdf.py
+npm run build
+npm run check
+```
+
+Le contrôle couvre les pages autorisées, les trois suppléments, la continuité du sommaire et les empreintes des fichiers servis. Il ne remplace pas une revue visuelle de confidentialité. Les originaux nominatifs ne doivent jamais être ajoutés aux assets.
+
+La relecture éditoriale porte sur les fiches actuelles, contacts, contrats et historiques : explications directes, sigles développés, interlocuteurs explicites, suppression des doublons et des demandes de validation éditoriale. Les références de provenance restent dans les sources. Les faits incertains restent datés et qualifiés, notamment le modèle de plaques, la résolution contradictoire de 2025 sur le DTG et les limites des contrats anciens. L'article 19 du règlement (page 64) documente la description du chauffage collectif et individuel.

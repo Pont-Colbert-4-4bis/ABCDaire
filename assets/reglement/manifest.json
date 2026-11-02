@@ -1,0 +1,1168 @@
+{
+  "edition": "2026-11-02",
+  "pdf": "reglement-1977-public.pdf",
+  "pages": [
+    {
+      "number": 1,
+      "image": "page-001.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 28,
+      "rotation": 0,
+      "sha256": "483a26a969b382c9e202da011ade194733861e1d63eb993d7331d75e567612e7"
+    },
+    {
+      "number": 2,
+      "image": "page-002.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 29,
+      "rotation": 0,
+      "sha256": "5a4b4f69b2f7304ffc5fe44e81fe6103539cf3d94a013337283ef3ae72021ed9"
+    },
+    {
+      "number": 3,
+      "image": "page-003.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 30,
+      "rotation": 0,
+      "sha256": "83d9be3b14fd52c38bd21a73967b800e9664cbca036970e26d8009c1a7838589"
+    },
+    {
+      "number": 4,
+      "image": "page-004.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 31,
+      "rotation": 0,
+      "sha256": "614849c359fedd1439d43275237131e3e2b4eacd5c60cd02e5dc3a951623a91e"
+    },
+    {
+      "number": 5,
+      "image": "page-005.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 32,
+      "rotation": 0,
+      "sha256": "95d29bdcc99902a1ef0c7d9e3521ac5648b9869bda575670fe2f3a6016efa557"
+    },
+    {
+      "number": 6,
+      "image": "page-006.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 33,
+      "rotation": 0,
+      "sha256": "263049437d50f8a3173dc245d138733221a97d06f1edb4124ae68787b3f41b7c"
+    },
+    {
+      "number": 7,
+      "image": "page-007.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 34,
+      "rotation": 0,
+      "sha256": "ac5c9df25e8d0fe2c0c3fa93f4a10149b52e32808cad45ba317934836c0ce02d"
+    },
+    {
+      "number": 8,
+      "image": "page-008.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 35,
+      "rotation": 0,
+      "sha256": "8acfd07129ff353e3c623f247aa2a33fe2da497b4755f01fd4366aa4cc993e49"
+    },
+    {
+      "number": 9,
+      "image": "page-009.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 36,
+      "rotation": 0,
+      "sha256": "70bc81e82e96b54b7e39f29559b53185037b86e084c9ce367386fb38b30137eb"
+    },
+    {
+      "number": 10,
+      "image": "page-010.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 37,
+      "rotation": 0,
+      "sha256": "e0dd3341bf0681b81e7cd9a7fb2464e6adf173beeac6cceeb62499c8ba57ba63"
+    },
+    {
+      "number": 11,
+      "image": "page-011.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 38,
+      "rotation": 0,
+      "sha256": "b1415a388ce0fbf290ff6d52b9b1d4eb0799571f9763872a1150a8df2f31da1f"
+    },
+    {
+      "number": 12,
+      "image": "page-012.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 39,
+      "rotation": 0,
+      "sha256": "7affd09c38c06e0eb5d8d2b5cfe697f316e7ce081f3d0678ce5cccd5e95305bb"
+    },
+    {
+      "number": 13,
+      "image": "page-013.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 40,
+      "rotation": 0,
+      "sha256": "912434dd11a391c6fa3a6a6c3ebbeee63b4438bf88040a0b40fd5a4ac0194d7f"
+    },
+    {
+      "number": 14,
+      "image": "page-014.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 41,
+      "rotation": 0,
+      "sha256": "17655b14c099884d642fb0a4f3cbab6282b4a36fcbf0641e9b6865f142b5dca6"
+    },
+    {
+      "number": 15,
+      "image": "page-015.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 42,
+      "rotation": 0,
+      "sha256": "35795808eacc3e8a21fed3fa8274e258b1cdabdb32bcd80a43624891aad9ad4a"
+    },
+    {
+      "number": 16,
+      "image": "page-016.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 43,
+      "rotation": 0,
+      "sha256": "e4c3381201986cc788598dee35360cb2af290a2ae5e47db64ba4dec617fbbc0c"
+    },
+    {
+      "number": 17,
+      "image": "page-017.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 44,
+      "rotation": 0,
+      "sha256": "e8b5df82014de0de3948f58cde56e2be8e67902ee876552d9059beefe2450212"
+    },
+    {
+      "number": 18,
+      "image": "page-018.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 45,
+      "rotation": 0,
+      "sha256": "74d3feb664a0cd97a98acfba293657c6f83aaa0dc3129a9ffd6fc93c88699cda"
+    },
+    {
+      "number": 19,
+      "image": "page-019.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 46,
+      "rotation": 0,
+      "sha256": "65547a1accb9217c1f39c1a91378796aebbd40ed143ef50f1b61fe2bd7834589"
+    },
+    {
+      "number": 20,
+      "image": "page-020.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 47,
+      "rotation": 0,
+      "sha256": "a5919deae4ad88ecc6ee61b5d90bc86bf7d7c66a7c7c5eed853d2aca846b1863"
+    },
+    {
+      "number": 21,
+      "image": "page-021.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 48,
+      "rotation": 0,
+      "sha256": "7873b38f523fe35669126439cec144d4c7e3c9f85d46df3fb7e872dd5f3d9155"
+    },
+    {
+      "number": 22,
+      "image": "page-022.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 49,
+      "rotation": 0,
+      "sha256": "c0babce1d0ddf2113ac9d71bda20175ed72041d5356a53adef62c66b2946aa3a"
+    },
+    {
+      "number": 23,
+      "image": "page-023.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 50,
+      "rotation": 0,
+      "sha256": "2ff08956dff174ea06c943c90429799175213753c0c0bd72b5c370054fbbd97e"
+    },
+    {
+      "number": 24,
+      "image": "page-024.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 51,
+      "rotation": 0,
+      "sha256": "6e5010450fb0c3abb45de8e999ae405b45331cefd7eb412316aad64c154806d6"
+    },
+    {
+      "number": 25,
+      "image": "page-025.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 52,
+      "rotation": 0,
+      "sha256": "345f3d7d721d65073f42ce60a653c15d988ba131bf87cf9254e3bca8f1231b5a"
+    },
+    {
+      "number": 26,
+      "image": "page-026.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 53,
+      "rotation": 0,
+      "sha256": "1d3dce9a0b4c4fa8edef63c80631d8395dc52a2b27a6cdfe3041842f59ec3034"
+    },
+    {
+      "number": 27,
+      "image": "page-027.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 54,
+      "rotation": 0,
+      "sha256": "41b813992bd80ad4fe9bcebe0fc7f16de46019b09175ffc9086b1b7695bf5a18"
+    },
+    {
+      "number": 28,
+      "image": "page-028.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 55,
+      "rotation": 0,
+      "sha256": "5c43517707414c50a54bedfd49d7541b0f2fb80aac28ff9e0c959afcc174be62"
+    },
+    {
+      "number": 29,
+      "image": "page-029.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 56,
+      "rotation": 0,
+      "sha256": "b91fa0fe070192aef7b6f1a6d5b9c96cde3f55d3506c9e7170906b5b8d79f522"
+    },
+    {
+      "number": 30,
+      "image": "page-030.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 57,
+      "rotation": 0,
+      "sha256": "f85c62277203b06f19096f4c12f409558b19684f384176c2a6f7f3c6d0cdfe24"
+    },
+    {
+      "number": 31,
+      "image": "page-031.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 58,
+      "rotation": 0,
+      "sha256": "b0fc555b6cd68b6c6e982016171d1079c2e4288e7303ec9225d0978e0438f242"
+    },
+    {
+      "number": 32,
+      "image": "page-032.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 59,
+      "rotation": 0,
+      "sha256": "8208c77e474e0612e96b2aba5e8de33ed512e7c0f6b7bd4473a6eb41bad8e6ed"
+    },
+    {
+      "number": 33,
+      "image": "page-033.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 60,
+      "rotation": 0,
+      "sha256": "b3c243d0bba0777af9d74b896c741b4ac417a26bbfeef4303e8573ad2654260a"
+    },
+    {
+      "number": 34,
+      "image": "page-034.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 61,
+      "rotation": 0,
+      "sha256": "ade414a8dadf6f65ae227e404d188a79a820bb94c1a647450f77d1258650342a"
+    },
+    {
+      "number": 35,
+      "image": "page-035.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 62,
+      "rotation": 0,
+      "sha256": "b3f1940f587adb11d0656339eadc6741f47121270503363f9c09abaa1972970b"
+    },
+    {
+      "number": 36,
+      "image": "page-036.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 63,
+      "rotation": 0,
+      "sha256": "34773ae58b5110ce728c897ae5ebe16366b503fd44c36154cbf6ca821c223424"
+    },
+    {
+      "number": 37,
+      "image": "page-037.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 64,
+      "rotation": 0,
+      "sha256": "6b785588de53b7687a86ce562b0c01a0456c76e31c04d1b55630bc0ff2d7e878"
+    },
+    {
+      "number": 38,
+      "image": "page-038.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 65,
+      "rotation": 0,
+      "sha256": "1bcf7203342072991db48ff1e5b1d7d85943df21247c971a2a08067e01943328"
+    },
+    {
+      "number": 39,
+      "image": "page-039.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 66,
+      "rotation": 0,
+      "sha256": "4f9212904d39bcaa5a7b6312edd989f52714085025259c35c7ffc8541d0d6151"
+    },
+    {
+      "number": 40,
+      "image": "page-040.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 67,
+      "rotation": 0,
+      "sha256": "ef96a9dea60735a9b4edab450c01a230c2e5cf5d9a612a2c01cb2c2ce2a2e723"
+    },
+    {
+      "number": 41,
+      "image": "page-041.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 68,
+      "rotation": 0,
+      "sha256": "c272b2b2064ae7ceb42044d1d91a7e0b521bad1a9bc2c71e5060bb1f06bafe49"
+    },
+    {
+      "number": 42,
+      "image": "page-042.webp",
+      "width": 3288,
+      "height": 4642,
+      "sourceDocument": 739697,
+      "sourcePage": 47,
+      "rotation": 0,
+      "sha256": "00a4191b439366022b51e99cc203d1ea214a2fd8a1d7b7e789f9de2717b5d1f5"
+    },
+    {
+      "number": 43,
+      "image": "page-043.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 69,
+      "rotation": 0,
+      "sha256": "76d732dbb5dd1911797f99ec38bdb4d7914b67db65f6dbda36527a37daa1bc82"
+    },
+    {
+      "number": 44,
+      "image": "page-044.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 72,
+      "rotation": 0,
+      "sha256": "d796103791e49b035f3089ea70f255e3e096860c522248155a49682199aad83e"
+    },
+    {
+      "number": 45,
+      "image": "page-045.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 71,
+      "rotation": 0,
+      "sha256": "ba986e75fbe53c2871feb951768b17d0727349469b8f0e0727db0dc27dc358c6"
+    },
+    {
+      "number": 46,
+      "image": "page-046.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 73,
+      "rotation": 0,
+      "sha256": "5629bd2e851df9e927cc7b36498d97c9bd6bd12ec0e586cec0733b5fafb66635"
+    },
+    {
+      "number": 47,
+      "image": "page-047.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 74,
+      "rotation": 0,
+      "sha256": "77664d2c5e6e7eafb1026d2efbd4bb9654511f7756c2fcd15f521dae47987e3d"
+    },
+    {
+      "number": 48,
+      "image": "page-048.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 75,
+      "rotation": 0,
+      "sha256": "870fa664a36c27d1bd8d04e87a198ac47e60235df7ed51cf7aea159af63caacd"
+    },
+    {
+      "number": 49,
+      "image": "page-049.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 76,
+      "rotation": 0,
+      "sha256": "2f7b7828bfcc43c0f11f9ac1b2eb00fcbef4c3d1df8776fa6190536910ec1530"
+    },
+    {
+      "number": 50,
+      "image": "page-050.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 77,
+      "rotation": 0,
+      "sha256": "52373d94555ede7005421b462c101254ed77b4a84d4a6b4e54e85e2628d0db05"
+    },
+    {
+      "number": 51,
+      "image": "page-051.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 78,
+      "rotation": 0,
+      "sha256": "ca5124dd170166fc466f6c43291fbf97a6b62a777fe678172e1ddf54ae8dd62e"
+    },
+    {
+      "number": 52,
+      "image": "page-052.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 79,
+      "rotation": 0,
+      "sha256": "aef3b18e702bf4354cbcc10d31e5f48aa14c44f0429d3acf57b23d4ea1224bc2"
+    },
+    {
+      "number": 53,
+      "image": "page-053.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 80,
+      "rotation": 0,
+      "sha256": "b58085c0da6a72621bf7141c0a319931ca47824d44c08e4665d3096f629b8d52"
+    },
+    {
+      "number": 54,
+      "image": "page-054.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 81,
+      "rotation": 0,
+      "sha256": "814d86461bf52a35eed0bf6bb0c8f960af5230b33faec4876d205961047ffd99"
+    },
+    {
+      "number": 55,
+      "image": "page-055.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 82,
+      "rotation": 0,
+      "sha256": "19b8f21fa2e33da64b92e5139e63e54f586410cf3b116d98333bf20d8db1605c"
+    },
+    {
+      "number": 56,
+      "image": "page-056.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 83,
+      "rotation": 0,
+      "sha256": "06ab4b9b9d7082b924e844451ce0f8d477727468d706539cb8b768156cb7a999"
+    },
+    {
+      "number": 57,
+      "image": "page-057.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 84,
+      "rotation": 0,
+      "sha256": "85517b33f5df6a82999e849a50eb10e848e6c2f42147d52332fca03fd100da2a"
+    },
+    {
+      "number": 58,
+      "image": "page-058.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 85,
+      "rotation": 0,
+      "sha256": "b1ef5a4f1a2fcb642bc5fb306718d943ba233ef138b252273415d32b5f95d6ff"
+    },
+    {
+      "number": 59,
+      "image": "page-059.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 86,
+      "rotation": 0,
+      "sha256": "b12f16e2a5a5341ce1a9e91eccbf0d2b0440b7256114d1e28bc6c80cc19156e3"
+    },
+    {
+      "number": 60,
+      "image": "page-060.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 87,
+      "rotation": 0,
+      "sha256": "8752302e70c919d3fc870fde2f1e5a270bcc8581b4464e8e893aa02bad2741d7"
+    },
+    {
+      "number": 61,
+      "image": "page-061.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 88,
+      "rotation": 0,
+      "sha256": "f259feaffeaced951bf8457f95a7ffd69f54f632b3e271b20c685f0a543e3c07"
+    },
+    {
+      "number": 62,
+      "image": "page-062.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 89,
+      "rotation": 0,
+      "sha256": "30a8ed89ea0f80bbd24066dde8383216c0c608c6ffd87435570a7708b1296186"
+    },
+    {
+      "number": 63,
+      "image": "page-063.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 90,
+      "rotation": 0,
+      "sha256": "8f40f462afc264785c2ad2e124bbff44196db20cf6b2de41319c36b686313f87"
+    },
+    {
+      "number": 64,
+      "image": "page-064.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 91,
+      "rotation": 0,
+      "sha256": "6a193c6e90472c9d672c7bbcd93f2a3741304345433a38cbf9881eb4e4938cdc"
+    },
+    {
+      "number": 65,
+      "image": "page-065.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 92,
+      "rotation": 0,
+      "sha256": "b8afc9a7e3f9a5e8b8bfa1abeab45c93d5da7aaa9ffbcc3f2b5fe619440be912"
+    },
+    {
+      "number": 66,
+      "image": "page-066.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 93,
+      "rotation": 0,
+      "sha256": "70f8344f20bbe66d1fda653953421ab3fe3a401f4eee8f1808c57c5351531b97"
+    },
+    {
+      "number": 67,
+      "image": "page-067.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 94,
+      "rotation": 0,
+      "sha256": "1bcedd1c8b8e9d87d6a30e1ffd98525e2c03e090de310c402f7fb7958b794785"
+    },
+    {
+      "number": 68,
+      "image": "page-068.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 95,
+      "rotation": 0,
+      "sha256": "36e39411740c97e01a7c2787459a5880ab00c5e80c9e79f383a6be7133aede2f"
+    },
+    {
+      "number": 69,
+      "image": "page-069.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 96,
+      "rotation": 0,
+      "sha256": "6675d65594bcbc65ba8e101b230e7e329ea92549423992172bd0344e74de96e7"
+    },
+    {
+      "number": 70,
+      "image": "page-070.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 97,
+      "rotation": 0,
+      "sha256": "1e7933ece159789c23223dff5c105961c856cdd709a873378311b51403936b7b"
+    },
+    {
+      "number": 71,
+      "image": "page-071.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 98,
+      "rotation": 0,
+      "sha256": "9a168cdb75def2433a0e90a6d5979cb8d6b69cedd6ddf56c701226f200afcc03"
+    },
+    {
+      "number": 72,
+      "image": "page-072.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 99,
+      "rotation": 0,
+      "sha256": "33278db812093209e02d4dbd07672dbfbab50a769e7194c0d327fcff08210ffa"
+    },
+    {
+      "number": 73,
+      "image": "page-073.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 100,
+      "rotation": 0,
+      "sha256": "47201ae3b2baf94ebcf1ef80e031885231a3d6cd5a6091319be3fb3b83f8e83f"
+    },
+    {
+      "number": 74,
+      "image": "page-074.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 101,
+      "rotation": 0,
+      "sha256": "0e4bc4c5e8b54adda543ab32370d3573537e5738fa3798f2ea4e0b3f20baa45a"
+    },
+    {
+      "number": 75,
+      "image": "page-075.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 102,
+      "rotation": 0,
+      "sha256": "4a1b23e25f26a0e70adab5bd12a72999c845d7e88a5cf136886d8c2d475015a8"
+    },
+    {
+      "number": 76,
+      "image": "page-076.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 103,
+      "rotation": 0,
+      "sha256": "0981180812989880929a0e17068d8a20d579d303981b0abdcb7c0a15afbf0798"
+    },
+    {
+      "number": 77,
+      "image": "page-077.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 104,
+      "rotation": 0,
+      "sha256": "a0085cf01858202a868d0d2d21e5d10678b6e706fc1a393e29177e40b69a48ca"
+    },
+    {
+      "number": 78,
+      "image": "page-078.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 105,
+      "rotation": 0,
+      "sha256": "7f59dc33ca836406701f0e590daa19739d698b069acaeb3dbb77a942e5e8ba64"
+    },
+    {
+      "number": 79,
+      "image": "page-079.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 106,
+      "rotation": 0,
+      "sha256": "07aee7266fdaa1a3430889b2d4bb35bfd37e3d98fa1287e8f868516c195d1e6d"
+    },
+    {
+      "number": 80,
+      "image": "page-080.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 107,
+      "rotation": 0,
+      "sha256": "02675bd8d328e76f19c92d2a5bd6962d4c2134fd889514c2382939d1b028c582"
+    },
+    {
+      "number": 81,
+      "image": "page-081.webp",
+      "width": 3280,
+      "height": 4668,
+      "sourceDocument": 739697,
+      "sourcePage": 86,
+      "rotation": 0,
+      "sha256": "7eedc2c4ee9ce4e566388d5b7d467729ac6de1841f79aa73badc5201660e1c76"
+    },
+    {
+      "number": 82,
+      "image": "page-082.webp",
+      "width": 3286,
+      "height": 4644,
+      "sourceDocument": 739697,
+      "sourcePage": 87,
+      "rotation": 0,
+      "sha256": "77731aebe05a44f8d487dd067e2da8c0df11b7492eba3ed2d0377cee1106ab0c"
+    },
+    {
+      "number": 83,
+      "image": "page-083.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 108,
+      "rotation": 0,
+      "sha256": "b3d8e0ad96395cbd6d53d802e66e686c6164fbf975e9b2457c5c0f0e7890d058"
+    },
+    {
+      "number": 84,
+      "image": "page-084.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 109,
+      "rotation": 0,
+      "sha256": "4a095c4c7b5f64121345826a9f99fd5e7521e21623ddf3220bdaccf8fd12f201"
+    },
+    {
+      "number": 85,
+      "image": "page-085.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 110,
+      "rotation": 0,
+      "sha256": "f316eefc209af203ddfbae759a8203d65f4d7d4f4b6e759a05a4846ca5acda9c"
+    },
+    {
+      "number": 86,
+      "image": "page-086.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 111,
+      "rotation": 0,
+      "sha256": "79c191525ad6ed284ca1f30d799773a674378f5b265984695b673bf2d444521f"
+    },
+    {
+      "number": 87,
+      "image": "page-087.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 112,
+      "rotation": 0,
+      "sha256": "f2560538b71596b34df414418e6c9aafd9d1f4995ecf29641eb97adf858bb276"
+    },
+    {
+      "number": 88,
+      "image": "page-088.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 113,
+      "rotation": 0,
+      "sha256": "d729a45e32003f847f1f46993d0588359ce2f5c4262532736d76facac9d375d7"
+    },
+    {
+      "number": 89,
+      "image": "page-089.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 114,
+      "rotation": 0,
+      "sha256": "3abf13984e5ef26a9b631493a06257847980682fe083c64a9bcb7af735e184cb"
+    },
+    {
+      "number": 90,
+      "image": "page-090.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 115,
+      "rotation": 0,
+      "sha256": "7a00a704ec46e73a2028cfac656e584e9aff8fa47294da870f5eeb586f09c6ac"
+    },
+    {
+      "number": 91,
+      "image": "page-091.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 116,
+      "rotation": 0,
+      "sha256": "cb0ae10981174353cee59109921c317594ebe918e8608ac31e614da5014ddbf3"
+    },
+    {
+      "number": 92,
+      "image": "page-092.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 117,
+      "rotation": 0,
+      "sha256": "806c56b08823d19374029e8a061b1d587ad660b539dd0387fccfff90b0384fbf"
+    },
+    {
+      "number": 93,
+      "image": "page-093.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 118,
+      "rotation": 0,
+      "sha256": "ecf0295595ed28c001631fa884193887ac9a04c69f1c8f50c093565784ad63bd"
+    },
+    {
+      "number": 94,
+      "image": "page-094.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 119,
+      "rotation": 0,
+      "sha256": "40f161b3cace5bb0a066bb4a794c8b69b87e991e0899b31eb93cf52c149e50d1"
+    },
+    {
+      "number": 95,
+      "image": "page-095.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 120,
+      "rotation": 0,
+      "sha256": "399b687943991a4c5a51329545e8a818258b655c2d99da3cc9de434218a62e0f"
+    },
+    {
+      "number": 96,
+      "image": "page-096.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 121,
+      "rotation": 0,
+      "sha256": "b730bd4c245d7c51bfc47bdc9cc9dfbcd26860ef52e243fcb9bc15e8177298a6"
+    },
+    {
+      "number": 97,
+      "image": "page-097.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 122,
+      "rotation": 0,
+      "sha256": "178172d4f4b4f1f0e4032633bec3b1d79fe78f9b496b10699d6a4d438fe041dd"
+    },
+    {
+      "number": 98,
+      "image": "page-098.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 123,
+      "rotation": 0,
+      "sha256": "c94f378c7d086697fa69b1f8f4b981331fa58b7e3197d24a8dcede8ea1f35125"
+    },
+    {
+      "number": 99,
+      "image": "page-099.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 124,
+      "rotation": 0,
+      "sha256": "357ec2767023e323c3ac0c83e09e713415f2dfe8dd43f4cac9618a544ac15682"
+    },
+    {
+      "number": 100,
+      "image": "page-100.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 125,
+      "rotation": 0,
+      "sha256": "7df54a0c173cf296fed6df4a8791fb9ce11f978446749f91668e4050ecac147d"
+    },
+    {
+      "number": 101,
+      "image": "page-101.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 126,
+      "rotation": 0,
+      "sha256": "61ee30a14e9ef1213b67e197c6d5d797aedc8a72093c58f29dd26ca9d8e97258"
+    },
+    {
+      "number": 102,
+      "image": "page-102.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 127,
+      "rotation": 0,
+      "sha256": "daf14cd51df55ffd9951c7fa02357714414e0a2773f008b1afe7804a737dd04f"
+    },
+    {
+      "number": 103,
+      "image": "page-103.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 128,
+      "rotation": 0,
+      "sha256": "a95be0446cafc49bea227df27a46fa4c9f30037dee402e149f46fa21d9c33ac9"
+    },
+    {
+      "number": 104,
+      "image": "page-104.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 129,
+      "rotation": 0,
+      "sha256": "ded3058870212d9fa780f0a7d48b25b388b7c83fd9d1b35c040f5f695f3604a9"
+    },
+    {
+      "number": 105,
+      "image": "page-105.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 130,
+      "rotation": 0,
+      "sha256": "89584c9af58b70398a722511d8193ae64027b66b3d26b5ee39e9fdc2c83826e3"
+    },
+    {
+      "number": 106,
+      "image": "page-106.webp",
+      "width": 1664,
+      "height": 2336,
+      "sourceDocument": 690259,
+      "sourcePage": 131,
+      "rotation": 0,
+      "sha256": "c2e95321e6ffb33f51192cd722d66349c7d835c04abc163bdf380b22d7748b71"
+    },
+    {
+      "number": 107,
+      "image": "page-107.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 132,
+      "rotation": 90,
+      "sha256": "3d32f3dd6c758c539aaa696e2ea0336ce08f279938352105ca4b06845551127b"
+    },
+    {
+      "number": 108,
+      "image": "page-108.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 133,
+      "rotation": 90,
+      "sha256": "0252e8b0ccbc9c7a4d8e50c598ddb682b1c1999ef834b1ac7f45f0abc9c76080"
+    },
+    {
+      "number": 109,
+      "image": "page-109.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 134,
+      "rotation": 90,
+      "sha256": "07f38da3877fda98c94bcf72382ba2f1c165f221173fcf1d8986844904361e0a"
+    },
+    {
+      "number": 110,
+      "image": "page-110.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 135,
+      "rotation": 90,
+      "sha256": "a75e9148caeaed966074d1bd6e08169b7273468fe8cd9035b6ec798272a99ca9"
+    },
+    {
+      "number": 111,
+      "image": "page-111.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 136,
+      "rotation": 90,
+      "sha256": "6f8714d91090a78226b418dfee15d6327d719754fbd7181d3368a6e90c8822d0"
+    },
+    {
+      "number": 112,
+      "image": "page-112.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 137,
+      "rotation": 90,
+      "sha256": "c08edaaaa73690d38c1770f10809bf247235529386a4e17ae3974f03b90be227"
+    },
+    {
+      "number": 113,
+      "image": "page-113.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 138,
+      "rotation": 90,
+      "sha256": "4fb284c44574b8e57dc663467b9af38a6d04e0a924986d8493cef89be11c6589"
+    },
+    {
+      "number": 114,
+      "image": "page-114.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 139,
+      "rotation": 90,
+      "sha256": "8a06cc7e1ce2d267b555501575f7a915915b17cc66c9cce4807fd50a5033ee0b"
+    },
+    {
+      "number": 115,
+      "image": "page-115.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 140,
+      "rotation": 90,
+      "sha256": "9ded46ea3179fc924b84de6519abfc9996fc8ef1131a8ec262977fa0128e432c"
+    },
+    {
+      "number": 116,
+      "image": "page-116.webp",
+      "width": 2336,
+      "height": 1664,
+      "sourceDocument": 690259,
+      "sourcePage": 141,
+      "rotation": 90,
+      "sha256": "81fa1d455792b31a70d2876366c5afdc678ee50b379c8ff3949a207b937c55c2"
+    }
+  ],
+  "pdfPages": 117,
+  "sha256": "eb0a7831c56ca3eb1b1f12cb7d70bf158fa3f8bf1345b9e824537964e27df22e"
+}

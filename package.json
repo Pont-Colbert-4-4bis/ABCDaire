@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs && pagefind --site dist --exclude-selectors '[data-search-ignore]'",
-    "check": "node scripts/check.mjs && node scripts/check-summary-pdfs.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-summary-pdfs.mjs && node scripts/check-regulation.mjs",
     "preview": "node scripts/serve.mjs",
     "pdf:summaries": "python3 scripts/create-summary-pdfs.py"
   },

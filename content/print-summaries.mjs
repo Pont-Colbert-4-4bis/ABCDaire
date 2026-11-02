@@ -37,7 +37,7 @@ export const printSummaries = {
   'boites-aux-lettres': {
     contacts: ['syndic'],
     sections: [
-      ['Préparer une plaque', ['Contactez le CS par votre canal privé avant de faire fabriquer une plaque. Transmettez l’orthographe exacte du nom au seul interlocuteur concerné.', 'Le guide indique que TAN n’est plus disponible et qu’aucun remplaçant n’a été retenu.']],
+      ['Préparer une plaque', ['Contactez le CS par votre canal privé avant de faire fabriquer une plaque. Transmettez l’orthographe exacte du nom au seul interlocuteur concerné.', 'TAN n’est plus disponible. Aucun remplaçant n’était retenu au 13 octobre 2026.']],
       ['Une présentation harmonisée', ['Le PV de 2016 prévoit un texte en majuscules, noir sur blanc, avec Copperplate Gothic si possible.', 'Les mesures et la typographie ont été contestées en 2025 : ces indications historiques ne constituent pas un modèle actuel de fabrication.']],
       ['Courrier et absences', ['« Stop Pub » concerne les publicités non adressées. Pour une absence, convenez en privé du relevé du courrier avec une personne de confiance.']]
     ]
@@ -53,9 +53,9 @@ export const printSummaries = {
   'chauffage-et-trames': {
     contacts: ['chauffage', 'syndic'],
     sections: [
-      ['Comprendre le chauffage', ['Les trames collectives chauffent la structure progressivement ; des convecteurs individuels peuvent compléter le chauffage.', 'Les dates de mise en route et d’arrêt sont communiquées par le syndic.']],
+      ['Comprendre le chauffage', ['Des résistances électriques intégrées aux planchers et plafonds chauffent le bâtiment. Les convecteurs individuels apportent un complément, payé sur le compteur du logement.', 'Les dates de mise en route et d’arrêt sont communiquées par le syndic.']],
       ['Documenter une anomalie', ['Relevez la température matin et soir, dans la même pièce et au même endroit, avec date et heure.', 'Signalez à Homeland les pièces concernées, les symptômes et les éventuels autres logements touchés. SETEMI intervient sur les trames.']],
-      ['Avant des travaux', ['Faites vérifier la présence de trames avant tout percement du plafond. Un changement de sol peut aussi modifier l’acoustique et la diffusion de chaleur.']]
+      ['Avant des travaux', ['En raison des trames chauffantes dans les plafonds, faites vérifier leur emplacement avant tout percement. Un changement de sol peut aussi modifier l’acoustique et la diffusion de chaleur.']]
     ]
   },
   'conseil-syndical-et-syndic': {
@@ -75,11 +75,11 @@ export const printSummaries = {
     ]
   },
   'eau-chaude-et-compteurs': {
-    contacts: ['eau-chaude', 'syndic'],
+    contacts: ['syndic', 'compteurs'],
     sections: [
-      ['Relevés et facturation', ['Gardez l’accès aux compteurs dégagé et conservez vos relevés. OCEA assure le comptage et la télérelève ; Homeland traite les charges.', 'L’AG du 13 avril 2026 a voté 34 €/m³ d’eau chaude, avec effet au 1er janvier 2026.']],
-      ['Signaler une anomalie', ['Précisez le robinet, l’heure, la durée et le caractère total ou intermittent de la panne. Indiquez si plusieurs logements sont touchés.', 'Pour de l’eau froide arrivant tiède, notez les mêmes observations sans modifier les réseaux communs.']],
-      ['Les rôles', ['Tournois entretient la production collective d’eau chaude et le traitement d’eau. Prévenez Homeland pour organiser une intervention ; une fuite fait l’objet d’un signalement spécifique.']]
+      ['Suivre votre consommation', ['Le portail OCEA est inclus au contrat. Pour créer votre accès, demandez le code de résidence à Homeland. Lien ci-dessous.', 'L’AG du 13 avril 2026 a voté 34 €/m³ d’eau chaude, avec effet au 1er janvier 2026. Homeland traite les charges.']],
+      ['Signaler une anomalie', ['Pour un compteur, un relevé ou une intervention, contactez Homeland : le syndic sollicitera OCEA. Signalez aussi à Homeland les difficultés d’accès au portail.', 'En cas de problème d’eau chaude, précisez le robinet, l’heure, la durée et les logements touchés.']],
+      ['Entretien et précautions', ['Tournois entretient la production collective d’eau chaude. Gardez l’accès aux compteurs dégagé ; ne modifiez pas les réseaux communs.']]
     ]
   },
   'eclairage': {
@@ -142,7 +142,7 @@ export const printSummaries = {
     contacts: ['dechets'],
     sections: [
       ['Donner ou réparer', ['Avant de jeter un objet, envisagez le don ou la réparation. Convenez directement du transport et du rendez-vous avec le destinataire.', 'Une collecte ou un espace de partage ne doit pas encombrer les circulations.']],
-      ['Compostage dans le quartier', ['Le magazine municipal de février-avril 2026 mentionne deux lieux : Chantiers, 53 rue des Chantiers ; Porchefontaine, 86 rue Yves-Le-Coz.', 'Consultez Versailles Grand Parc ou la maison de quartier pour l’inscription, les horaires et les déchets acceptés.']],
+      ['Compostage dans le quartier', ['Deux maisons de quartier proposent le compostage partagé : Chantiers, 53 rue des Chantiers ; Porchefontaine, 86 rue Yves-Le-Coz.', 'Consultez Versailles Grand Parc ou la maison de quartier pour l’inscription, les horaires et les déchets acceptés.']],
       ['Dans la résidence', ['Les projets de compost collectif soumis aux AG de 2015, 2016 et 2020 ont été rejetés. Ils sont distincts des dispositifs du quartier.']]
     ]
   },
@@ -166,7 +166,7 @@ export const printSummaries = {
     contacts: ['syndic'],
     sections: [
       ['L’étude de toiture', ['L’AG du 13 avril 2026 a retenu le cabinet Minne pour l’étude de la toiture et la consultation des entreprises.', 'Une étude prépare les travaux ; elle n’atteste ni leur coût final ni leur réalisation.']],
-      ['Décisions et documents', ['Les offres de DTG et variantes DPE/PPPT présentées en 2026 ont été rejetées.', 'Consultez la fiche complète pour l’historique par sujet ; les devis, documents applicables et suivis détaillés sont dans l’extranet ou auprès du syndic.']],
+      ['Décisions et documents', ['Les offres de diagnostic technique, de performance énergétique et de plan pluriannuel de travaux présentées en 2026 ont été rejetées.', 'Consultez la fiche complète pour l’historique par sujet ; les devis, documents applicables et suivis détaillés sont dans l’extranet ou auprès du syndic.']],
       ['Une infiltration ?', ['Signalez à Homeland l’emplacement, la date, les circonstances et les dommages visibles. Prévenez aussi votre assurance si votre logement est touché.']]
     ]
   },
@@ -174,7 +174,7 @@ export const printSummaries = {
     contacts: ['syndic'],
     sections: [
       ['Avant de commander', ['Présentez au syndic l’emplacement, les travaux, les matériaux et leurs effets sur les parties communes ou l’aspect extérieur.', 'Identifiez les autorisations et les documents nécessaires avant d’engager le chantier.']],
-      ['Vérifications techniques', ['Plafonds : faites vérifier les trames chauffantes avant tout percement. Sols : examinez les effets acoustiques et thermiques.', 'Pour réseaux, fenêtres et façades, faites préciser les contraintes par les professionnels et le syndic.']],
+      ['Vérifications techniques', ['Plafonds : en raison des trames chauffantes, faites vérifier leur emplacement avant tout percement. Sols : examinez les effets acoustiques et thermiques.', 'Pour réseaux, fenêtres et façades, faites préciser les contraintes par les professionnels et le syndic.']],
       ['Organiser le chantier', ['Prévenez les voisins et vérifiez les horaires autorisés. Protégez les circulations et organisez l’évacuation des déchets.', 'Cette synthèse ne vaut pas autorisation de travaux.']]
     ]
   },
