@@ -1,24 +1,583 @@
-const archives = 'Abécédaire de la résidence, révision de juin 2022 ; synthèse éditoriale du 6 octobre 2026.';
-const cs = 'Synthèse anonymisée des sujets du conseil syndical du 5 octobre 2026.';
+// Fiches du guide, relues le 10 novembre 2026.
+// Une fiche dit ce qu’il faut savoir et quoi faire. Pas de note d’auteur, pas de renvoi « à vérifier ».
+// Les règles citées viennent du règlement de copropriété de 1977 (pages de la copie publique).
+const reg = ref => `Règlement de copropriété de 1977, ${ref}.`;
+const cs = 'Conseil syndical, novembre 2026.';
+const f = (slug, title, category, icon, intro, keywords, sections, source, related, extra = {}) =>
+  ({slug, title, letter: title[0].normalize('NFD')[0].toUpperCase(), category, icon, intro, keywords, sections, source, related, ...extra});
+
 export const articles = [
-{slug:'arriver-et-demenager',title:'Arriver et déménager',letter:'A',category:'Vie quotidienne',icon:'home',intro:'Les repères pour prendre vos marques et organiser un déménagement dans la résidence.',keywords:'emménagement nouvel arrivant locataire propriétaire bienvenue cartons livraison',sections:[['Avant votre arrivée',['Demandez à votre propriétaire ou à votre agence les documents et contacts utiles à votre logement : règlement, syndic, signalement des pannes et consignes de tri.','Repérez votre bâtiment, votre entrée, votre boîte aux lettres et les espaces de dépôt des déchets. Conservez les informations d’accès dans un espace privé.']],['Préparer un déménagement',['Prévenez vos voisins du déménagement et organisez le passage des objets volumineux.','Prévoyez la protection des parties communes pendant le déménagement.','Respectez la charge affichée dans l’ascenseur et gardez les circulations dégagées pendant les manutentions.']]],source:archives,related:['ascenseurs','boites-aux-lettres','dechets-et-encombrants']},
-{slug:'ascenseurs',title:'Ascenseurs',letter:'A',category:'Équipements',icon:'lift',intro:'Bien utiliser la cabine, préparer un transport encombrant et trouver le bon contact en cas de panne.',keywords:'ascenseur cabine panne bloqué déménagement 4 4bis TK',sections:[['Au quotidien',['Respectez la charge et les consignes affichées dans la cabine. Attendez l’ouverture complète des portes et ne forcez pas leur mouvement.','Pour transporter des objets volumineux, protégez la cabine et les abords.']],['En cas de panne',['Utilisez les instructions d’assistance et le numéro affichés dans la cabine. Si vous êtes bloqué, utilisez le dispositif d’appel prévu et suivez les indications de l’opérateur.','Signalez aussi la panne à Homeland, en précisant le bâtiment, l’heure et les symptômes constatés.','En cas de danger immédiat pour une personne, appelez les secours.']],['Ce qui n’est pas confirmé',['Les anciens délais d’intervention et contacts de l’Abécédaire ne sont pas repris : ils doivent être rapprochés du contrat actuel. Une cause de panne ne peut pas être déduite du seul symptôme.']]],source:archives,related:['urgences','signaler-un-probleme','arriver-et-demenager']},
-{slug:'balcons-et-fenetres',title:'Balcons et fenêtres',letter:'B',category:'Travaux & logement',icon:'window',intro:'Préserver l’harmonie de la résidence et préparer un projet visible depuis l’extérieur.',keywords:'façade fenetre balcon peinture garde-corps canisse store volets climatisation',sections:[['Avant de modifier un élément extérieur',['Présentez votre projet au syndic avant de commander les travaux : élément concerné, matériaux, couleur, dimensions et aspect extérieur. Demandez quelles autorisations et références s’appliquent.']],['Peintures, stores et protections',['Les références de peinture anciennes ont été barrées lors de la révision de 2022. Aucune référence de remplacement n’est confirmée dans cette édition.','Pour installer un store ou une climatisation, présentez au syndic l’emplacement, les dimensions et l’aspect extérieur du projet avant de commander.']],['Pour le confort de tous',['Évitez les objets susceptibles de tomber et les écoulements d’eau vers les voisins. Préservez la propreté et l’usage paisible des abords.']]],source:archives+' '+cs,related:['travaux-privatifs','bruit-et-voisinage']},
-{slug:'boites-aux-lettres',title:'Boîtes aux lettres',letter:'B',category:'Vie quotidienne',icon:'mail',intro:'Faire réaliser une plaque cohérente avec celles de la résidence.',keywords:'boite aux lettres plaque nom étiquette typographie police dimensions commande',sections:[['Faire une demande',['Contactez le conseil syndical avant de faire fabriquer une plaque afin de vérifier le modèle à reproduire.','Préparez l’orthographe exacte du nom à afficher et les informations nécessaires à la commande. Transmettez-les uniquement à l’interlocuteur concerné.']]],source:'Échanges du conseil syndical de février 2025 et compte rendu du 16 juin 2025 ; synthèse anonymisée.',related:['arriver-et-demenager','conseil-syndical-et-syndic']},
-{slug:'bruit-et-voisinage',title:'Bruit et voisinage',letter:'B',category:'Vie quotidienne',icon:'sound',intro:'Quelques habitudes pour concilier la vie de chacun et la tranquillité des voisins.',keywords:'bruit musique tapage nocturne perceuse bricolage machine laver fêtes horaires',sections:[['Les gestes utiles',['Limitez le volume des appareils et les vibrations des équipements ménagers. Pensez aux bruits transmis par les sols et aux conversations sur les balcons.','Prévenez les voisins lorsqu’une réception ou une intervention risque de les gêner. Cela permet le dialogue, sans remplacer les règles applicables.']],['Travaux et bricolage',['Vérifiez les horaires autorisés auprès de la mairie et les règles de la résidence avant de programmer des travaux bruyants.']],['Si la gêne se répète',['Privilégiez un échange courtois lorsque la situation le permet. Pour un signalement, notez les dates, horaires et faits constatés, sans publier d’accusation nominative.','Si une intervention est nécessaire, signalez le problème à Homeland depuis l’extranet.']]],source:archives,related:['travaux-privatifs','signaler-un-probleme']},
-{slug:'chauffage-et-trames',title:'Chauffage et trames',letter:'C',category:'Équipements',icon:'heat',intro:'Un équipement collectif à prendre en compte dans le confort du logement et dans les projets de travaux.',keywords:'chauffage trames plafond percer sol disjoncteur électricité froid',sections:[['Avant des travaux',['En raison de la présence de trames chauffantes dans les plafonds, faites vérifier leur emplacement et les contraintes techniques avant tout percement ou intervention.','Un changement de revêtement de sol peut aussi avoir des conséquences acoustiques et thermiques. Présentez le projet au syndic et aux professionnels concernés.']],['Décrire une anomalie',['Indiquez les pièces concernées, le moment d’apparition et si le problème semble isolé ou partagé par d’autres logements.','Transmettez ces observations au syndic. Toute intervention sur les installations électriques ou collectives doit être confiée aux professionnels habilités.']],['À compléter',['Les procédures précises de dépannage et les coordonnées d’astreinte seront ajoutées après vérification des contrats en cours.']]],source:archives+' '+cs,related:['travaux-privatifs','signaler-un-probleme','eau-chaude-et-compteurs']},
-{slug:'conseil-syndical-et-syndic',title:'Conseil syndical et syndic',letter:'C',category:'Démarches',icon:'people',intro:'Trouver le bon interlocuteur et transmettre une question de façon utile.',keywords:'CS copropriété AG assemblée générale gestionnaire propriétaire locataire règlement',sections:[['Pour une question de gestion',['Adressez vos demandes de gestion à Homeland depuis l’extranet. Conservez la référence et la date de votre demande.','Le conseil syndical peut aider à orienter un sujet concernant la vie collective. Pour le suivi d’une intervention, identifiez clairement l’interlocuteur qui en assure le traitement.']],['Pour proposer un sujet',['Décrivez le besoin, les personnes concernées et le résultat souhaité. Un projet de travaux gagnera à être accompagné d’un descriptif et des éléments demandés par le syndic.','Demandez la procédure et le calendrier appropriés si une décision collective doit être sollicitée.']],['Documents et informations privées',['Retrouvez les documents de gestion dans les espaces réservés aux copropriétaires. Les dossiers individuels, contrats complets et échanges nominatifs ne sont pas publiés dans ce guide.']]],source:'Abécédaire de la résidence ; échanges du conseil syndical d’octobre 2026.',related:['signaler-un-probleme','travaux-privatifs','a-propos']},
-{slug:'dechets-et-encombrants',title:'Déchets et encombrants',letter:'D',category:'Vie quotidienne',icon:'leaf',intro:'Trouver la bonne filière, éviter les dépôts inadaptés et vérifier les jours de collecte.',keywords:'déchet tri poubelle ordures verre carton encombrants gravats peinture batterie électroménager recyclage',sections:[['Vérifier avant de déposer',['Consultez le service « Mes jours et points de collecte » de Versailles Grand Parc avec votre adresse pour les jours, points de dépôt et consignes actuels.','Pour les points de dépôt à l’intérieur de la résidence, suivez les indications affichées sur place.']],['Électroménager et déchets dangereux',['Les équipements électriques et électroniques ainsi que les déchets dangereux sont exclus de la collecte des encombrants. Orientez-les vers une filière dédiée, une collecte adaptée ou une déchèterie selon les indications de Versailles Grand Parc.','Les gravats nécessitent également une filière adaptée : faites préciser leur évacuation lors de la préparation des travaux.']],['Préserver les circulations',['Ne laissez pas de sacs, cartons ou objets dans les couloirs et les accès. Organisez le transport des objets volumineux jusqu’au lieu de dépôt approprié.']]],source:archives+' Compte rendu du 16 juin 2025.',links:[['Jours et points de collecte','https://www.versaillesgrandparc.fr/927.htm'],['Guide du tri de Versailles Grand Parc','https://www.versaillesgrandparc.fr/fileadmin/user_upload/gestion_doc/Publications/Publications_2023/Guide_du_tri_2024.pdf']],related:['vide-ordures','espaces-communs','travaux-privatifs']},
-{slug:'eau-chaude-et-compteurs',title:'Eau chaude et compteurs',letter:'E',category:'Équipements',icon:'drop',intro:'Préparer un relevé et transmettre les bonnes observations en cas d’anomalie.',keywords:'eau chaude froide compteur relevé index consommation robinet ballon',sections:[['Relevés et accès',['Suivez les consignes du prestataire ou du syndic pour les relevés. Gardez l’accès aux compteurs dégagé et signalez toute difficulté d’accès.','Conservez vos relevés et documents de consommation dans votre espace privé.']],['En cas de panne d’eau chaude',['Indiquez si l’absence d’eau chaude est totale ou intermittente, depuis quand elle dure et si d’autres logements sont concernés.','Signalez le problème à Homeland depuis l’extranet. Pour une fuite, consultez la fiche dédiée.']],['Anciennes consignes à revalider',['La révision de 2022 indique que la fiche Compteurs n’avait pas été relue. Les anciens contacts, clauses de propriété des équipements et forfaits de facturation ne sont donc pas présentés ici comme actuels.']]],source:archives+' '+cs,related:['fuites-et-degats-des-eaux','signaler-un-probleme']},
-{slug:'eclairage',title:'Éclairage',letter:'E',category:'Équipements',icon:'light',intro:'Signaler un luminaire défectueux dans une circulation ou un espace partagé.',keywords:'lampe ampoule lumière néon parking cave palier escalier',sections:[['Un signalement précis',['Indiquez le bâtiment, l’étage et le luminaire concerné. Précisez si une seule lampe est touchée ou si toute une zone est privée d’éclairage.','Signalez le défaut à Homeland depuis l’extranet. Une photo peut aider si elle ne montre pas de personnes ou d’informations privées.']],['Faire intervenir la bonne personne',['La répartition des interventions entre entretien courant et prestataire spécialisé doit être confirmée. Ne démontez pas les équipements communs.','Si l’absence de lumière crée un danger immédiat, signalez clairement ce risque dans votre demande.']]],source:archives,related:['signaler-un-probleme','espaces-communs']},
-{slug:'espaces-communs',title:'Espaces communs',letter:'E',category:'Vie quotidienne',icon:'stairs',intro:'Des accès dégagés et des lieux partagés agréables pour tous.',keywords:'couloir cave poussette vélo objets encombrement palier circulation escalier propreté',sections:[['Laisser les passages libres',['Gardez les couloirs, escaliers et accès dégagés. Organisez le rangement et l’évacuation des objets dans les espaces appropriés.','Cette attention vaut aussi pendant une livraison, un déménagement ou des travaux.']],['Signaler une dégradation',['Précisez l’emplacement et la nature du problème : éclairage, porte, propreté ou équipement. Adressez le signalement à votre interlocuteur habituel.','Évitez de publier des photos montrant des noms sur les portes, des personnes ou des documents privés.']],['Usages particuliers',['Pour le rangement des vélos ou poussettes et l’utilisation d’un local partagé, demandez quelles règles s’appliquent et quel espace est prévu.']]],source:cs,related:['arriver-et-demenager','dechets-et-encombrants','eclairage']},
-{slug:'fuites-et-degats-des-eaux',title:'Fuites et dégâts des eaux',letter:'F',category:'Démarches',icon:'drop',intro:'Distinguer une urgence d’un signalement et préparer le suivi de l’intervention.',keywords:'fuite eau inondation dégât sinistre assurance plombier robinet ordre mission',sections:[['D’abord, apprécier l’urgence',['En cas de danger immédiat pour des personnes, contactez les secours. Ne vous exposez pas à un risque électrique ou à une intervention dangereuse.','Pour une situation sans danger immédiat, prévenez les personnes concernées et le syndic. Décrivez le lieu, l’heure et l’étendue visible de la fuite.']],['Préparer le suivi',['Contactez votre assurance pour connaître les démarches adaptées à votre situation. Si vous êtes locataire, informez également votre propriétaire ou gestionnaire.','Conservez les échanges, photos utiles et références d’intervention dans un dossier privé. Évitez toute diffusion publique de données concernant les logements ou occupants.']]],source:cs,related:['urgences','eau-chaude-et-compteurs','signaler-un-probleme']},
-{slug:'interphone',title:'Interphone',letter:'I',category:'Équipements',icon:'phone',intro:'Vérifier les gestes simples et décrire un problème de sonnerie ou de communication.',keywords:'interphone sonnette combiné larsen sifflement entrée',sections:[['Avant de signaler',['Vérifiez que votre combiné est correctement raccroché. Notez si le problème concerne la sonnerie, le son ou plusieurs logements.']],['Transmettre le problème',['Indiquez le bâtiment, le moment du défaut et les vérifications déjà réalisées. Adressez la demande à Homeland depuis l’extranet.','Ne démontez pas le système commun et ne diffusez pas les informations d’accès sur ce site public.']]],source:archives,related:['signaler-un-probleme','arriver-et-demenager']},
-{slug:'jardins-et-vie-de-residence',title:'Jardins et vie de résidence',letter:'J',category:'Vie quotidienne',icon:'leaf',intro:'Prendre soin des espaces partagés et proposer des initiatives collectives.',keywords:'jardin arrosage plantes rosiers fête picnic pique-nique voisins',sections:[['Espaces végétalisés',['Respectez les plantations et signalez les anomalies observées dans les espaces communs. Avant d’intervenir ou de modifier une plantation, rapprochez-vous du conseil syndical.','Les sujets d’arrosage et de renouvellement des végétaux évoqués au CS restent à préciser ; aucun calendrier d’intervention n’est annoncé ici.']],['Proposer un moment convivial',['Présentez une proposition simple : lieu, date envisagée, nombre de personnes et organisation du rangement. Vérifiez avec le conseil syndical les modalités d’usage du lieu.','Les annonces publiques doivent rester générales ; inscriptions et coordonnées des participants se partagent dans un canal privé.']]],source:cs,related:['espaces-communs','conseil-syndical-et-syndic']},
-{slug:'parking-et-stationnement',title:'Parking et stationnement',letter:'P',category:'Vie quotidienne',icon:'car',intro:'Circuler avec attention et organiser un stationnement sans gêner les autres utilisateurs.',keywords:'parking garage voiture place stationnement porte accès visiteur',sections:[['Stationner et circuler',['Utilisez uniquement une place dont vous avez l’usage ou pour laquelle vous avez obtenu l’accord du titulaire. Une place momentanément vide n’est pas une autorisation.','Circulez lentement, soyez attentif aux piétons et gardez les accès dégagés.']],['Invités et livraisons',['Organisez le stationnement des invités et des livraisons à l’avance, avec l’accord du titulaire de la place utilisée.']],['Panne de porte',['Signalez le défaut par le circuit habituel. Les manipulations du mécanisme et les informations d’accès ne sont pas publiées dans ce guide.','Les coordonnées du mainteneur doivent être vérifiées avant leur ajout.']]],source:archives,related:['arriver-et-demenager','signaler-un-probleme']},
-{slug:'signaler-un-probleme',title:'Signaler un problème',letter:'S',category:'Démarches',icon:'message',intro:'Un message précis facilite l’orientation et le suivi de votre demande.',keywords:'contact syndic panne incident réclamation signalement prestataire entretien',sections:[['Les informations utiles',['Le lieu : bâtiment, étage et équipement concerné.','Les faits : ce qui fonctionne ou non, depuis quand, et si le problème se reproduit.','Le niveau d’urgence : précisez tout risque observé, sans avancer de diagnostic non confirmé.']],['Envoyer et suivre',['Utilisez le canal habituel du syndic ou le contact actuellement affiché pour l’équipement. Pour votre logement loué, prévenez aussi le propriétaire ou gestionnaire lorsque nécessaire.','Conservez la date, la référence de la demande et les réponses. Complétez le même échange pour garder le suivi.']],['Protéger les informations privées',['Transmettez les coordonnées, numéros de logement et photos utiles directement au destinataire concerné. Les signalements individuels ne doivent pas être déposés dans les espaces publics du site ou du dépôt.']]],source:'Guide de rédaction éditorial, fondé sur les besoins de suivi relevés dans les fiches et comptes rendus.',related:['urgences','conseil-syndical-et-syndic']},
-{slug:'travaux-privatifs',title:'Travaux privatifs',letter:'T',category:'Travaux & logement',icon:'tool',intro:'Préparer les vérifications utiles avant d’engager des travaux dans votre logement.',keywords:'travaux rénovation autorisation AG syndic plafond percement sol acoustique plomberie façade',sections:[['Avant de commander',['Décrivez le projet : emplacement, nature des travaux, matériaux, équipements et effets possibles sur les parties communes ou l’aspect extérieur.','Soumettez ces éléments au syndic pour identifier les autorisations, documents et étapes à prévoir. Cette fiche ne vaut pas accord pour réaliser des travaux.']],['Points à examiner avec les professionnels',['Plafonds : en raison des trames chauffantes, faites vérifier leur emplacement avant tout percement ou intervention.','Sols : vérifiez les conséquences acoustiques et thermiques d’un changement de revêtement.','Réseaux, fenêtres et façades : faites préciser les contraintes techniques et les autorisations applicables.']],['Organiser le chantier',['Anticipez les nuisances, la protection des circulations et l’évacuation des déchets. Prévenez les voisins des interventions susceptibles de les gêner.','Vérifiez les horaires actuels avant de programmer des travaux bruyants.']]],source:archives,related:['balcons-et-fenetres','chauffage-et-trames','bruit-et-voisinage','dechets-et-encombrants']},
-{slug:'urgences',title:'Urgences et pannes',letter:'U',category:'Démarches',icon:'alert',intro:'En cas de danger pour une personne, contactez les secours. Pour une panne courante, contactez le dépanneur indiqué sur l’équipement ou Homeland.',keywords:'urgence secours 112 18 15 114 danger incendie malaise panne',sections:[['Contacter les secours',['112 : numéro d’urgence européen, pour être orienté vers le service adapté.','18 : sapeurs-pompiers. 15 : urgence médicale / Samu.','114 : urgence accessible aux personnes sourdes, sourdaveugles, malentendantes ou aphasiques, par application, internet ou SMS.']],['Signaler une panne courante',['Suivez les consignes affichées sur l’équipement et signalez la panne à Homeland. Décrivez le lieu exact et le défaut constaté.','Pour un ascenseur, consultez les instructions et le numéro affichés dans la cabine. Pour une fuite, consultez la fiche dédiée.']],['Contacts de la résidence',['La liste de prestataires de 2010 est obsolète pour un usage de référence. Les coordonnées actuelles seront ajoutées après vérification.']]],source:'Service Public, fiche F33954 ; ancien Abécédaire pour l’identification des rubriques à actualiser.',links:[['Numéros d’urgence : Service Public','https://www.service-public.gouv.fr/particuliers/vosdroits/F33954'],['Urgence 114','https://www.urgence114.fr/']],related:['ascenseurs','fuites-et-degats-des-eaux','signaler-un-probleme']},
-{slug:'ventilation-vmc',title:'Ventilation et VMC',letter:'V',category:'Équipements',icon:'wind',intro:'Observer le fonctionnement de la ventilation et préparer un signalement utile.',keywords:'ventilation VMC bouche extraction air humidité odeur climatisation',sections:[['En cas d’anomalie',['Notez la pièce concernée et les signes observés : bruit inhabituel, odeur ou changement apparent de fonctionnement. Indiquez depuis quand ils sont présents.','Transmettez ces observations au syndic sans intervenir sur l’installation collective.']],['Avant une modification',['Faites vérifier tout projet touchant une bouche, une gaine ou un équipement de ventilation. Demandez les consignes d’entretien correspondant à votre installation.']]],source:cs,related:['signaler-un-probleme','travaux-privatifs','balcons-et-fenetres']},
-{slug:'vide-ordures',title:'Vide-ordures',letter:'V',category:'Équipements',icon:'bin',intro:'Vérifier les consignes actuelles d’un équipement ancien avant de l’utiliser.',keywords:'vide ordures sac déchet palier hygiène tri poubelle',sections:[['Vérifier l’usage autorisé',['Suivez l’affichage et les consignes actuellement en vigueur dans la résidence. L’ancienne fiche a été fortement annotée lors de la révision de 2022.','Cette première édition ne permet pas de confirmer les conditions actuelles d’utilisation des vide-ordures.']],['Choisir la bonne filière',['Les déchets dangereux, gravats et équipements électriques nécessitent une filière adaptée. Consultez la fiche Déchets et les informations de Versailles Grand Parc.','Pour un engorgement, une odeur inhabituelle ou une anomalie, signalez l’emplacement au syndic. Ne tentez pas de déboucher une installation commune.']]],source:archives,related:['dechets-et-encombrants','signaler-un-probleme']}
+f('absences-et-securite', 'Absences et sécurité', 'Vie quotidienne', 'home',
+  'Partir l’esprit tranquille : clés, courrier, portes et badges.',
+  'absence vacances courrier clés porte badge perte sécurité voisin serrurier',
+  [
+    ['Avant une absence prolongée', [
+      'Laissez vos clés à une personne de confiance qui habite la région et indiquez son nom à Homeland. Le règlement le demande : en cas d’urgence, une fuite par exemple, il faut pouvoir entrer dans le logement.',
+      'À défaut, le syndic peut faire ouvrir la porte par un serrurier, en présence de la police.',
+      'Demandez à un voisin de relever votre courrier.'
+    ]],
+    ['Portes et badges', [
+      'Vérifiez que la porte du hall et celle du parking se referment derrière vous. Si une porte ferme mal, prévenez Homeland.',
+      'Badge perdu ou volé : prévenez Homeland, qui commande un nouveau badge et fait désactiver l’ancien si c’est possible.'
+    ]]
+  ],
+  reg('art. 7 § 9, p. 48'),
+  ['arriver-et-demenager', 'boites-aux-lettres', 'urgences']),
+
+f('arriver-et-demenager', 'Arriver et déménager', 'Vie quotidienne', 'home',
+  'Ce qu’il faut savoir en arrivant, et comment organiser un déménagement.',
+  'emménagement nouvel arrivant locataire propriétaire bienvenue cartons déménagement bail location',
+  [
+    ['En arrivant', [
+      'Votre propriétaire ou votre agence vous remet les clés, le badge et le code d’entrée.',
+      'Repérez votre entrée (4 ou 4 bis), votre boîte aux lettres, le local poubelles et le local vélos.',
+      'La fiche Boîtes aux lettres explique comment obtenir votre plaque ; la fiche WhatsApp, comment rejoindre le groupe des résidents.',
+      'La fiche Règles de vie résume l’essentiel du règlement de copropriété.'
+    ]],
+    ['Le jour du déménagement', [
+      'Prévenez vos voisins quelques jours avant.',
+      'Avant de commencer, faites constater l’état de la cabine d’ascenseur par un membre du conseil syndical. Les dégâts causés pendant le déménagement sont à la charge de celui qui déménage.',
+      'Protégez les parois et le sol de la cabine avec des cartons. Respectez la charge de 300 kg et ne bloquez pas les portes.',
+      'Ne laissez rien dans les halls et les couloirs. Les cartons vides se plient et vont dans les bacs de tri ; les encombrants sortent le mercredi soir.'
+    ]],
+    ['Si vous louez votre logement', [
+      'Le bail doit imposer au locataire le respect du règlement de copropriété. Le propriétaire en adresse une copie au syndic dans les quinze jours.',
+      'La location meublée d’un appartement entier est autorisée ; la location à la chambre ne l’est pas.'
+    ]]
+  ],
+  'Règlement de copropriété de 1977, art. 7 § 2.4 et 14, p. 45 et 49 ; pratique du conseil syndical.',
+  ['ascenseurs', 'boites-aux-lettres', 'dechets-et-encombrants', 'whatsapp', 'regles-de-vie'],
+  {links: [['Affiche de la résidence — 2 QR codes', '/ABCDaire/assets/partage/affiche-hall-abcdaire-et-whatsapp.pdf'], ['Affiche et QR codes', '/ABCDaire/partager/']]}),
+
+f('ascenseurs', 'Ascenseurs', 'Équipements', 'lift',
+  'Un ascenseur par entrée. Que faire en cas de panne, et comment éviter d’en provoquer une.',
+  'ascenseur cabine panne bloqué alarme déménagement charge 300 kg fosse clés',
+  [
+    ['Au quotidien', [
+      'Charge maximale : 300 kg.',
+      'Attendez l’ouverture complète des portes. Ne les forcez pas et ne surchargez pas la cabine : ce sont les causes de panne les plus fréquentes.',
+      'Pour un objet volumineux, protégez les parois et le sol de la cabine.'
+    ]],
+    ['En cas de panne', [
+      'Vous êtes bloqué : appuyez sur le bouton d’alarme de la cabine. Il vous met en relation avec TK Elevator, 24 h/24. Le contrat prévoit l’arrivée d’un technicien dans l’heure.',
+      'L’ascenseur est à l’arrêt : appelez le dépannage TK Elevator au 0 800 24 00 20, puis prévenez Homeland en indiquant l’entrée et l’heure.',
+      'Une personne est en danger : appelez le 18 ou le 112.'
+    ]],
+    ['Un objet tombé dans la fosse', [
+      'Ne tentez pas de le récupérer et n’ouvrez pas les portes palières. Demandez l’intervention à Homeland ; elle peut être facturée.'
+    ]]
+  ],
+  'Contrat de maintenance TK Elevator de 2025.',
+  ['urgences', 'signaler-un-probleme', 'arriver-et-demenager']),
+
+f('balcons-et-fenetres', 'Balcons et fenêtres', 'Travaux & logement', 'window',
+  'La façade est commune : ce qui se voit de l’extérieur ne se modifie pas sans vote de l’assemblée générale.',
+  'façade fenêtre balcon peinture garde-corps canisse store volets climatisation linge antenne parabole',
+  [
+    ['Ce que dit le règlement', [
+      'Pas de linge visible de l’extérieur, aucun objet posé sur le rebord des fenêtres et des balcons, rien jeté par les fenêtres.',
+      'Les balcons ne servent pas de débarras.',
+      'Canisses et autres habillages le long des garde-corps : interdits.',
+      'Protection supplémentaire pour de jeunes enfants : autorisation préalable du syndic.',
+      'Antenne ou parabole individuelle à l’extérieur : interdite.'
+    ]],
+    ['Fenêtres, garde-corps, peinture', [
+      'Les fenêtres, les portes palières, les garde-corps et leur peinture ne peuvent être modifiés qu’avec l’accord de l’assemblée générale.',
+      'Avant de remplacer vos fenêtres ou de repeindre, écrivez à Homeland avec le descriptif : modèle, matériau, couleur.',
+      'La référence de peinture des garde-corps est en cours de vérification par le conseil syndical.'
+    ]],
+    ['Stores et climatisation', [
+      'Le règlement autorise les stores si leur fixation, leur teinte et leur forme sont celles adoptées en assemblée générale. Aucun modèle n’est adopté à ce jour : le conseil syndical étudie la question.',
+      'Il n’existe pas encore de règle pour la climatisation. Ne posez pas d’unité extérieure sans accord de l’assemblée générale.'
+    ]]
+  ],
+  reg('art. 7 § 1.1.4, 4, 5 et 6, p. 42, 46 et 47'),
+  ['travaux-privatifs', 'bruit-et-voisinage']),
+
+f('boites-aux-lettres', 'Boîtes aux lettres', 'Vie quotidienne', 'mail',
+  'Plaque à votre nom, publicité, courrier pendant vos absences.',
+  'boîte aux lettres plaque nom étiquette gravure stop pub courrier',
+  [
+    ['Votre plaque', [
+      'Toutes les plaques suivent le même modèle. Ce modèle et le graveur sont en cours de confirmation par le conseil syndical : demandez-lui avant de commander.',
+      'Donnez l’orthographe exacte du nom à graver.'
+    ]],
+    ['Courrier et publicité', [
+      'Un autocollant « Stop Pub » évite les imprimés publicitaires.',
+      'Pendant une absence, demandez à un voisin de relever votre courrier.',
+      'Aucune boîte aux lettres supplémentaire ne peut être posée sans accord de l’assemblée générale.'
+    ]]
+  ],
+  'Conseil syndical, novembre 2026 ; règlement de copropriété de 1977, art. 8 § 3, p. 50.',
+  ['arriver-et-demenager', 'conseil-syndical-et-syndic']),
+
+f('bruit-et-voisinage', 'Bruit et voisinage', 'Vie quotidienne', 'sound',
+  'Les horaires à respecter pour les travaux bruyants et les bons réflexes entre voisins.',
+  'bruit musique tapage nocturne perceuse bricolage machine à laver fêtes horaires travaux',
+  [
+    ['Travaux bruyants : les horaires', [
+      'Jours ouvrables : 8 h 30 – 12 h et 14 h – 19 h 30. Samedi : 9 h – 12 h et 15 h – 19 h. Dimanche et jours fériés : 10 h – 12 h.',
+      'Horaires fixés par arrêté préfectoral : rappelez-les à vos entreprises.'
+    ]],
+    ['Au quotidien', [
+      'Tout bruit qui trouble la tranquillité des voisins est interdit, de jour comme de nuit, même chez soi.',
+      'Les sols transmettent les bruits : patins de feutre sous les chaises, chaussons, lave-linge posé sur un support anti-vibrations.',
+      'Prévenez vos voisins avant une fête ou des travaux.'
+    ]],
+    ['Si la gêne persiste', [
+      'Parlez-en d’abord à votre voisin.',
+      'Si rien ne change, écrivez à Homeland en indiquant les dates et les heures. Le règlement ne retient pas les plaintes verbales ou anonymes.'
+    ]]
+  ],
+  'Arrêté préfectoral des Yvelines n° 2012346-0003 ; règlement de copropriété de 1977, art. 7 § 2 et 3, p. 41, 45 et 46.',
+  ['travaux-privatifs', 'signaler-un-probleme'],
+  {links: [['Bruit : informations de la Ville de Versailles', 'https://www.versailles.fr/156/mairie/prevention-et-securite/hygiene.htm']]}),
+
+f('chauffage-et-trames', 'Chauffage et trames', 'Équipements', 'heat',
+  'Le chauffage collectif réchauffe les logements par les planchers et les plafonds. Vos convecteurs apportent le complément.',
+  'chauffage trames plafond plancher percer convecteur froid température période de chauffe thermostat',
+  [
+    ['Comment votre logement est chauffé', [
+      'Des résistances électriques, appelées « trames », sont noyées dans les planchers et les plafonds. Elles fournissent une température de base d’environ 13 °C.',
+      'Vos convecteurs électriques apportent le complément. Leur consommation est comptée sur le compteur électrique de votre logement.',
+      'Les trames chauffent la structure du bâtiment : la température monte et descend lentement.'
+    ]],
+    ['La période de chauffe', [
+      'Le chauffage collectif fonctionne du 1er octobre au 15 mai.',
+      'Pendant cette période, un thermostat le déclenche dès que la température mesurée sur le toit passe sous 13 °C. Plus il fait froid, plus la durée de chauffe s’allonge dans la journée.',
+      'Les charges du chauffage de base sont dues par tous, même en cas d’absence.'
+    ]],
+    ['Ne percez ni les plafonds ni les sols', [
+      'Aucun trou ni saignée dans les plafonds et les planchers sans l’autorisation du syndic : une trame percée est hors service.',
+      'Sa réparation coûte environ 4 000 €, hors remise en état du plafond, à la charge de celui qui l’a percée.',
+      'Pour fixer un luminaire, utilisez uniquement le point lumineux existant.'
+    ]],
+    ['En cas de froid anormal', [
+      'Relevez la température matin et soir, dans la même pièce, pendant quelques jours.',
+      'Transmettez ces relevés à Homeland en précisant les pièces concernées.'
+    ]]
+  ],
+  'Règlement de copropriété de 1977, art. 7 § 1.1.1, p. 41, et art. 19, p. 64 ; AG du 10 mai 2012 ; conseil syndical, octobre et novembre 2026.',
+  ['travaux-privatifs', 'signaler-un-probleme', 'eau-chaude-et-compteurs'],
+  {links: [['Règlement : article 19, page 64', '/ABCDaire/reglement/#reg-page-64']]}),
+
+f('conseil-syndical-et-syndic', 'Conseil syndical et syndic', 'Démarches', 'people',
+  'Qui fait quoi dans la copropriété, et à qui s’adresser.',
+  'CS copropriété AG assemblée générale gestionnaire syndic Homeland extranet charges',
+  [
+    ['Le syndic : Homeland', [
+      'Homeland gère la copropriété : charges, contrats, travaux, sinistres. C’est Homeland qui commande les interventions des entreprises.',
+      'Pour toute demande sur les parties communes, écrivez-lui depuis l’extranet ou à assistance@homeland.immo.',
+      'Chaque intervention commandée est payée par la copropriété, donc par tous : sollicitez Homeland à bon escient.',
+      'Les PV d’assemblée générale, les comptes et les contrats sont dans l’extranet Homeland.'
+    ]],
+    ['Le conseil syndical', [
+      'Le conseil syndical (CS) est composé de copropriétaires bénévoles élus en assemblée générale. Il contrôle la gestion du syndic et l’assiste.',
+      'Il ne commande pas les travaux à la place du syndic. Vous pouvez lui signaler un problème ou lui proposer une idée, par exemple sur le groupe WhatsApp des résidents.'
+    ]],
+    ['L’assemblée générale', [
+      'Elle réunit les copropriétaires une fois par an et vote le budget, les travaux et les contrats.',
+      'Pour faire inscrire une question à l’ordre du jour, adressez-la à Homeland. Le conseil syndical peut vous aider à la formuler.'
+    ]]
+  ],
+  'AG du 13 avril 2026 ; conseil syndical, novembre 2026.',
+  ['signaler-un-probleme', 'travaux-privatifs', 'whatsapp'],
+  {links: [['Extranet Homeland', 'https://extranet.homeland.immo/']]}),
+
+f('dechets-et-encombrants', 'Déchets et encombrants', 'Vie quotidienne', 'leaf',
+  'Où jeter quoi, et quand sortir les encombrants.',
+  'déchet tri poubelle ordures verre carton encombrants gravats peinture batterie électroménager recyclage déchèterie',
+  [
+    ['Tous les jours', [
+      'Les ordures ménagères et le tri se déposent dans les bacs des locaux poubelles. Les consignes de tri sont affichées dans ces locaux et à l’entrée du garage.',
+      'Le tri se dépose en vrac, sans sac. Pliez les cartons.',
+      'Le verre va dans les conteneurs de la rue.',
+      'Ne laissez rien dans les couloirs ni dans les halls.'
+    ]],
+    ['Encombrants', [
+      'Sortez-les vous-même le mercredi soir, pour la collecte du jeudi. Ce n’est pas le rôle de l’agent d’entretien.',
+      'Acceptés : literie, fauteuils, tapis et moquette, ferraille, jouets non électriques, miroirs et vitres bien emballés.',
+      'Refusés : gravats, appareils électriques, textiles, pièces automobiles, déchets dangereux.'
+    ]],
+    ['Le reste', [
+      'Appareils électriques, peintures, solvants, piles : déchèterie ou collecte spécialisée de Versailles Grand Parc.',
+      'Gravats : l’entreprise qui fait vos travaux les emporte.',
+      'Un objet encore utilisable ? Pensez au don avant de jeter.'
+    ]]
+  ],
+  'Le Petit Colbert d’octobre 2026 ; Versailles Grand Parc.',
+  ['vide-ordures', 'espaces-communs', 'travaux-privatifs', 'reemploi-et-compost'],
+  {links: [['Jours et points de collecte', 'https://www.versaillesgrandparc.fr/927.htm'], ['Consignes de tri de Versailles Grand Parc', 'https://www.versaillesgrandparc.fr/310/au-quotidien/gestion-des-dechets/trier-jeter-valoriser/tri-selectif-et-consignes.htm']]}),
+
+f('eau-chaude-et-compteurs', 'Eau chaude et compteurs', 'Équipements', 'drop',
+  'L’eau chaude est produite collectivement et facturée selon votre consommation.',
+  'eau chaude froide compteur relevé consommation ballon tarif m3 OCEA portail',
+  [
+    ['Comment ça marche', [
+      'L’eau chaude est produite au sous-sol, dans des ballons communs entretenus par Tournois. Des travaux sur ces ballons ont été réalisés à l’automne 2026.',
+      'Chaque logement a un compteur d’eau chaude, relevé à distance par OCEA : personne ne passe chez vous.',
+      'Tarif voté à l’AG du 13 avril 2026 : 34 € le m³ depuis le 1er janvier 2026.'
+    ]],
+    ['Consulter votre consommation', [
+      'Le portail résident OCEA affiche vos consommations. Pour créer votre accès, demandez le code de la résidence à Homeland.',
+      'Compteur en panne, consommation anormale, accès impossible : adressez-vous à Homeland, qui contacte OCEA.'
+    ]],
+    ['En cas de problème', [
+      'Plus d’eau chaude, ou eau tiède : vérifiez auprès d’un voisin si l’immeuble est touché, puis prévenez Homeland.',
+      'Température qui varie sous la douche : signalez-le à Homeland en indiquant votre entrée, votre étage et la pièce concernée.',
+      'Pour une fuite, voyez la fiche Fuites et dégâts des eaux.'
+    ]]
+  ],
+  'Règlement de copropriété de 1977, art. 20, p. 64 ; contrats OCEA de 2023 et Tournois de 2024 ; AG du 13 avril 2026.',
+  ['fuites-et-degats-des-eaux', 'signaler-un-probleme'],
+  {
+    links: [['Consulter ma consommation d’eau — portail résident OCEA', 'https://espace-resident.ocea-sb.com/'], ['Créer mon accès au portail résident OCEA', 'https://espace-resident-inscription.ocea-sb.com/']],
+    sectionLinks: {'Consulter votre consommation': [['Consulter ma consommation d’eau — portail résident OCEA', 'https://espace-resident.ocea-sb.com/'], ['Créer mon accès au portail résident OCEA', 'https://espace-resident-inscription.ocea-sb.com/']]}
+  }),
+
+f('eclairage', 'Éclairage', 'Équipements', 'light',
+  'Une ampoule grillée dans un couloir, un parking ou une cave : à qui le dire.',
+  'lampe ampoule lumière néon parking cave palier escalier éclairage',
+  [
+    ['Signaler une panne', [
+      'Prévenez Homeland en indiquant l’entrée, l’étage et l’endroit précis. Joignez une photo si possible.',
+      'Si toute une zone est dans le noir, précisez-le : la panne ne vient pas d’une ampoule.'
+    ]],
+    ['Qui remplace quoi', [
+      'L’entreprise de ménage remplace les ampoules des parties communes à la demande de Homeland.',
+      'Un luminaire ou un circuit défectueux demande un électricien, mandaté par Homeland.',
+      'Ne démontez pas vous-même un luminaire commun.'
+    ]]
+  ],
+  'Contrat de nettoyage ANET & Services de 2023.',
+  ['signaler-un-probleme', 'espaces-communs']),
+
+f('espaces-communs', 'Espaces communs', 'Vie quotidienne', 'stairs',
+  'Halls, paliers, couloirs, caves : des lieux à garder libres et propres.',
+  'couloir cave poussette vélo objets encombrement palier circulation escalier propreté paillasson local vélos',
+  [
+    ['Rien dans les passages', [
+      'Le règlement interdit de laisser quoi que ce soit dans les halls, les escaliers, les paliers, les couloirs des caves et les voies de circulation des parkings.',
+      'Les halls ne servent pas de garage à vélos, à poussettes ou à motos.',
+      'Le syndic peut faire enlever un objet 48 heures après une mise en demeure, aux frais de son propriétaire.',
+      'Les abords des portes d’appartement restent dégagés pour le nettoyage des paliers et des moquettes.'
+    ]],
+    ['Les locaux vélos', [
+      'Au 4 : juste après la porte d’entrée, à droite.',
+      'Au 4 bis : dans le parking du rez-de-chaussée, près de l’entrée du 4 bis.'
+    ]],
+    ['Portes et paillassons', [
+      'L’aspect des portes d’appartement côté couloir est commun : pas de changement de couleur sans accord de l’assemblée générale.',
+      'Le paillasson doit être d’un modèle autorisé par le syndic.'
+    ]],
+    ['Signaler une dégradation', [
+      'Prévenez Homeland en précisant l’entrée, l’étage et l’endroit. La fiche Signaler un problème explique comment.'
+    ]]
+  ],
+  reg('art. 7 § 5, p. 46, et art. 8, p. 49 et 50'),
+  ['arriver-et-demenager', 'dechets-et-encombrants', 'eclairage', 'signaler-un-probleme']),
+
+f('fuites-et-degats-des-eaux', 'Fuites et dégâts des eaux', 'Démarches', 'drop',
+  'Les premiers gestes, puis qui prévenir et qui paie.',
+  'fuite eau inondation dégât sinistre assurance plombier robinet arrêt constat',
+  [
+    ['Tout de suite', [
+      'Coupez l’eau au robinet d’arrêt de votre logement.',
+      'Prévenez le voisin du dessous, ou celui du dessus si l’eau vient de chez lui.',
+      'Appelez Homeland au 01 86 76 07 60.',
+      'Eau près d’une installation électrique ou danger pour une personne : appelez le 18 ou le 112.'
+    ]],
+    ['Qui fait réparer, qui paie', [
+      'La recherche de fuite et la réparation se demandent par écrit à Homeland, par le propriétaire du logement.',
+      'Fuite sur une partie privative : la facture est à la charge du propriétaire.',
+      'Fuite sur une partie commune : elle est à la charge de la copropriété.',
+      'Le règlement oblige à laisser l’accès au logement pour rechercher l’origine d’une fuite.'
+    ]],
+    ['Assurance', [
+      'Déclarez le sinistre à votre assurance habitation et remplissez un constat amiable avec le voisin concerné.',
+      'Locataire : prévenez aussi votre propriétaire.',
+      'Gardez les photos et les références des interventions.'
+    ]]
+  ],
+  'Procédure arrêtée par le conseil syndical en octobre 2026 ; règlement de copropriété de 1977, art. 7 § 8, p. 47 et 48.',
+  ['urgences', 'eau-chaude-et-compteurs', 'signaler-un-probleme']),
+
+f('interphone', 'Interphone', 'Équipements', 'phone',
+  'L’interphone ne sonne pas ou grésille : que vérifier, qui prévenir.',
+  'interphone sonnette combiné grésillement entrée fibre câble',
+  [
+    ['Avant de signaler', [
+      'Vérifiez que votre combiné est bien raccroché.',
+      'Notez ce qui ne marche pas : la sonnerie, le son ou l’ouverture de la porte.'
+    ]],
+    ['Signaler la panne', [
+      'Prévenez Homeland en indiquant l’entrée et l’étage. Homeland fait intervenir l’entreprise.',
+      'Ne démontez pas votre combiné.',
+      'Si vous faites poser la fibre ou d’autres câbles, demandez à l’installateur d’utiliser les goulottes existantes : des fils d’interphone ont déjà été coupés par des perçages.'
+    ]]
+  ],
+  cs,
+  ['signaler-un-probleme', 'arriver-et-demenager']),
+
+f('jardins-et-vie-de-residence', 'Jardins et vie de résidence', 'Vie quotidienne', 'leaf',
+  'Qui entretient les espaces verts, et comment participer à la vie de la résidence.',
+  'jardin arrosage plantes rosiers fête pique-nique voisins bénévoles haies pelouse',
+  [
+    ['Les espaces verts', [
+      'Concept du Paysage entretient les pelouses, les massifs et les haies : au moins seize passages par an et deux tailles de haies.',
+      'Respectez les plantations. Le règlement interdit de couper les fleurs des espaces communs.',
+      'Une idée de plantation ou un problème ? Parlez-en au conseil syndical.'
+    ]],
+    ['Les cuves fleuries des entrées', [
+      'Des résidents bénévoles entretiennent toute l’année les cuves de plantes et d’arbustes devant le 4 et le 4 bis.',
+      'Ils s’organisent dans un groupe WhatsApp de jardinage. Pour les rejoindre, demandez sur le groupe des résidents.'
+    ]],
+    ['Moments conviviaux', [
+      'Le conseil syndical organise des rendez-vous entre voisins, comme le pique-nique de rentrée. Ils sont annoncés dans Le Petit Colbert et sur le groupe WhatsApp.',
+      'Vous avez une idée ? Proposez-la au conseil syndical.'
+    ]]
+  ],
+  'Contrat Concept du Paysage de 2022 ; règlement de copropriété de 1977, art. 8 § 2, p. 50.',
+  ['espaces-communs', 'conseil-syndical-et-syndic', 'whatsapp']),
+
+f('parking-et-stationnement', 'Parking et stationnement', 'Vie quotidienne', 'car',
+  'Deux parkings, au rez-de-chaussée et au sous-sol, et quelques règles pour circuler sans gêner.',
+  'parking garage voiture place stationnement porte accès priorité entrant sortant rampe sous-sol moto',
+  [
+    ['Les règles', [
+      'Garez-vous uniquement sur votre emplacement. Une place vide n’est pas une place libre.',
+      'Un emplacement sert à garer un véhicule, jamais de débarras.',
+      'Aucun carburant ni produit inflammable dans les garages et les caves.',
+      'Ne stationnez pas sur les voies de circulation ni sur les rampes. Roulez au pas.'
+    ]],
+    ['Priorité au véhicule qui entre', [
+      'À la sortie, laissez passer le véhicule qui entre s’il est déjà engagé dans l’accès.',
+      'Sinon il devrait reculer vers la rue en retraversant le trottoir et, pour le sous-sol, remonter la rampe en marche arrière.'
+    ]],
+    ['Porte en panne', [
+      'Prévenez Homeland, qui fait intervenir l’entreprise de maintenance.',
+      'Ne manœuvrez pas la porte vous-même.'
+    ]]
+  ],
+  reg('art. 7 § 2.3 et 2.5, p. 45, et art. 8 § 1, p. 49'),
+  ['arriver-et-demenager', 'signaler-un-probleme', 'recharge-vehicules-electriques']),
+
+f('recharge-vehicules-electriques', 'Recharge des véhicules électriques', 'Équipements', 'car',
+  'L’infrastructure de recharge est en service depuis janvier 2025. Chaque propriétaire peut faire équiper sa place.',
+  'borne recharge IRVE voiture électrique parking Electro-Mob devis',
+  [
+    ['Faire installer une borne', [
+      'Demandez un devis à Electro-Mob, qui a installé l’infrastructure commune.',
+      'La borne, sa pose et l’électricité consommée sont à votre charge. La consommation est comptée individuellement.',
+      'Demandez que le devis détaille le raccordement, la borne, la pose, l’abonnement éventuel et la garantie.'
+    ]],
+    ['En cas de panne', [
+      'Votre borne : contactez le service après-vente d’Electro-Mob.',
+      'Plusieurs bornes touchées : prévenez aussi Homeland.'
+    ]]
+  ],
+  'AG du 27 juin 2023 (résolution 26) et du 28 juin 2024 (résolution 16).',
+  ['parking-et-stationnement', 'travaux-privatifs', 'conseil-syndical-et-syndic'],
+  {links: [['Electro-Mob : devis, installation et contact', 'https://www.electro-mob.com/']]}),
+
+f('reemploi-et-compost', 'Réemploi et compost', 'Vie quotidienne', 'leaf',
+  'Donner plutôt que jeter, et composter près de chez soi.',
+  'compost biodéchet don réparation réemploi maison de quartier Porchefontaine Chantiers',
+  [
+    ['Donner', [
+      'Avant de sortir un objet aux encombrants, proposez-le autour de vous, par exemple sur le groupe WhatsApp des résidents.'
+    ]],
+    ['Composter', [
+      'Il n’y a pas de composteur dans la résidence. Des résidents utilisent le compost partagé de la maison de quartier de Porchefontaine, 86 rue Yves-Le-Coz.',
+      'Un autre site existe à la maison de quartier des Chantiers, 53 rue des Chantiers.',
+      'Inscription et consignes : auprès de Versailles Grand Parc ou de la maison de quartier. Un résident référent peut vous guider : demandez sur le groupe WhatsApp.'
+    ]]
+  ],
+  'Versailles Grand Parc ; AG de 2015, 2016 et 2020.',
+  ['dechets-et-encombrants', 'jardins-et-vie-de-residence'],
+  {links: [['Compostage partagé : sites et modalités VGP', 'https://www.versaillesgrandparc.fr/1696/au-quotidien/en-route-vers-le-zero-dechet/composter-ses-biodechets/le-compostage-partage.htm']]}),
+
+f('regles-de-vie', 'Règles de vie', 'Vie quotidienne', 'people',
+  'L’essentiel du règlement de copropriété, en une page.',
+  'règlement règles vie bon voisinage accueil respect bruit déchets parking balcon travaux',
+  [
+    ['Bruit', [
+      'Tout bruit gênant pour les voisins est interdit, de jour comme de nuit.',
+      'Travaux bruyants : en semaine 8 h 30 – 12 h et 14 h – 19 h 30 ; samedi 9 h – 12 h et 15 h – 19 h ; dimanche et jours fériés 10 h – 12 h.'
+    ]],
+    ['Parties communes', [
+      'Rien ne reste dans les halls, les escaliers, les paliers et les couloirs.',
+      'Les vélos vont au local vélos, pas dans les halls.',
+      'Les déchets vont dans les locaux poubelles ; les encombrants sortent le mercredi soir.'
+    ]],
+    ['Façade et balcons', [
+      'Pas de linge visible, pas d’objet sur les rebords, pas de canisses.',
+      'Fenêtres, garde-corps, portes palières : aucun changement sans vote de l’assemblée générale.'
+    ]],
+    ['Travaux', [
+      'Autorisation du syndic avant de percer un plafond ou un plancher, de modifier la distribution du logement ou de toucher aux canalisations communes.',
+      'Le propriétaire répond des dégâts causés par ses travaux.'
+    ]],
+    ['Parkings', [
+      'Chacun sur sa place, aucun dépôt, priorité au véhicule qui entre.'
+    ]],
+    ['En cas de problème', [
+      'Parties communes : prévenez Homeland. Urgence : 18 ou 112.'
+    ]]
+  ],
+  reg('art. 7 et 8, p. 41 à 50'),
+  ['arriver-et-demenager', 'espaces-communs', 'bruit-et-voisinage', 'dechets-et-encombrants', 'signaler-un-probleme'],
+  {links: [['Lire le règlement de copropriété', '/ABCDaire/reglement/'], ['Affiche de la résidence — 2 QR codes', '/ABCDaire/assets/partage/affiche-hall-abcdaire-et-whatsapp.pdf']]}),
+
+f('signaler-un-probleme', 'Signaler un problème', 'Démarches', 'message',
+  'Pour les parties communes, c’est Homeland qu’il faut prévenir. Voici comment être efficace.',
+  'contact syndic panne incident réclamation signalement prestataire entretien Homeland extranet',
+  [
+    ['Qui prévenir', [
+      'Danger pour une personne : 18 ou 112.',
+      'Ascenseur bloqué : bouton d’alarme de la cabine.',
+      'Tout le reste dans les parties communes : Homeland, par l’extranet, à assistance@homeland.immo ou au 01 86 76 07 60.',
+      'Dans votre logement : votre propriétaire si vous êtes locataire, sinon l’artisan de votre choix.'
+    ]],
+    ['Ce qu’il faut dire', [
+      'Où : entrée, étage, endroit précis.',
+      'Quoi : ce que vous constatez, et depuis quand.',
+      'Une photo aide beaucoup.'
+    ]],
+    ['Bon à savoir', [
+      'C’est Homeland qui mandate les entreprises : n’appelez pas directement un prestataire de la résidence.',
+      'Chaque intervention est payée par la copropriété. Signalez ce qui le mérite, une seule fois, et répondez dans le même message pour le suivi.',
+      'Vous pouvez aussi en parler sur le groupe WhatsApp des résidents ou à un membre du conseil syndical. Évitez d’y citer un voisin ou un numéro d’appartement.'
+    ]]
+  ],
+  cs,
+  ['urgences', 'conseil-syndical-et-syndic', 'whatsapp'],
+  {links: [['Extranet Homeland', 'https://extranet.homeland.immo/']]}),
+
+f('toiture-et-projets', 'Toiture et projets collectifs', 'Travaux & logement', 'tool',
+  'Où en est le projet de réfection de la toiture.',
+  'toiture terrasse étanchéité architecte diagnostic amiante DTG DPE PPPT plan pluriannuel infiltration',
+  [
+    ['Le projet', [
+      'L’AG du 13 avril 2026 a confié au cabinet Minne l’étude de la réfection de la toiture et la consultation des entreprises.',
+      'Un diagnostic amiante de la toiture, obligatoire avant les travaux, est engagé à l’automne 2026.',
+      'Le projet chiffré sera soumis au vote d’une prochaine assemblée générale.'
+    ]],
+    ['Diagnostics du bâtiment', [
+      'Les offres de diagnostic technique global (DTG), de diagnostic de performance énergétique collectif (DPE) et de plan pluriannuel de travaux (PPPT) ont été rejetées par l’AG du 13 avril 2026.'
+    ]],
+    ['Infiltration par la toiture', [
+      'Prévenez Homeland en indiquant l’endroit, la date et les dégâts, puis votre assurance.'
+    ]]
+  ],
+  'AG du 13 avril 2026, résolutions 13 à 15 ; conseil syndical, novembre 2026.',
+  ['fuites-et-degats-des-eaux', 'conseil-syndical-et-syndic', 'travaux-privatifs']),
+
+f('travaux-privatifs', 'Travaux privatifs', 'Travaux & logement', 'tool',
+  'Ce que vous pouvez faire librement chez vous, et ce qui demande une autorisation.',
+  'travaux rénovation autorisation AG syndic plafond percement sol acoustique plomberie façade gravats',
+  [
+    ['Autorisation du syndic obligatoire', [
+      'Percer ou faire une saignée dans un plafond ou un plancher : des résistances de chauffage y sont noyées.',
+      'Modifier la disposition intérieure du logement.',
+      'Se raccorder à une canalisation commune.',
+      'Remplacer ou ajouter un élément de chauffage.'
+    ]],
+    ['Vote de l’assemblée générale', [
+      'Tout ce qui se voit de l’extérieur : fenêtres, portes palières, garde-corps, stores.'
+    ]],
+    ['Les règles techniques', [
+      'Nouveau revêtement de sol : isolation phonique au moins égale à celle d’origine.',
+      'Câbles (fibre, électricité) : dans les goulottes existantes.',
+      'Le propriétaire est responsable des dégâts causés par ses travaux ; le syndic peut demander une attestation d’assurance.'
+    ]],
+    ['Pendant le chantier', [
+      'Respectez les horaires des travaux bruyants (fiche Bruit et voisinage) et prévenez vos voisins.',
+      'Protégez l’ascenseur et les parties communes, et nettoyez après le passage des ouvriers.',
+      'Les gravats sont emportés par l’entreprise, jamais déposés dans les locaux poubelles ni aux encombrants.'
+    ]]
+  ],
+  reg('art. 7 § 1.1.1 à 1.1.7, p. 41 à 43'),
+  ['balcons-et-fenetres', 'chauffage-et-trames', 'bruit-et-voisinage', 'dechets-et-encombrants']),
+
+f('urgences', 'Urgences et pannes', 'Démarches', 'alert',
+  'Les numéros à connaître.',
+  'urgence secours 112 18 15 17 114 danger incendie malaise panne extincteur électricité',
+  [
+    ['Secours', [
+      '112 : numéro d’urgence européen.',
+      '18 : pompiers. 15 : Samu. 17 : police.',
+      '114 : par SMS, pour les personnes sourdes ou malentendantes.'
+    ]],
+    ['Dans la résidence', [
+      'Ascenseur bloqué : bouton d’alarme de la cabine, ou TK Elevator au 0 800 24 00 20.',
+      'Fuite d’eau ou panne dans les parties communes : Homeland au 01 86 76 07 60, 24 h/24.',
+      'Coupure d’électricité dans tout l’immeuble : Enedis au 09 72 67 50 78.'
+    ]],
+    ['Extincteurs', [
+      'Un dans chaque hall, trois dans le parking du rez-de-chaussée, sept dans le parking du sous-sol.',
+      'En cas d’incendie, appelez d’abord le 18.'
+    ]]
+  ],
+  'Service-public.fr ; inventaire des extincteurs de juin 2023.',
+  ['ascenseurs', 'fuites-et-degats-des-eaux', 'signaler-un-probleme'],
+  {links: [['Numéros d’urgence : Service Public', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F33954'], ['Urgence 114', 'https://www.urgence114.fr/']]}),
+
+f('ventilation-vmc', 'Ventilation et VMC', 'Équipements', 'wind',
+  'La ventilation est collective : les bouches de votre logement doivent rester propres et dégagées.',
+  'ventilation VMC bouche extraction air humidité odeur',
+  [
+    ['Chez vous', [
+      'Ne bouchez ni les entrées d’air ni les bouches d’extraction.',
+      'Nettoyez les bouches régulièrement.',
+      'Ne raccordez rien à la ventilation sans l’accord du syndic.'
+    ]],
+    ['En cas d’anomalie', [
+      'Bruit inhabituel, odeurs, bouche qui n’aspire plus : prévenez Homeland en indiquant la pièce et depuis quand.',
+      'Le moteur de ventilation a été réparé à l’automne 2026.'
+    ]]
+  ],
+  cs,
+  ['signaler-un-probleme', 'travaux-privatifs', 'balcons-et-fenetres']),
+
+f('vide-ordures', 'Vide-ordures', 'Équipements', 'bin',
+  'Les vide-ordures restent en service, mais le conseil syndical déconseille leur utilisation : préférez les bacs des locaux poubelles.',
+  'vide ordures sac déchet palier hygiène tri poubelle colonne',
+  [
+    ['Toujours en service, mais déconseillés', [
+      'L’assemblée générale a refusé leur fermeture, la dernière fois le 28 juin 2024.',
+      'Le conseil syndical recommande d’utiliser les bacs des locaux poubelles, qui permettent le tri.'
+    ]],
+    ['Si vous les utilisez', [
+      'Petits sacs bien fermés uniquement.',
+      'Jamais de verre, de carton, d’objet encombrant, de liquide ni de déchet dangereux.',
+      'Odeur ou colonne bouchée : prévenez Homeland en indiquant l’entrée et l’étage. Ne tentez pas de déboucher vous-même.',
+      'Les colonnes sont nettoyées et désinfectées deux fois par an.'
+    ]]
+  ],
+  'AG du 28 juin 2024, résolutions 13.1 à 13.4 ; contrat d’entretien des colonnes.',
+  ['dechets-et-encombrants', 'signaler-un-probleme']),
+
+f('whatsapp', 'WhatsApp : résidents et conseil syndical', 'Vie quotidienne', 'message',
+  'Un groupe pour les résidents, ouvert sur demande ; un autre réservé au conseil syndical.',
+  'whatsapp groupe résident conseil syndical CS QR code rejoindre invitation administrateur',
+  [
+    ['Le groupe des résidents', [
+      '« Residents Pont Colbert 4&4bis » sert à l’entraide et aux informations pratiques.',
+      'Pour le rejoindre, utilisez le bouton ou le QR code de cette page. Un administrateur du conseil syndical valide votre demande.',
+      'Vous rejoignez en même temps la communauté « Pont Colbert 4&4bis » et son groupe d’annonces.'
+    ]],
+    ['Les autres groupes', [
+      'Le groupe du conseil syndical est réservé à ses membres.',
+      'Un groupe de jardinage réunit les bénévoles des cuves fleuries : demandez à le rejoindre sur le groupe des résidents.'
+    ]],
+    ['Bon usage', [
+      'Restez courtois et utile à tous.',
+      'Un message WhatsApp ne remplace pas une demande à Homeland.',
+      'Ne citez ni un voisin ni un numéro d’appartement.'
+    ]]
+  ],
+  'Conseil syndical, octobre 2026.',
+  ['conseil-syndical-et-syndic', 'signaler-un-probleme', 'jardins-et-vie-de-residence'],
+  {links: [['Fonctionnement de l’approbation WhatsApp', 'https://faq.whatsapp.com/526742385997912/?cms_platform=web']]})
 ];
