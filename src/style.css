@@ -111,3 +111,19 @@
 .regulation-provenance{border:1px solid var(--line);border-radius:12px;padding:24px;margin:32px 0}
 .regulation-provenance summary{font-weight:700;cursor:pointer}
 @media(max-width:620px){.regulation-chapter summary{flex-wrap:wrap;gap:12px}.regulation-chapter summary small{flex-basis:100%;padding-left:28px}}
+/* Regulation text */
+.regulation-toc{display:flex;flex-wrap:wrap;gap:8px 18px;margin:28px 0 36px;font-size:14px}
+.regulation-toc .reg-toc-part{flex-basis:100%;margin:14px 0 0;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#cc8664}
+.regulation-text{max-width:760px}
+.regulation-text p{margin:0 0 14px;line-height:1.7}
+.regulation-text .reg-page{margin:30px 0 10px;font-size:12px;text-align:right;border-top:1px dashed var(--line);padding-top:6px;scroll-margin-top:160px}
+.regulation-text .reg-page a{color:#52626b}
+.regulation-text .reg-part{font-family:var(--serif);font-weight:400;font-size:30px;margin:44px 0 10px}
+.regulation-text .reg-chapter{font-size:21px;margin:34px 0 10px;scroll-margin-top:160px}
+.regulation-text .reg-article{font-size:17px;margin:28px 0 10px;color:#19364c;scroll-margin-top:160px}
+.regulation-text .reg-title{font-size:15px;margin:20px 0 8px;font-weight:700}
+.regulation-text .reg-lots{display:grid;gap:10px;margin:10px 0}
+.regulation-text .reg-lot{display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:baseline;border-bottom:1px solid var(--line);padding:8px 0;scroll-margin-top:160px}
+.regulation-text .reg-lot p{margin:0;font-size:14px;line-height:1.55}
+.regulation-text .reg-share{font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:620px){.regulation-text .reg-lot{grid-template-columns:1fr}.regulation-text .reg-share{justify-self:start}}
