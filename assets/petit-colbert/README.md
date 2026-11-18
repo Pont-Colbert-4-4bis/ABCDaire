@@ -1,6 +1,6 @@
 # Copies publiques du Petit Colbert
 
-30 PDF et 36 pages de lecture pour 24 éditions ou projets (2020–2026), variantes comprises.
+31 PDF et 37 pages de lecture pour 25 éditions ou projets (2020–2026), variantes comprises.
 
 Les noms du CS sont remplacés par « membre du CS » ; les autres personnes sont désignées par leur fonction ou une mention anonyme. Les coordonnées privées et l’immatriculation sont masquées ; les QR d’invitation privés sont retirés. Les sections et leur contenu sont conservés. Les PDF sont reconstruits sans commentaires, pièces jointes ni métadonnées nominatives. Les images de lecture proviennent des PDF anonymisés. Les transcriptions conservent l’ordre du document source et appliquent les mêmes substitutions.
 

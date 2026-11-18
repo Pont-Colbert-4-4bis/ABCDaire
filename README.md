@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition actualisée le 2 novembre 2026 : 26 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
+Guide public de la résidence à Versailles. Édition actualisée le 2 novembre 2026 : 26 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 25 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 
@@ -76,7 +76,7 @@ Validation du 7 octobre : compilation et contrôle de 33 pages / 1 599 liens loc
 
 ## Archives du Petit Colbert
 
-La rubrique `/petit-colbert/` rassemble 24 éditions ou projets retrouvés, de février 2020 à octobre 2026, du plus récent au plus ancien. Les synthèses ont été remplacées par les pages des documents, avec leur mise en page et leurs illustrations, avec remplacement des noms par une désignation générique, sans suppression des sections. Les 30 PDF (variantes comprises) et 36 images WebP se trouvent dans `assets/petit-colbert/`. Chaque édition propose la lecture des pages, leur agrandissement, le téléchargement du PDF, les autres variantes, le texte intégral de la copie publique pour la recherche et des liens vers les fiches actuelles.
+La rubrique `/petit-colbert/` rassemble 25 éditions ou projets retrouvés, de février 2020 à novembre 2026, du plus récent au plus ancien. Les synthèses ont été remplacées par les pages des documents, avec leur mise en page et leurs illustrations, avec remplacement des noms par une désignation générique, sans suppression des sections. Les 31 PDF (variantes comprises) et 37 images WebP se trouvent dans `assets/petit-colbert/`. Chaque édition propose la lecture des pages, leur agrandissement, le téléchargement du PDF, les autres variantes, le texte intégral de la copie publique pour la recherche et des liens vers les fiches actuelles.
 
 Les identités sont remplacées dans les PDF eux-mêmes : « membre du CS » pour les membres du conseil syndical, fonction ou mention anonyme pour les autres personnes. Les sections, les phrases et les consignes sont conservées. Les coordonnées privées et l’immatriculation sont masquées ; les QR d’invitation privés sont retirés. Les métadonnées nominatives, commentaires et pièces jointes ne sont pas conservés. Les images sont produites à partir des PDF anonymisés. Les transcriptions conservent l’ordre de lecture du texte d’origine et appliquent exactement les mêmes substitutions ; elles sont contrôlées avant publication. Les originaux et la liste privée des passages retirés restent hors Git. Les noms des entreprises sont conservés. Hors substitutions d’identités et de coordonnées, les formulations, coquilles et constats historiques ne sont pas réécrits.
 
@@ -88,7 +88,7 @@ Juin 2025, février 2025 V5 et octobre 2026 V8 restent signalés comme versions 
 
 Vérification de cette évolution : compilation et contrôle des 58 pages et 2 539 liens locaux ; recherche « Electromob » retrouvant les numéros et les fiches associées ; lecture à 390 px sans débordement ; ordre des étapes du prix de l’eau contrôlé de 2026 à 2012. Les 24 numéros ont des pages distinctes et des références de source.
 
-Contrôle de cette archive : 30 PDF, 36 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
+Contrôle de cette archive : 31 PDF, 37 pages, retrait réel des identités dans les PDF et leurs métadonnées, comparaison visuelle en dehors des remplacements et recherche dans les transcriptions anonymisées. La conversion Word peut conserver les défauts présents dans les sources.
 
 Validation de la maquette du 7 octobre (version Three.js) : compilation et contrôle de 60 pages HTML et 2 834 liens locaux ; rendu Chromium (WebGL logiciel) de l’accueil, de `/residence/`, des vues rapprochées des entrées 4 et 4 bis et de l’accueil à 390 px ; visite entre les vues 2, 1 et 3 avec la journée, arrêt après un geste et reprise une minute plus tard, boutons Visite et Journée. Les cotes restent estimées d’après les photographies et les indications de résidents.
 

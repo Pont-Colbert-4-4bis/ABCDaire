@@ -484,5 +484,20 @@
     ],
     "redacted": false,
     "sha256": "b1856101728fd2ade439bb27125e8d16baa82347dd8b1ccae593b35553422ad1"
+  },
+  {
+    "edition": "2026-11",
+    "variant": "principal",
+    "pdf": "2026-11-principal.pdf",
+    "pages": [
+      {
+        "image": "2026-11-principal-p1.webp",
+        "width": 1414,
+        "height": 2000,
+        "text": "É D I T I O N  D E  N O V E M B R E  2 0 2 6\nLe Petit Colbert\n     Le chauffage est en route\nLe  chauffage  collectif  a  été  remis  en  service  le  14  octobre,  comme  le  prévoit  le \nrèglement de copropriété.\nRappel : les trames assurent un chauffage de base destiné à maintenir une température  \nacceptable  dans  les  logements.  Tout  chauffage  de  confort  doit  être  assuré  par  des \nchauffages d’appoint individuels.\n     Des travaux enfin terminés\nPlusieurs chantiers suivis par le conseil syndical sont maintenant achevés :\n•  Eau chaude : l’installation des nouveaux ballons est terminée.\nSondage eau chaude. Un sondage a été distribué dans vos boîtes aux lettres pour  \nsavoir si vous rencontrez des variations de température de l’eau chaude depuis le  \nchangement des ballons.\nMerci de rendre ce sondage avant le 30 novembre 2026 , en précisant votre nom, \nvotre appartement et la pièce d’eau concernée.\n•  Ascenseurs : TK Elevator a réparé la porte de l’ascenseur au sous-sol du 4 et le \ndéfaut à l’origine des vibrations de l’ascenseur du 4 bis.\n•  Ventilation (VMC) : le caisson du 4 bis, le ventilateur et le moteur ont été \nremplacés.\n     Contrôle des ascenseurs Mardi 24 nov. — 9 h\nLe contrôle technique quinquennal obligatoire des deux ascenseurs aura lieu le mardi 24  \nnovembre à partir de 9 h. Les ascenseurs pourront être  indisponibles pendant une  \ndemi-journée.\nMerci d’en tenir compte dans vos déplacements ce matin-là !\n    ✦ ✦ ✦\nBien cordialement,\nLe conseil syndical\n"
+      }
+    ],
+    "redacted": false,
+    "sha256": "bff4e7b59d50e3065445da9ecd679534cf129f8524e10d1ad27870044b90165b"
   }
 ]

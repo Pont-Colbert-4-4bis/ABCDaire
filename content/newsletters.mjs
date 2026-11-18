@@ -1,5 +1,20 @@
 // Catalogue des éditions. Les pages publiques et leur texte sont dans facsimiles.json.
 export const newsletters = [
+{
+  "id": "2026-11",
+  "date": "Novembre 2026",
+  "title": "Chauffage, travaux, sondage eau chaude et contrôle des ascenseurs",
+  "related": [
+    "chauffage-et-trames",
+    "eau-chaude-et-compteurs",
+    "ascenseurs",
+    "ventilation-vmc"
+  ],
+  "source": "Le Petit Colbert de novembre 2026, dernière version PDF révisée le 18 novembre 2026 et ajoutée à l’Abécédaire à la demande de Philippe.",
+  "note": "",
+  "status": "Édition de novembre",
+  "publicCopyNote": "PDF ajouté le 18 novembre 2026 dans sa mise en page finale. Le document ne contient ni coordonnées personnelles ni noms de résidents ; aucune anonymisation supplémentaire n’a été nécessaire."
+},
   {
     "id": "2026-10",
     "date": "Octobre 2026",
