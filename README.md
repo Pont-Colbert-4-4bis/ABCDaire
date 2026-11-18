@@ -1,6 +1,6 @@
 # L’Abécédaire de Villa Colbert
 
-Guide public de la résidence à Versailles. Édition actualisée le 2 novembre 2026 : 26 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 25 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
+Guide public de la résidence à Versailles. Édition actualisée le 2 novembre 2026 : 26 fiches, annuaire professionnel, 17 synthèses de contrats et services, 28 historiques de décisions (98 étapes sourcées, AG 2012–2026), 24 éditions et projets du Petit Colbert (2020–2026), index A–Z, filtres par thème et recherche accessible depuis toutes les pages. Dessin de la résidence sur l’accueil et maquette 3D interactive (Three.js) dans la page « La résidence en 3D ».
 
 ## Contenu éditorial
 

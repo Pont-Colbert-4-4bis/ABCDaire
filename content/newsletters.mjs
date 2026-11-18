@@ -1,20 +1,6 @@
 // Catalogue des éditions. Les pages publiques et leur texte sont dans facsimiles.json.
 export const newsletters = [
   {
-    "id": "2026-11",
-    "date": "Novembre 2026",
-    "title": "Chauffage, travaux terminés et contrôle des ascenseurs",
-    "related": [
-      "chauffage-et-trames",
-      "eau-chaude-et-compteurs",
-      "ascenseurs",
-      "ventilation-vmc"
-    ],
-    "source": "Le Petit Colbert de novembre 2026, préparé le 9 novembre 2026 d’après la réunion du conseil syndical du 2 novembre 2026.",
-    "note": "Version préparée pour diffusion ; sa diffusion n’est pas confirmée.",
-    "status": "Version de travail"
-  },
-  {
     "id": "2026-10",
     "date": "Octobre 2026",
     "title": "Bruit, encombrants et moment convivial",
