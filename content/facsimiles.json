@@ -484,5 +484,20 @@
     ],
     "redacted": false,
     "sha256": "b1856101728fd2ade439bb27125e8d16baa82347dd8b1ccae593b35553422ad1"
+  },
+  {
+    "edition": "2026-11",
+    "variant": "principal",
+    "pdf": "2026-11-principal.pdf",
+    "pages": [
+      {
+        "image": "2026-11-principal-p1.webp",
+        "width": 1489,
+        "height": 2105,
+        "text": "É D I T I O N   D E   N O V E M B R E   2 0 2 6\nLe Petit Colbert\n  Le chauffage est en route\nLe chauffage collectif a été remis en service le 14 octobre, comme le prévoit le règlement de copropriété.\n  Des travaux enfin terminés\nPlusieurs chantiers suivis par le conseil syndical sont maintenant achevés :\n• Eau chaude : l’installation des nouveaux ballons est terminée.\n• Ascenseur du 4 : la porte de l’ascenseur au sous-sol a été réparée.\n• Ascenseur du 4 bis : les vibrations ont disparu.\n• Ventilation (VMC) : les caissons, le ventilateur et le moteur ont été remplacés.\n  Contrôle des ascenseurs Mardi 24 nov. — 9 h\nLe contrôle technique quinquennal obligatoire des deux ascenseurs aura lieu le mardi 24 novembre à partir de 9 h. Les ascenseurs pourront être indisponibles pendant une demi-journée.\nMerci d’en tenir compte dans vos déplacements ce matin-là !\n✦✦✦\nBien cordialement,\nLe conseil syndical"
+      }
+    ],
+    "redacted": false,
+    "sha256": "af839fd9853c60cb57d0211869015d2992dc315ce2675b7cfcc6f215ca7d67b7"
   }
 ]
